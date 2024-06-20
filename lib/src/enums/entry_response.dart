@@ -1,0 +1,4 @@
+enum EntryResponse {
+  valid,
+  notValid;
+}

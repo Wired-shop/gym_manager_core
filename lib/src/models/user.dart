@@ -1,0 +1,93 @@
+import 'validation_result.dart';
+import 'package:json_annotation/json_annotation.dart';
+part 'user.g.dart';
+
+@JsonSerializable()
+class User {
+  //Ids
+  int? id;
+
+//Informations
+  String? name;
+  String? surname;
+  DateTime? birthday;
+  String? gender;
+
+//Address
+  String? address;
+  String? fiscalCode;
+  String? city;
+  int? zipCode;
+  String? province;
+
+//Contacts
+  String? phone;
+  String? phone2;
+  String? phone2Type;
+  String? phone3;
+  String? phone3Type;
+  String? email;
+
+//Notes
+  String? privateNote;
+  String? publicNote;
+
+  //Expirations
+  DateTime? subscriptionExpirationDate;
+  DateTime? affiliationExpirationDate;
+  DateTime? medicalCertificateExpirationDate;
+
+  //Files
+  String? image;
+  String? medicalDocument;
+  String? affiliationDocument;
+  String? subscriptionDocument;
+
+  //Flags
+  int? flagged;
+  int? archived;
+  int? tpPro;
+
+  //Validation
+  ValidationResult? validationResult;
+
+  User({
+    this.name,
+    this.surname,
+    this.address,
+    this.fiscalCode,
+    this.city,
+    this.zipCode,
+    this.province,
+    this.phone,
+    this.phone2,
+    this.phone2Type,
+    this.phone3,
+    this.phone3Type,
+    this.email,
+    this.privateNote,
+    this.publicNote,
+    this.subscriptionExpirationDate,
+    this.affiliationExpirationDate,
+    this.medicalCertificateExpirationDate,
+    this.image,
+    this.medicalDocument,
+    this.affiliationDocument,
+    this.subscriptionDocument,
+    this.flagged,
+    this.archived,
+    this.tpPro,
+    this.id,
+    this.birthday,
+    this.gender,
+    this.validationResult,
+  });
+
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  Map<String, dynamic> toJson() => _$UserToJson(this);
+
+  @override
+  String toString() {
+    return toJson().toString();
+  }
+}
