@@ -22,17 +22,15 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       email: json['email'] as String?,
       privateNote: json['privateNote'] as String?,
       publicNote: json['publicNote'] as String?,
-      subscriptionExpirationDate: json['subscriptionExpirationDate'] == null
+      subscriptionExpiration: json['subscriptionExpiration'] == null
           ? null
-          : DateTime.parse(json['subscriptionExpirationDate'] as String),
-      affiliationExpirationDate: json['affiliationExpirationDate'] == null
+          : DateTime.parse(json['subscriptionExpiration'] as String),
+      affiliationExpiration: json['affiliationExpiration'] == null
           ? null
-          : DateTime.parse(json['affiliationExpirationDate'] as String),
-      medicalCertificateExpirationDate:
-          json['medicalCertificateExpirationDate'] == null
-              ? null
-              : DateTime.parse(
-                  json['medicalCertificateExpirationDate'] as String),
+          : DateTime.parse(json['affiliationExpiration'] as String),
+      medicalCertificateExpiration: json['medicalCertificateExpiration'] == null
+          ? null
+          : DateTime.parse(json['medicalCertificateExpiration'] as String),
       image: json['image'] as String?,
       medicalDocument: json['medicalDocument'] as String?,
       affiliationDocument: json['affiliationDocument'] as String?,
@@ -70,12 +68,12 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'email': instance.email,
       'privateNote': instance.privateNote,
       'publicNote': instance.publicNote,
-      'subscriptionExpirationDate':
-          instance.subscriptionExpirationDate?.toIso8601String(),
-      'affiliationExpirationDate':
-          instance.affiliationExpirationDate?.toIso8601String(),
-      'medicalCertificateExpirationDate':
-          instance.medicalCertificateExpirationDate?.toIso8601String(),
+      'subscriptionExpiration':
+          instance.subscriptionExpiration?.toIso8601String(),
+      'affiliationExpiration':
+          instance.affiliationExpiration?.toIso8601String(),
+      'medicalCertificateExpiration':
+          instance.medicalCertificateExpiration?.toIso8601String(),
       'image': instance.image,
       'medicalDocument': instance.medicalDocument,
       'affiliationDocument': instance.affiliationDocument,

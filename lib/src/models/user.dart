@@ -33,9 +33,9 @@ class User {
   String? publicNote;
 
   //Expirations
-  DateTime? subscriptionExpirationDate;
-  DateTime? affiliationExpirationDate;
-  DateTime? medicalCertificateExpirationDate;
+  DateTime? subscriptionExpiration;
+  DateTime? affiliationExpiration;
+  DateTime? medicalCertificateExpiration;
 
   //Files
   String? image;
@@ -67,9 +67,9 @@ class User {
     this.email,
     this.privateNote,
     this.publicNote,
-    this.subscriptionExpirationDate,
-    this.affiliationExpirationDate,
-    this.medicalCertificateExpirationDate,
+    this.subscriptionExpiration,
+    this.affiliationExpiration,
+    this.medicalCertificateExpiration,
     this.image,
     this.medicalDocument,
     this.affiliationDocument,
