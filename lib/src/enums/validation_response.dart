@@ -4,12 +4,13 @@ enum ValidationResponse {
   warnings;
 
   static String toPrettyString(ValidationResponse validationResponse) {
-    if (validationResponse == ValidationResponse.warnings) {
-      return "Problemi";
-    } else if (validationResponse == ValidationResponse.notValid) {
-      return "Non valido";
-    } else {
-      return "Valido";
+    switch (validationResponse) {
+      case ValidationResponse.warnings:
+        return "Problemi";
+      case ValidationResponse.notValid:
+        return "Non valido";
+      case ValidationResponse.valid:
+        return "Valido";
     }
   }
 }

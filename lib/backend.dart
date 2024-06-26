@@ -15,5 +15,4 @@ export 'src/enums/validation_response_warnings.dart';
 export 'src/repositories/entry_repository.dart';
 export 'src/repositories/file_repository.dart';
 export 'src/repositories/subscription_repository.dart';
-export 'src/repositories/validation_repository.dart';
 export 'src/repositories/user_repository.dart';
