@@ -14,8 +14,9 @@ enum ValidationResponseWarnings {
   affiliazioneInScadenza,
   certificatoMedicoInScadenza;
 
-  String toPrettyString() {
-    switch (this) {
+  static String toPrettyString(
+      ValidationResponseWarnings validationResponseWarnings) {
+    switch (validationResponseWarnings) {
       case ValidationResponseWarnings.iscrizioneScaduta:
         return "Iscrizione scaduta";
       case ValidationResponseWarnings.affiliazioneScaduta:
