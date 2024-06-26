@@ -45,7 +45,6 @@ class User {
 
   //Flags
   int? flagged;
-  int? archived;
   int? tpPro;
 
   //Validation
@@ -75,7 +74,6 @@ class User {
     this.affiliationDocument,
     this.subscriptionDocument,
     this.flagged,
-    this.archived,
     this.tpPro,
     this.id,
     this.birthday,
