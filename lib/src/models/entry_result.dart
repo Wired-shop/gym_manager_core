@@ -1,5 +1,4 @@
 import 'package:gym_manager_backend/backend.dart';
-import 'package:gym_manager_backend/src/enums/entry_response_warnings.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'entry_result.g.dart';
 
