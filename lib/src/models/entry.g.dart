@@ -11,17 +11,13 @@ Entry _$EntryFromJson(Map<String, dynamic> json) => Entry(
       subscriptionId: json['subscriptionId'] as int,
       date:
           json['date'] == null ? null : DateTime.parse(json['date'] as String),
-      response: $enumDecodeNullable(_$EntryResponseEnumMap, json['response']),
+      result:
+          json['result'] == null ? null : EntryResult.fromJson(json['result']),
     );
 
 Map<String, dynamic> _$EntryToJson(Entry instance) => <String, dynamic>{
       'userId': instance.userId,
       'subscriptionId': instance.subscriptionId,
       'date': instance.date?.toIso8601String(),
-      'response': _$EntryResponseEnumMap[instance.response],
+      'result': instance.result?.toJson()
     };
-
-const _$EntryResponseEnumMap = {
-  EntryResponse.valid: 'valid',
-  EntryResponse.notValid: 'notValid',
-};
