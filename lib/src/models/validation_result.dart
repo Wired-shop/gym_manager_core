@@ -5,10 +5,10 @@ part 'validation_result.g.dart';
 
 @JsonSerializable()
 class ValidationResult {
-  ValidationResponse validationResponse;
-  List<ValidationResponseWarnings> validationResponseWarnings;
+  ValidationResponse response;
+  List<ValidationResponseWarnings> warnings;
 
-  ValidationResult(this.validationResponse, this.validationResponseWarnings);
+  ValidationResult(this.response, this.warnings);
 
   factory ValidationResult.fromJson(Map<String, dynamic> json) =>
       _$ValidationResultFromJson(json);

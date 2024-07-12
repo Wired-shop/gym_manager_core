@@ -12,11 +12,14 @@ enum ValidationResponseWarnings {
   abbonamentoInScadenza,
   iscrizioneInscadenza,
   affiliazioneInScadenza,
-  certificatoMedicoInScadenza;
+  certificatoMedicoInScadenza,
+  sconosciuto;
 
   static String toPrettyString(
       ValidationResponseWarnings validationResponseWarnings) {
     switch (validationResponseWarnings) {
+      case ValidationResponseWarnings.sconosciuto:
+        return "Sconosciuto";
       case ValidationResponseWarnings.iscrizioneScaduta:
         return "Iscrizione scaduta";
       case ValidationResponseWarnings.affiliazioneScaduta:

@@ -8,17 +8,16 @@ part of 'validation_result.dart';
 
 ValidationResult _$ValidationResultFromJson(Map<String, dynamic> json) =>
     ValidationResult(
-      $enumDecode(_$ValidationResponseEnumMap, json['validationResponse']),
-      (json['validationResponseWarnings'] as List<dynamic>)
+      $enumDecode(_$ValidationResponseEnumMap, json['response']),
+      (json['warnings'] as List<dynamic>)
           .map((e) => $enumDecode(_$ValidationResponseWarningsEnumMap, e))
           .toList(),
     );
 
 Map<String, dynamic> _$ValidationResultToJson(ValidationResult instance) =>
     <String, dynamic>{
-      'validationResponse':
-          _$ValidationResponseEnumMap[instance.validationResponse]!,
-      'validationResponseWarnings': instance.validationResponseWarnings
+      'response': _$ValidationResponseEnumMap[instance.response]!,
+      'warnings': instance.warnings
           .map((e) => _$ValidationResponseWarningsEnumMap[e]!)
           .toList(),
     };
@@ -41,10 +40,5 @@ const _$ValidationResponseWarningsEnumMap = {
   ValidationResponseWarnings.abbonamentoAssente: 'abbonamentoAssente',
   ValidationResponseWarnings.abbonamentoScaduto: 'abbonamentoScaduto',
   ValidationResponseWarnings.accessiTerminati: 'accessiTerminati',
-  ValidationResponseWarnings.bloccato: 'bloccato',
-  ValidationResponseWarnings.abbonamentoInScadenza: 'abbonamentoInScadenza',
-  ValidationResponseWarnings.iscrizioneInscadenza: 'iscrizioneInscadenza',
-  ValidationResponseWarnings.affiliazioneInScadenza: 'affiliazioneInScadenza',
-  ValidationResponseWarnings.certificatoMedicoInScadenza:
-      'certificatoMedicoInScadenza',
+  ValidationResponseWarnings.sconosciuto: 'sconosciuto',
 };
