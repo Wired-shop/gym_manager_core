@@ -7,7 +7,7 @@ void main(List<String> arguments) {
 
 _listenEntry() {
   EntryRepository.stream().listen((value) {
-    print(value.map((e) => e..toJson()));
+    print(value.map((e) => e.toJson()));
   });
 }
 

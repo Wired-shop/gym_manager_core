@@ -7,13 +7,13 @@ class Entry {
   int userId;
   int subscriptionId;
   DateTime? date;
-  EntryResult? entryResult;
+  EntryResult? result;
 
   Entry({
     required this.userId,
     required this.subscriptionId,
     required this.date,
-    required this.entryResult,
+    required this.result,
   });
 
   factory Entry.fromJson(Map<String, dynamic> json) => _$EntryFromJson(json);
