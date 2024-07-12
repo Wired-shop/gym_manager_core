@@ -9,15 +9,18 @@ part of 'entry.dart';
 Entry _$EntryFromJson(Map<String, dynamic> json) => Entry(
       userId: json['userId'] as int,
       subscriptionId: json['subscriptionId'] as int,
-      date:
-          json['date'] == null ? null : DateTime.parse(json['date'] as String),
-      result:
-          json['result'] == null ? null : EntryResult.fromJson(json['result']),
+      date: DateTime.parse(json['date'] as String),
+      response: $enumDecode(_$EntryResponseEnumMap, json['response']),
     );
 
 Map<String, dynamic> _$EntryToJson(Entry instance) => <String, dynamic>{
       'userId': instance.userId,
       'subscriptionId': instance.subscriptionId,
-      'date': instance.date?.toIso8601String(),
-      'result': instance.result?.toJson()
+      'date': instance.date.toIso8601String(),
+      'response': _$EntryResponseEnumMap[instance.response]!,
     };
+
+const _$EntryResponseEnumMap = {
+  EntryResponse.valid: 'valid',
+  EntryResponse.notValid: 'notValid',
+};

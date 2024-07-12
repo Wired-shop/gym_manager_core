@@ -1,23 +1,23 @@
 import 'package:json_annotation/json_annotation.dart';
 part 'subscription.g.dart';
 
-
 @JsonSerializable()
 class Subscription {
   int userId;
-  int? id;
-  DateTime? creation;
+  int id;
   DateTime expiration;
+  DateTime creation;
+
   String? badgeCode;
   int? dailyAccessLimit;
 
   Subscription({
-    this.id,
+    required this.id,
     required this.userId,
+    required this.creation,
+    required this.expiration,
     this.badgeCode,
     this.dailyAccessLimit,
-    this.creation,
-    required this.expiration,
   });
 
   factory Subscription.fromJson(Map<String, dynamic> json) =>

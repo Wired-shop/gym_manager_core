@@ -37,7 +37,7 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       subscriptionDocument: json['subscriptionDocument'] as String?,
       flagged: json['flagged'] as int?,
       tpPro: json['tpPro'] as int?,
-      id: json['id'] as int?,
+      id: json['id'],
       birthday: json['birthday'] == null
           ? null
           : DateTime.parse(json['birthday'] as String),

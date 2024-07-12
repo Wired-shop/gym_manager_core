@@ -1,4 +1,4 @@
-import 'package:gym_manager_backend/src/models/entry_result.dart';
+import 'package:gym_manager_backend/src/enums/entry_response.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'entry.g.dart';
 
@@ -6,14 +6,14 @@ part 'entry.g.dart';
 class Entry {
   int userId;
   int subscriptionId;
-  DateTime? date;
-  EntryResult? result;
+  DateTime date;
+  EntryResponse response;
 
   Entry({
     required this.userId,
     required this.subscriptionId,
     required this.date,
-    required this.result,
+    required this.response,
   });
 
   factory Entry.fromJson(Map<String, dynamic> json) => _$EntryFromJson(json);
