@@ -5,7 +5,7 @@ part 'user.g.dart';
 @JsonSerializable()
 class User {
   //Ids
-  int id;
+  int? id;
 
 //Informations
   String? name;
@@ -51,7 +51,7 @@ class User {
   ValidationResult? validationResult;
 
   User({
-    required this.id,
+    this.id,
     this.name,
     this.surname,
     this.address,
