@@ -82,7 +82,6 @@ class User {
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
-    print(json);
     return _$UserFromJson(json);
   }
   Map<String, dynamic> toJson() => _$UserToJson(this);
