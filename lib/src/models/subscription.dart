@@ -4,18 +4,17 @@ part 'subscription.g.dart';
 @JsonSerializable()
 class Subscription {
   int userId;
-  int id;
   DateTime expiration;
-  DateTime creation;
-
+  int? id;
+  DateTime? creation;
   String? badgeCode;
   int? dailyAccessLimit;
 
   Subscription({
     required this.id,
     required this.userId,
-    required this.creation,
     required this.expiration,
+    this.creation,
     this.badgeCode,
     this.dailyAccessLimit,
   });
