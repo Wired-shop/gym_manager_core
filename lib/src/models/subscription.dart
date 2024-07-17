@@ -11,7 +11,7 @@ class Subscription {
   int? dailyAccessLimit;
 
   Subscription({
-    required this.id,
+    this.id,
     required this.userId,
     required this.expiration,
     this.creation,
