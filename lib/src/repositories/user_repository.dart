@@ -57,9 +57,9 @@ class UserRepository {
     }
   }
 
-  static Future<User?> get({int? id, int? subscriptionId}) async {
+  static Future<User?> get({int? id}) async {
     String url =
-        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/get_user?id=$id&subscriptionId=$subscriptionId";
+        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/get_user?id=$id";
     Response response = await _dio.get(url);
     if (response.data["responseType"] == "ok") {
       User user = User.fromJson(response.data["body"]);
