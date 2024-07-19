@@ -5,7 +5,7 @@ import '../services/api_service.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class EntryRepository {
-  static final Dio _dio = Dio();
+  static final Dio _dio = Dio(); //
   static Future insert(Entry entry) async {
     String url =
         "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/insert_entry";
