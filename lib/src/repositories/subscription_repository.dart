@@ -45,8 +45,11 @@ class SubscriptionRepository {
   static Future insert(Subscription subscription) async {
     String url =
         "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/insert_subscription";
-    var response = await _dio.post(url, data: subscription.toJson());
-    if (response.data["responseType"] == "error") {
+    Response response = await _dio.post(url, data: subscription.toJson());
+    if (response.data["responseType"] == "ok") {
+      Subscription subscription = Subscription.fromJson(response.data["body"]);
+      return subscription;
+    } else {
       throw response.data;
     }
   }

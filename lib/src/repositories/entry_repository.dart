@@ -10,7 +10,10 @@ class EntryRepository {
     String url =
         "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/insert_entry";
     Response response = await _dio.post(url, data: entry.toJson());
-    if (response.data["responseType"] == "error") {
+    if (response.data["responseType"] == "ok") {
+      Entry entry = Entry.fromJson(response.data["body"]);
+      return entry;
+    } else {
       throw response.data;
     }
   }

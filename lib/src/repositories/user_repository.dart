@@ -52,7 +52,10 @@ class UserRepository {
     String url =
         "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/update_user";
     Response response = await _dio.put(url, data: user.toJson());
-    if (response.data["responseType"] == "error") {
+    if (response.data["responseType"] == "ok") {
+      User user = User.fromJson(response.data["body"]);
+      return user;
+    } else {
       throw response.data;
     }
   }
