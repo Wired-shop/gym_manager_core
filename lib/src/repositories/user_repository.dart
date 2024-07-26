@@ -51,7 +51,7 @@ class UserRepository {
     }
   }
 
-  static Future edit(User user) async {
+  static Future update(User user) async {
     String url =
         "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/update_user";
     Response response = await _dio.put(url, data: user.toJson());

@@ -1,9 +1,58 @@
 import 'package:gym_manager_backend/backend.dart';
 
 void main(List<String> arguments) async {
-  _listenEntry();
+  _editUser(362);
+  await Future.delayed(const Duration(seconds: 2));
+
+  /* _listenEntry();
   _listenUsers();
-  _insertUser();
+  _insertUser();*/
+}
+
+Future<void> _editUser(int id) async {
+  print("--------");
+  UserRepository.update(
+    User.fromJson(
+      {
+        "id": 362,
+        "name": "Ciccione",
+        "surname": "Pasticcione",
+        "birthday": "2024-01-12T00:00:00.000",
+        "gender": null,
+        "address": null,
+        "fiscalCode": null,
+        "city": "Biancavilla",
+        "zipCode": 95033,
+        "province": "CT",
+        "phone": null,
+        "phone2": null,
+        "phone2Type": null,
+        "phone3": null,
+        "phone3Type": null,
+        "email": "patricknicolosi99@gmail.com",
+        "privateNote": null,
+        "publicNote": null,
+        "subscriptionExpiration": null,
+        "affiliationExpiration": null,
+        "medicalCertificateExpiration": null,
+        "image": null,
+        "medicalDocument": null,
+        "affiliationDocument": null,
+        "subscriptionDocument": null,
+        "flagged": null,
+        "tpPro": null,
+        "validationResult": {
+          "response": "notValid",
+          "warnings": [
+            "abbonamentoScaduto",
+            "certificatoMedicoAssente",
+            "affiliazioneAssente",
+            "iscrizioneAssente"
+          ]
+        }
+      },
+    ),
+  );
 }
 
 Future<void> _insertUser() async {

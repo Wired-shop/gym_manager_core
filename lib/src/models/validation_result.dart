@@ -12,7 +12,7 @@ class ValidationResult {
 
   List<ValidationResponseWarnings> possibleWarnings() {
     if (response == ValidationResponse.notValid) {
-      [
+      return [
         ValidationResponseWarnings.abbonamentoScaduto,
         ValidationResponseWarnings.affiliazioneScaduta,
         ValidationResponseWarnings.iscrizioneScaduta,
@@ -21,7 +21,7 @@ class ValidationResult {
         ValidationResponseWarnings.abbonamentoAssente,
       ];
     } else if (response == ValidationResponse.notValid) {
-      [
+      return [
         ValidationResponseWarnings.affiliazioneAssente,
         ValidationResponseWarnings.iscrizioneAssente,
         ValidationResponseWarnings.certificatoMedicoAssente,

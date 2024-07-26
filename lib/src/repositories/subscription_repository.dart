@@ -33,7 +33,7 @@ class SubscriptionRepository {
     }
   }
 
-  static Future edit(Subscription subscription) async {
+  static Future update(Subscription subscription) async {
     String url =
         "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/update_subscription";
     var response = await _dio.put(url, data: subscription.toJson());
