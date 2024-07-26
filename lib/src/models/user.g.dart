@@ -79,5 +79,5 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'subscriptionDocument': instance.subscriptionDocument,
       'flagged': instance.flagged,
       'tpPro': instance.tpPro,
-      'validationResult': instance.validationResult,
+      'validationResult': instance.validationResult?.toJson(),
     };
