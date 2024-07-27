@@ -19,32 +19,29 @@ class FileRepository {
       required String extension,
       required DocumentType documentType}) async {
     String url =
-        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/files?fileName=${documentType.name}&userId=$userId";
+        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/upload_file?fileName=${documentType.name}&userId=$userId";
     Response response =
         await _dio.post(url, data: {"bytes": bytes, "extension": extension});
     if (response.data["responseType"] == "ok") {
       return response.data["body"].toString();
-    } else {
-      throw response.data;
     }
+    throw response.data;
   }
 
   static Future<List<int>> get(String path) async {
     Response response = await _dio.get(
-        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/files?path=$path");
+        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/get_file?path=$path");
     if (response.data["responseType"] == "ok") {
-      return (response.data["body"] as List<dynamic>)
-          .map<int>((e) => e)
-          .toList();
+      return (response.data["body"] as List).map<int>((e) => e).toList();
     } else {
       throw response.data;
     }
   }
 
-  static Future<void> delete(String path) async {
+  static Future delete(String path) async {
     String url =
-        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/files?path=$path";
-    Response response = await _dio.delete(url);
+        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/delete_file?path=$path";
+    Response response = await _dio.get(url);
     if (response.data["responseType"] == "error") {
       throw response.data;
     }

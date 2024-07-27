@@ -11,7 +11,7 @@ class UserRepository {
   static Stream<List<User>> stream({String? q, UsersFilter? filter}) {
     return WebSocketChannel.connect(
       Uri.parse(
-          'ws://localhost:${ApiService.getIstance().getPort()}/users/stream?q=$q&${filter?.toQueryParams()}'),
+          'ws://localhost:${ApiService.getIstance().getPort()}/list_users_stream?/list_users?q=$q&${filter?.toQueryParams()}'),
     ).stream.asyncMap((response) {
       return List<Map<String, dynamic>>.from(json.decode(response.toString()))
           .map((e) => User.fromJson(e))
@@ -21,7 +21,7 @@ class UserRepository {
 
   static Future<List<User>> list({String? q, UsersFilter? filter}) async {
     String url =
-        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/users?q=$q&${filter?.toQueryParams()}";
+        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/list_users?q=$q&${filter?.toQueryParams()}";
     Response response = await _dio.get(url);
     if (response.data["responseType"] == "ok") {
       List<User> users = (response.data["body"] as List<dynamic>)
@@ -33,9 +33,9 @@ class UserRepository {
     }
   }
 
-  static Future<User> insert(User user) async {
+  static Future insert(User user) async {
     String url =
-        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/users";
+        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/insert_user";
     Response response = await _dio.post(url, data: user.toJson());
     if (response.data["responseType"] == "ok") {
       User user = User.fromJson(response.data["body"]);
@@ -45,9 +45,9 @@ class UserRepository {
     }
   }
 
-  static Future<User> update(User user) async {
+  static Future update(User user) async {
     String url =
-        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/users";
+        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/update_user";
     Response response = await _dio.put(url, data: user.toJson());
     if (response.data["responseType"] == "ok") {
       User user = User.fromJson(response.data["body"]);
@@ -59,7 +59,7 @@ class UserRepository {
 
   static Future<User?> get({int? id}) async {
     String url =
-        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/users/$id";
+        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/get_user?id=$id";
     Response response = await _dio.get(url);
     if (response.data["responseType"] == "ok") {
       User user = User.fromJson(response.data["body"]);
@@ -71,7 +71,7 @@ class UserRepository {
 
   static Future delete(int id) async {
     String url =
-        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/users?id=$id";
+        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/delete_user?id=$id";
     Response response = await _dio.delete(url);
     if (response.data["responseType"] == "error") {
       throw response.data;
