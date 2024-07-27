@@ -5,9 +5,9 @@ void main(List<String> arguments) async {
   //listenEntry();
   //listenUsers();
   //insertUser();
-  print(
-    await listUsers(UsersFilter()),
-  );
+  UsersFilter usersFilter = UsersFilter();
+  usersFilter.setFieldValue(name: "hasPublicNote", value: true);
+  print(await listUsers(usersFilter));
 }
 
 Future<void> editUser(int id) async {

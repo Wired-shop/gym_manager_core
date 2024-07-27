@@ -1,17 +1,19 @@
 import 'dart:convert';
-import 'package:gym_manager_backend/src/models/users_filter.dart';
-import '../models/user.dart';
+import 'package:gym_manager_backend/backend.dart';
 import 'package:dio/dio.dart';
-import '../services/api_service.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class UserRepository {
   static final Dio _dio = Dio();
 
-  static Stream<List<User>> stream({String? q, UsersFilter? filter}) {
+  static Stream<List<User>> stream({
+    String? q,
+    UsersFilter? filter,
+    List<ValidationResponseWarnings>? validationResponseWarnings,
+  }) {
     return WebSocketChannel.connect(
       Uri.parse(
-          'ws://localhost:${ApiService.getIstance().getPort()}/list_users_stream?/list_users?q=$q&${filter?.toQueryParams()}'),
+          'ws://localhost:${ApiService.getIstance().getPort()}/list_users_stream?/list_users?q=$q&${filter?.toQueryParameters()}&${validationResponseWarnings.toString().replaceAll('[', '').replaceAll(']', '').trim()}'),
     ).stream.asyncMap((response) {
       return List<Map<String, dynamic>>.from(json.decode(response.toString()))
           .map((e) => User.fromJson(e))
@@ -19,9 +21,12 @@ class UserRepository {
     });
   }
 
-  static Future<List<User>> list({String? q, UsersFilter? filter}) async {
+  static Future<List<User>> list(
+      {String? q,
+      UsersFilter? filter,
+      List<ValidationResponseWarnings>? validationResponseWarnings}) async {
     String url =
-        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/list_users?q=$q&${filter?.toQueryParams()}";
+        '${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/list_users?q=$q&${filter?.toQueryParameters()}&${validationResponseWarnings.toString().replaceAll('[', '').replaceAll(']', '').trim()}';
     Response response = await _dio.get(url);
     if (response.data["responseType"] == "ok") {
       List<User> users = (response.data["body"] as List<dynamic>)

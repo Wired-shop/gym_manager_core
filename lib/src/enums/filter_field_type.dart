@@ -1,0 +1,1 @@
+enum FilterFieldType { isField, hasField }

@@ -8,12 +8,14 @@
             "name": "gym_manager_backend",
             "request": "launch",
             "type": "dart",
+            "program": "../example/lib/example.dart"
         },
         {
             "name": "example",
             "cwd": "example",
             "request": "launch",
             "type": "dart",
+            "program": "../example/lib/example.dart"
         }
     ]
 }

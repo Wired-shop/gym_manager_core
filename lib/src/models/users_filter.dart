@@ -1,40 +1,43 @@
-import 'package:gym_manager_backend/backend.dart';
+import 'package:gym_manager_backend/src/models/filter.dart';
+import 'package:gym_manager_backend/src/models/filter_field.dart';
 
-class UsersFilter {
-  bool hasPublicNote;
-  bool hasPrivateNote;
-  bool hasEmail;
-  bool hasPhone;
-
-  bool flagged;
-  bool archived;
-  bool tpPro;
-
-  List<ValidationResponseWarnings>? validationResponseWarnings;
-
-  UsersFilter({
-    this.hasEmail = false,
-    this.hasPhone = false,
-    this.hasPrivateNote = false,
-    this.hasPublicNote = false,
-    this.archived = false,
-    this.flagged = false,
-    this.tpPro = false,
-    this.validationResponseWarnings,
-  });
-
-  String toQueryParams() {
-    String query = "";
-    query += "${query.isNotEmpty ? '&' : ''}hasEmail=${hasEmail == true}";
-    query += "&hasPhone=${hasPhone == true}";
-    query += "&hasPrivateNote=${hasPrivateNote == true}";
-    query += "&hasPublicNote=${hasPublicNote == true}";
-    query += "&archived=${archived == true}";
-    query += "&flagged=${flagged == true}";
-    query += "&tpPro=${flagged == true}";
-    query += "&tpPro=${flagged == true}";
-    query +=
-        "&validationResponseWarnings=${validationResponseWarnings.toString().replaceAll('[', '').replaceAll(']', '').trim()}";
-    return query;
-  }
+class UsersFilter extends Filter {
+  UsersFilter()
+      : super([
+          FilterField(
+            name: 'hasEmail',
+            dbAttributeName: 'email',
+            value: false,
+          ),
+          FilterField(
+            name: 'hasPhone',
+            dbAttributeName: 'phone',
+            value: false,
+          ),
+          FilterField(
+            name: 'hasPublicNote',
+            dbAttributeName: 'publicNote',
+            value: false,
+          ),
+          FilterField(
+            name: 'hasPrivateNote',
+            dbAttributeName: 'privateNote',
+            value: false,
+          ),
+          FilterField(
+            name: 'isArchived',
+            dbAttributeName: 'archived',
+            value: false,
+          ),
+          FilterField(
+            name: 'isFlagged',
+            dbAttributeName: 'flagged',
+            value: false,
+          ),
+          FilterField(
+            name: 'isTpPro',
+            dbAttributeName: 'tpPro',
+            value: false,
+          ),
+        ]);
 }
