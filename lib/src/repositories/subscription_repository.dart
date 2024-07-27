@@ -8,7 +8,7 @@ class SubscriptionRepository {
   static Future<Subscription?> get(
       {int? id, String? badgeCode, int? userId}) async {
     String url =
-        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/subscriptions?id=$id&badgeCode=$badgeCode&userId=$userId";
+        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/subscriptions/$id?badgeCode=$badgeCode&userId=$userId";
     Response response = await _dio.get(url);
     if (response.data["responseType"] == "ok") {
       Subscription subscription = Subscription.fromJson(response.data["body"]);

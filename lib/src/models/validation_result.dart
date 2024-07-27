@@ -10,26 +10,6 @@ class ValidationResult {
 
   ValidationResult(this.response, this.warnings);
 
-  List<ValidationResponseWarnings> associatedWarnings() {
-    if (response == ValidationResponse.notValid) {
-      return [
-        ValidationResponseWarnings.abbonamentoScaduto,
-        ValidationResponseWarnings.affiliazioneScaduta,
-        ValidationResponseWarnings.iscrizioneScaduta,
-        ValidationResponseWarnings.certificatoMedicoScaduto,
-        ValidationResponseWarnings.accessiTerminati,
-        ValidationResponseWarnings.abbonamentoAssente,
-      ];
-    } else if (response == ValidationResponse.notValid) {
-      return [
-        ValidationResponseWarnings.affiliazioneAssente,
-        ValidationResponseWarnings.iscrizioneAssente,
-        ValidationResponseWarnings.certificatoMedicoAssente,
-      ];
-    }
-    return [];
-  }
-
   factory ValidationResult.fromJson(Map<String, dynamic> json) =>
       _$ValidationResultFromJson(json);
   Map<String, dynamic> toJson() => _$ValidationResultToJson(this);
