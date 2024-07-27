@@ -1,15 +1,16 @@
 import 'package:gym_manager_backend/backend.dart';
 
 void main(List<String> arguments) async {
-  _editUser(362);
-  await Future.delayed(const Duration(seconds: 2));
-
-  /* _listenEntry();
-  _listenUsers();
-  _insertUser();*/
+  //editUser(362);
+  //listenEntry();
+  //listenUsers();
+  //insertUser();
+  print(
+    await listUsers(UsersFilter()),
+  );
 }
 
-Future<void> _editUser(int id) async {
+Future<void> editUser(int id) async {
   print("--------");
   UserRepository.update(
     User.fromJson(
@@ -55,20 +56,24 @@ Future<void> _editUser(int id) async {
   );
 }
 
-Future<void> _insertUser() async {
+Future<void> insertUser() async {
   await Future.delayed(const Duration(seconds: 2));
   print("--------");
   UserRepository.insert(User());
 }
 
-_listenEntry() {
+listenEntry() {
   EntryRepository.stream().listen((value) {
     print(value.last.toJson());
   });
 }
 
-_listenUsers() {
+listenUsers() {
   UserRepository.stream().listen((value) {
     print(value.map((e) => e.validationResult?.toJson()));
   });
+}
+
+Future<List<User>> listUsers(UsersFilter filter) async {
+  return await UserRepository.list(filter: filter);
 }

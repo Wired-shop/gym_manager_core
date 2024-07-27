@@ -8,7 +8,7 @@ class SubscriptionRepository {
   static Future<Subscription?> get(
       {int? id, String? badgeCode, int? userId}) async {
     String url =
-        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/get_subscription?badgeCode=$badgeCode&id=$id&userId=$userId";
+        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/subscriptions?id=$id&badgeCode=$badgeCode&userId=$userId";
     Response response = await _dio.get(url);
     if (response.data["responseType"] == "ok") {
       Subscription subscription = Subscription.fromJson(response.data["body"]);
@@ -20,7 +20,7 @@ class SubscriptionRepository {
 
   static Future<List<Subscription>> list() async {
     String url =
-        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/list_subscriptions";
+        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/subscriptions";
     Response response = await _dio.get(url);
     if (response.data["responseType"] == "ok") {
       List<Subscription> subscriptions =
@@ -33,22 +33,23 @@ class SubscriptionRepository {
     }
   }
 
-  static Future update(Subscription subscription) async {
+  static Future<Subscription> update(Subscription subscription) async {
     String url =
-        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/update_subscription";
-    var response = await _dio.put(url, data: subscription.toJson());
-    if (response.data["responseType"] == "error") {
+        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/subscriptions";
+    Response response = await _dio.put(url, data: subscription.toJson());
+    if (response.data["responseType"] == "ok") {
+      return Subscription.fromJson(response.data["body"]);
+    } else {
       throw response.data;
     }
   }
 
-  static Future insert(Subscription subscription) async {
+  static Future<Subscription> insert(Subscription subscription) async {
     String url =
-        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/insert_subscription";
+        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/subscriptions";
     Response response = await _dio.post(url, data: subscription.toJson());
     if (response.data["responseType"] == "ok") {
-      Subscription subscription = Subscription.fromJson(response.data["body"]);
-      return subscription;
+      return Subscription.fromJson(response.data["body"]);
     } else {
       throw response.data;
     }

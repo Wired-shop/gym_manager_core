@@ -36,6 +36,7 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       affiliationDocument: json['affiliationDocument'] as String?,
       subscriptionDocument: json['subscriptionDocument'] as String?,
       flagged: json['flagged'] as int?,
+      archived: json['archived'] as int?,
       tpPro: json['tpPro'] as int?,
       id: json['id'] as int?,
       birthday: json['birthday'] == null
@@ -78,6 +79,7 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'affiliationDocument': instance.affiliationDocument,
       'subscriptionDocument': instance.subscriptionDocument,
       'flagged': instance.flagged,
+      'archived': instance.archived,
       'tpPro': instance.tpPro,
       'validationResult': instance.validationResult?.toJson(),
     };

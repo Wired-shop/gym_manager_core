@@ -6,6 +6,7 @@ export 'src/models/user.dart';
 export 'src/models/subscription.dart';
 export 'src/models/entry.dart';
 export 'src/models/validation_result.dart';
+export 'src/models/users_filter.dart';
 
 export 'src/enums/document_type.dart';
 export 'src/enums/validation_response.dart';
