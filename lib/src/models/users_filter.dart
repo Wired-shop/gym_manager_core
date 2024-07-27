@@ -10,7 +10,7 @@ class UsersFilter {
   bool archived;
   bool tpPro;
 
-  List<ValidationResponseWarnings> validationResponseWarnings;
+  List<ValidationResponseWarnings>? validationResponseWarnings;
 
   UsersFilter({
     this.hasEmail = false,
@@ -20,7 +20,7 @@ class UsersFilter {
     this.archived = false,
     this.flagged = false,
     this.tpPro = false,
-    this.validationResponseWarnings = const [],
+    this.validationResponseWarnings,
   });
 
   String toQueryParams() {
