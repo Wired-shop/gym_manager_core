@@ -33,7 +33,7 @@ class FilterField {
       name: json['name'],
       dbAttributeName: json['dbAttributeName'],
       value: json['value'],
-      fieldType: json['fieldType'],
+      fieldType: FilterFieldType.fromValue(json['fieldType']),
     );
   }
 }

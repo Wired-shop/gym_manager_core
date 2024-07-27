@@ -5,7 +5,7 @@ import 'package:gym_manager_backend/src/models/filter_field.dart';
 class UsersFilter extends Filter {
   UsersFilter()
       : super(
-          [
+          fields: [
             FilterField(
               name: 'hasEmail',
               dbAttributeName: 'email',

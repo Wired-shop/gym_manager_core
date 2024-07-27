@@ -13,7 +13,7 @@ class UserRepository {
   }) {
     return WebSocketChannel.connect(
       Uri.parse(
-          'ws://localhost:${ApiService.getIstance().getPort()}/list_users_stream?/list_users?q=$q&${filter?.toQueryParameters()}&${validationResponseWarnings.toString().replaceAll('[', '').replaceAll(']', '').trim()}'),
+          'ws://localhost:${ApiService.getIstance().getPort()}/list_users_stream?q=$q&${filter?.toQueryParameters()}&${validationResponseWarnings.toString().replaceAll('[', '').replaceAll(']', '').trim()}'),
     ).stream.asyncMap((response) {
       return List<Map<String, dynamic>>.from(json.decode(response.toString()))
           .map((e) => User.fromJson(e))
