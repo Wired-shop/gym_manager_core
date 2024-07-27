@@ -10,22 +10,22 @@ class UsersFilter {
   bool archived;
   bool tpPro;
 
-  ValidationResult? validationResult;
+  List<ValidationResponseWarnings> validationResponseWarnings;
 
   UsersFilter({
     this.hasEmail = false,
-    this.hasPhone = true,
+    this.hasPhone = false,
     this.hasPrivateNote = false,
     this.hasPublicNote = false,
     this.archived = false,
     this.flagged = false,
     this.tpPro = false,
-    this.validationResult,
+    this.validationResponseWarnings = const [],
   });
 
   String toQueryParams() {
     String query = "";
-    query += "${query.isEmpty ? '&' : ''}hasEmail=${hasEmail == true}";
+    query += "${query.isNotEmpty ? '&' : ''}hasEmail=${hasEmail == true}";
     query += "&hasPhone=${hasPhone == true}";
     query += "&hasPrivateNote=${hasPrivateNote == true}";
     query += "&hasPublicNote=${hasPublicNote == true}";
@@ -33,11 +33,8 @@ class UsersFilter {
     query += "&flagged=${flagged == true}";
     query += "&tpPro=${flagged == true}";
     query += "&tpPro=${flagged == true}";
-    if (validationResult != null) {
-      query += "&validationResponse=${validationResult?.response.name}";
-      query +=
-          "&validationResponseWarnings=${validationResult?.warnings.map((e) => e.name).toList().toString().replaceAll("[", "").replaceAll("]", "").trim()}";
-    }
+    query +=
+        "&validationResponseWarnings=${validationResponseWarnings.toString().replaceAll('[', '').replaceAll(']', '').trim()}";
     return query;
   }
 }
