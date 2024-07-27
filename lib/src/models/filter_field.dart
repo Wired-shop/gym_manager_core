@@ -3,13 +3,13 @@ import 'package:gym_manager_backend/src/enums/filter_field_type.dart';
 class FilterField {
   String name;
   String dbAttributeName;
-  FilterFieldType? fieldType;
+  FilterFieldType fieldType;
   bool value;
 
   FilterField({
     required this.name,
     required this.dbAttributeName,
-    this.fieldType,
+    required this.fieldType,
     required this.value,
   }) {
     if (name.contains('has')) {
@@ -17,5 +17,23 @@ class FilterField {
     } else if (name.contains('is')) {
       fieldType = FilterFieldType.isField;
     }
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'dbAttributeName': dbAttributeName,
+      'fieldType': fieldType.name,
+      'value': value,
+    };
+  }
+
+  factory FilterField.fromJson(Map<String, dynamic> json) {
+    return FilterField(
+      name: json['name'],
+      dbAttributeName: json['dbAttributeName'],
+      value: json['value'],
+      fieldType: json['fieldType'],
+    );
   }
 }
