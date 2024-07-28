@@ -1,7 +1,7 @@
 import 'package:gym_manager_backend/backend.dart';
-import 'package:gym_manager_backend/src/models/filter.dart';
 
 class UsersFilter implements Filter {
+  String? name;
   bool? hasEmail;
   bool? hasPhone;
   bool? hasPublicNote;
@@ -11,6 +11,7 @@ class UsersFilter implements Filter {
   List<ValidationResponseWarnings>? validationResponseWarnings;
 
   UsersFilter({
+    this.name,
     this.hasEmail,
     this.hasPhone,
     this.hasPrivateNote,
@@ -33,6 +34,7 @@ class UsersFilter implements Filter {
   @override
   Map<String, dynamic> toJson() {
     return {
+      'name': name,
       'hasEmail': hasEmail,
       'hasPhone': hasPhone,
       'hasPrivateNote': hasPrivateNote,
@@ -47,6 +49,7 @@ class UsersFilter implements Filter {
   @override
   UsersFilter fromJson(Map<String, dynamic> json) {
     return UsersFilter(
+        name: json['name'] as String?,
         hasEmail: json['hasEmail'] as bool?,
         hasPhone: json['hasPhone'] as bool?,
         hasPrivateNote: json['hasPrivateNote'] as bool?,
