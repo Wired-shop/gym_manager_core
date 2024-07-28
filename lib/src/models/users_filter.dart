@@ -8,7 +8,8 @@ class UsersFilter implements Filter {
   bool? hasPrivateNote;
   bool? isArchived;
   bool? isFlagged;
-  List<ValidationResponseWarnings>? validationResponseWarnings;
+  ValidationResponse? validationResponse;
+  List<ValidationResponseWarnings>? validationResponseWarnings = [];
 
   UsersFilter({
     this.name,
@@ -18,12 +19,13 @@ class UsersFilter implements Filter {
     this.hasPublicNote,
     this.isArchived,
     this.isFlagged,
+    this.validationResponse,
     this.validationResponseWarnings,
   });
 
   @override
   String toQueryParameters() {
-    return 'hasEmail=$hasEmail&hasPhone=$hasPhone&hasPublicNote=$hasPublicNote&hasPrivateNote=$hasPrivateNote&isArchived=$isArchived&isFlagged=$isFlagged&validationResponseWarnings=${validationResponseWarnings.toString().replaceAll('[', '').replaceAll(']', '').trim()}';
+    return 'hasEmail=$hasEmail&hasPhone=$hasPhone&hasPublicNote=$hasPublicNote&hasPrivateNote=$hasPrivateNote&isArchived=$isArchived&isFlagged=$isFlagged&validationResponse=${validationResponse?.name}&validationResponseWarnings=${validationResponseWarnings.toString().replaceAll('[', '').replaceAll(']', '').trim()}';
   }
 
   @override
@@ -41,6 +43,7 @@ class UsersFilter implements Filter {
       'hasPublicNote': hasPublicNote,
       'isFlagged': isFlagged,
       'isArchived': isArchived,
+      'validationResponse': validationResponse?.name,
       'validationResponseWarnings':
           validationResponseWarnings?.map((e) => e.name).toList()
     };
@@ -56,8 +59,22 @@ class UsersFilter implements Filter {
         hasPublicNote: json['hasPublicNote'] as bool?,
         isArchived: json['isArchived'] as bool?,
         isFlagged: json['isFlagged'] as bool?,
+        validationResponse:
+            ValidationResponse.fromValue(json['validationResponse'] as String?),
         validationResponseWarnings: (json['validationResponseWarnings'] as List)
             .map((e) => ValidationResponseWarnings.fromValue(e.toString()))
             .toList());
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! UsersFilter) return false;
+    return toJson().toString() == other.toJson().toString();
+  }
+
+  @override
+  int get hashCode {
+    return toJson().hashCode;
   }
 }
