@@ -1,16 +1,15 @@
 import 'dart:convert';
 import 'package:gym_manager_backend/backend.dart';
 import 'package:dio/dio.dart';
-import 'package:gym_manager_backend/src/models/users_filter.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class UserRepository {
   static final Dio _dio = Dio();
 
-  static Stream<List<User>> stream({String? q, UsersFilter? userFilter}) {
+  static Stream<List<User>> stream({String? q, UsersFilter? filter}) {
     return WebSocketChannel.connect(
       Uri.parse(
-          'ws://localhost:${ApiService.getIstance().getPort()}/list_users_stream?q=$q&${userFilter?.toQueryParameters()}'),
+          'ws://localhost:${ApiService.getIstance().getPort()}/list_users_stream?q=$q&${filter?.toQueryParameters()}'),
     ).stream.asyncMap((response) {
       return List<Map<String, dynamic>>.from(json.decode(response.toString()))
           .map((e) => User.fromJson(e))
@@ -18,9 +17,9 @@ class UserRepository {
     });
   }
 
-  static Future<List<User>> list({String? q, UsersFilter? userFilter}) async {
+  static Future<List<User>> list({String? q, UsersFilter? filter}) async {
     String url =
-        '${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/list_users?q=$q&${userFilter?.toQueryParameters()}';
+        '${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/list_users?q=$q&${filter?.toQueryParameters()}';
     Response response = await _dio.get(url);
     if (response.data["responseType"] == "ok") {
       List<User> users = (response.data["body"] as List<dynamic>)
