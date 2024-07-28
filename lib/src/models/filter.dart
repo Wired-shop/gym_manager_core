@@ -1,7 +1,7 @@
 import 'package:gym_manager_backend/src/models/filter_field.dart';
 
-class Filter {
-  final String? name;
+abstract class Filter {
+  String? name;
   final List<FilterField> fields;
 
   Filter({required this.fields, this.name});
@@ -30,14 +30,6 @@ class Filter {
     return query;
   }
 
-  factory Filter.fromJson(Map<String, dynamic> json) {
-    return Filter(
-      name: json.containsKey('name') ? json['name'] : null,
-      fields: (json['fields'] as List<dynamic>)
-          .map((e) => FilterField.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
-  }
   Map<String, dynamic> toJson() {
     return {
       'name': name,
