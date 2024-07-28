@@ -50,4 +50,13 @@ enum ValidationResponseWarnings {
         return "Certificato medico in scadenza";
     }
   }
+
+  static ValidationResponseWarnings fromValue(String? value) {
+    for (int i = 0; i < ValidationResponseWarnings.values.length; i++) {
+      if (ValidationResponseWarnings.values[i].name == value) {
+        return ValidationResponseWarnings.values[i];
+      }
+    }
+    return ValidationResponseWarnings.sconosciuto;
+  }
 }

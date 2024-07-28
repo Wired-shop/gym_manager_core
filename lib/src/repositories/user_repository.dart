@@ -1,24 +1,16 @@
 import 'dart:convert';
 import 'package:gym_manager_backend/backend.dart';
 import 'package:dio/dio.dart';
+import 'package:gym_manager_backend/src/models/users_filter.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class UserRepository {
   static final Dio _dio = Dio();
 
-  static Stream<List<User>> stream({
-    String? q,
-    bool? hasEmail,
-    bool? hasPhone,
-    bool? hasPublicNote,
-    bool? hasPrivateNote,
-    bool? isArchived,
-    bool? isFlagged,
-    List<ValidationResponseWarnings>? validationResponseWarnings,
-  }) {
+  static Stream<List<User>> stream({String? q, UsersFilter? userFilter}) {
     return WebSocketChannel.connect(
       Uri.parse(
-          'ws://localhost:${ApiService.getIstance().getPort()}/list_users_stream?q=$q&hasEmail=$hasEmail&hasPhone=$hasPhone&hasPublicNote=$hasPublicNote&hasPrivateNote=$hasPrivateNote&isArchived=$isArchived&isFlagged=$isFlagged&validationResponseWarnings=${validationResponseWarnings.toString().replaceAll('[', '').replaceAll(']', '').trim()}'),
+          'ws://localhost:${ApiService.getIstance().getPort()}/list_users_stream?q=$q&${userFilter?.toQueryParameters()}'),
     ).stream.asyncMap((response) {
       return List<Map<String, dynamic>>.from(json.decode(response.toString()))
           .map((e) => User.fromJson(e))
@@ -26,18 +18,9 @@ class UserRepository {
     });
   }
 
-  static Future<List<User>> list({
-    String? q,
-    bool? hasEmail,
-    bool? hasPhone,
-    bool? hasPublicNote,
-    bool? hasPrivateNote,
-    bool? isArchived,
-    bool? isFlagged,
-    List<ValidationResponseWarnings>? validationResponseWarnings,
-  }) async {
+  static Future<List<User>> list({String? q, UsersFilter? userFilter}) async {
     String url =
-        '${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/list_users?q=$q&hasEmail=$hasEmail&hasPhone=$hasPhone&hasPublicNote=$hasPublicNote&hasPrivateNote=$hasPrivateNote&isArchived=$isArchived&isFlagged=$isFlagged&validationResponseWarnings=${validationResponseWarnings.toString().replaceAll('[', '').replaceAll(']', '').trim()}';
+        '${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/list_users?q=$q&${userFilter?.toQueryParameters()}';
     Response response = await _dio.get(url);
     if (response.data["responseType"] == "ok") {
       List<User> users = (response.data["body"] as List<dynamic>)
