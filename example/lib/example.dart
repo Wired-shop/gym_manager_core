@@ -5,9 +5,6 @@ void main(List<String> arguments) async {
   //listenEntry();
   //listenUsers();
   //insertUser();
-  UsersFilter usersFilter = UsersFilter();
-  usersFilter.setFieldValue(name: "hasPublicNote", value: true);
-  print(await listUsers(usersFilter));
 }
 
 Future<void> editUser(int id) async {
@@ -72,8 +69,4 @@ listenUsers() {
   UserRepository.stream().listen((value) {
     print(value.map((e) => e.validationResult?.toJson()));
   });
-}
-
-Future<List<User>> listUsers(UsersFilter filter) async {
-  return await UserRepository.list(filter: filter);
 }

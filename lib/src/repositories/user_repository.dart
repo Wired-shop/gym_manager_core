@@ -8,12 +8,17 @@ class UserRepository {
 
   static Stream<List<User>> stream({
     String? q,
-    UsersFilter? filter,
+    bool? hasEmail,
+    bool? hasPhone,
+    bool? hasPublicNote,
+    bool? hasPrivateNote,
+    bool? isArchived,
+    bool? isFlagged,
     List<ValidationResponseWarnings>? validationResponseWarnings,
   }) {
     return WebSocketChannel.connect(
       Uri.parse(
-          'ws://localhost:${ApiService.getIstance().getPort()}/list_users_stream?q=$q&${filter?.toQueryParameters()}&${validationResponseWarnings.toString().replaceAll('[', '').replaceAll(']', '').trim()}'),
+          'ws://localhost:${ApiService.getIstance().getPort()}/list_users_stream?q=$q&hasEmail=$hasEmail&hasPhone=$hasPhone&hasPublicNote=$hasPublicNote&hasPrivateNote=$hasPrivateNote&isArchived=$isArchived&isFlagged=$isFlagged&validationResponseWarnings=${validationResponseWarnings.toString().replaceAll('[', '').replaceAll(']', '').trim()}'),
     ).stream.asyncMap((response) {
       return List<Map<String, dynamic>>.from(json.decode(response.toString()))
           .map((e) => User.fromJson(e))
@@ -21,12 +26,18 @@ class UserRepository {
     });
   }
 
-  static Future<List<User>> list(
-      {String? q,
-      UsersFilter? filter,
-      List<ValidationResponseWarnings>? validationResponseWarnings}) async {
+  static Future<List<User>> list({
+    String? q,
+    bool? hasEmail,
+    bool? hasPhone,
+    bool? hasPublicNote,
+    bool? hasPrivateNote,
+    bool? isArchived,
+    bool? isFlagged,
+    List<ValidationResponseWarnings>? validationResponseWarnings,
+  }) async {
     String url =
-        '${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/list_users?q=$q&${filter?.toQueryParameters()}&${validationResponseWarnings.toString().replaceAll('[', '').replaceAll(']', '').trim()}';
+        '${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/list_users?q=$q&hasEmail=$hasEmail&hasPhone=$hasPhone&hasPublicNote=$hasPublicNote&hasPrivateNote=$hasPrivateNote&isArchived=$isArchived&isFlagged=$isFlagged&validationResponseWarnings=${validationResponseWarnings.toString().replaceAll('[', '').replaceAll(']', '').trim()}';
     Response response = await _dio.get(url);
     if (response.data["responseType"] == "ok") {
       List<User> users = (response.data["body"] as List<dynamic>)
