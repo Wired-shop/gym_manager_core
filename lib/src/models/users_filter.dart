@@ -2,30 +2,63 @@ import 'package:gym_manager_backend/backend.dart';
 
 class UsersFilter implements Filter {
   String? name;
-  bool? hasEmail;
-  bool? hasPhone;
-  bool? hasPublicNote;
-  bool? hasPrivateNote;
-  bool? isArchived;
-  bool? isFlagged;
-  ValidationResponse? validationResponse;
-  List<ValidationResponseWarnings>? validationResponseWarnings = [];
+  bool hasEmail;
+  bool hasPhone;
+  bool hasPublicNote;
+  bool hasPrivateNote;
+  bool isArchived;
+  bool isFlagged;
+  ValidationResponse validationResponse;
+  List<ValidationResponseWarnings> validationResponseWarnings;
 
   UsersFilter({
     this.name,
-    this.hasEmail,
-    this.hasPhone,
-    this.hasPrivateNote,
-    this.hasPublicNote,
-    this.isArchived,
-    this.isFlagged,
-    this.validationResponse,
-    this.validationResponseWarnings,
-  });
+    bool? hasEmail,
+    bool? hasPhone,
+    bool? hasPrivateNote,
+    bool? hasPublicNote,
+    bool? isArchived,
+    bool? isFlagged,
+    ValidationResponse? validationResponse,
+    List<ValidationResponseWarnings>? validationResponseWarnings,
+  })  : hasEmail = hasEmail ?? false,
+        hasPhone = hasPhone ?? false,
+        hasPublicNote = hasPublicNote ?? false,
+        hasPrivateNote = hasPrivateNote ?? false,
+        isArchived = isArchived ?? false,
+        isFlagged = isFlagged ?? false,
+        validationResponse = validationResponse ?? ValidationResponse.valid,
+        validationResponseWarnings = validationResponseWarnings ?? [];
+
+  @override
+  clear() {
+    name = null;
+    hasEmail = false;
+    hasPhone = false;
+    hasPublicNote = false;
+    hasPrivateNote = false;
+    isArchived = false;
+    isFlagged = false;
+    validationResponse = ValidationResponse.valid;
+    validationResponseWarnings = [];
+  }
+
+  @override
+  bool isClear() {
+    return name == null &&
+        hasEmail == false &&
+        hasPhone == false &&
+        hasPublicNote == false &&
+        hasPrivateNote == false &&
+        isArchived == false &&
+        isFlagged == false &&
+        validationResponse == ValidationResponse.valid &&
+        validationResponseWarnings.isEmpty;
+  }
 
   @override
   String toQueryParameters() {
-    return 'hasEmail=$hasEmail&hasPhone=$hasPhone&hasPublicNote=$hasPublicNote&hasPrivateNote=$hasPrivateNote&isArchived=$isArchived&isFlagged=$isFlagged&validationResponse=${validationResponse?.name}&validationResponseWarnings=${validationResponseWarnings.toString().replaceAll('[', '').replaceAll(']', '').trim()}';
+    return 'hasEmail=$hasEmail&hasPhone=$hasPhone&hasPublicNote=$hasPublicNote&hasPrivateNote=$hasPrivateNote&isArchived=$isArchived&isFlagged=$isFlagged&validationResponse=${validationResponse.name}&validationResponseWarnings=${validationResponseWarnings.map((e) => e.name).join(",")}';
   }
 
   @override
@@ -43,34 +76,39 @@ class UsersFilter implements Filter {
       'hasPublicNote': hasPublicNote,
       'isFlagged': isFlagged,
       'isArchived': isArchived,
-      'validationResponse': validationResponse?.name,
+      'validationResponse': validationResponse.name,
       'validationResponseWarnings':
-          validationResponseWarnings?.map((e) => e.name).toList()
+          validationResponseWarnings.map((e) => e.name).toList(),
     };
   }
 
   @override
   UsersFilter fromJson(Map<String, dynamic> json) {
     return UsersFilter(
-        name: json['name'] as String?,
-        hasEmail: json['hasEmail'] as bool?,
-        hasPhone: json['hasPhone'] as bool?,
-        hasPrivateNote: json['hasPrivateNote'] as bool?,
-        hasPublicNote: json['hasPublicNote'] as bool?,
-        isArchived: json['isArchived'] as bool?,
-        isFlagged: json['isFlagged'] as bool?,
-        validationResponse:
-            ValidationResponse.fromValue(json['validationResponse'] as String?),
-        validationResponseWarnings: (json['validationResponseWarnings'] as List)
-            .map((e) => ValidationResponseWarnings.fromValue(e.toString()))
-            .toList());
+      name: json['name'] as String?,
+      hasEmail: json['hasEmail'] as bool? ?? false,
+      hasPhone: json['hasPhone'] as bool? ?? false,
+      hasPrivateNote: json['hasPrivateNote'] as bool? ?? false,
+      hasPublicNote: json['hasPublicNote'] as bool? ?? false,
+      isArchived: json['isArchived'] as bool? ?? false,
+      isFlagged: json['isFlagged'] as bool? ?? false,
+      validationResponse:
+          ValidationResponse.fromValue(json['validationResponse'] as String?),
+      validationResponseWarnings: (json['validationResponseWarnings']
+                  as List<dynamic>?)
+              ?.map((e) => ValidationResponseWarnings.fromValue(e as String))
+              .toList() ??
+          [],
+    );
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other is! UsersFilter) return false;
-    return toJson().toString() == other.toJson().toString();
+
+    return toJson().values.toList().sublist(1).toString() ==
+        other.toJson().values.toList().sublist(1).toString();
   }
 
   @override
