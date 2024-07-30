@@ -28,7 +28,16 @@ class UsersFilter implements Filter {
         isArchived = isArchived ?? false,
         isFlagged = isFlagged ?? false,
         validationResponse = validationResponse ?? ValidationResponse.valid,
-        validationResponseWarnings = validationResponseWarnings ?? [];
+        validationResponseWarnings = validationResponseWarnings ?? [] {
+    assert(
+        (validationResponse == null &&
+                (validationResponseWarnings == null ||
+                    validationResponseWarnings.isEmpty)) ||
+            (validationResponse != null &&
+                validationResponseWarnings != null &&
+                validationResponseWarnings.isNotEmpty),
+        'Both validationResponse and validationResponseWarnings must be set together, or both must be null/empty.');
+  }
 
   @override
   clear() {
@@ -62,7 +71,7 @@ class UsersFilter implements Filter {
   }
 
   @override
-  fromQueryParameters() {
+  fromQueryParameters(Map<String, dynamic> map) {
     throw UnimplementedError();
   }
 
@@ -106,7 +115,6 @@ class UsersFilter implements Filter {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other is! UsersFilter) return false;
-
     return toJson().values.toList().sublist(1).toString() ==
         other.toJson().values.toList().sublist(1).toString();
   }
