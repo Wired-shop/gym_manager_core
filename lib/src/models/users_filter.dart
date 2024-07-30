@@ -8,7 +8,6 @@ class UsersFilter implements Filter {
   bool hasPrivateNote;
   bool isArchived;
   bool isFlagged;
-  ValidationResponse validationResponse;
   List<ValidationResponseWarnings> validationResponseWarnings;
 
   UsersFilter({
@@ -27,17 +26,7 @@ class UsersFilter implements Filter {
         hasPrivateNote = hasPrivateNote ?? false,
         isArchived = isArchived ?? false,
         isFlagged = isFlagged ?? false,
-        validationResponse = validationResponse ?? ValidationResponse.valid,
-        validationResponseWarnings = validationResponseWarnings ?? [] {
-    assert(
-        (validationResponse == null &&
-                (validationResponseWarnings == null ||
-                    validationResponseWarnings.isEmpty)) ||
-            (validationResponse != null &&
-                validationResponseWarnings != null &&
-                validationResponseWarnings.isNotEmpty),
-        'Both validationResponse and validationResponseWarnings must be set together, or both must be null/empty.');
-  }
+        validationResponseWarnings = validationResponseWarnings ?? [];
 
   @override
   clear() {
@@ -48,7 +37,6 @@ class UsersFilter implements Filter {
     hasPrivateNote = false;
     isArchived = false;
     isFlagged = false;
-    validationResponse = ValidationResponse.valid;
     validationResponseWarnings = [];
   }
 
@@ -61,13 +49,12 @@ class UsersFilter implements Filter {
         hasPrivateNote == false &&
         isArchived == false &&
         isFlagged == false &&
-        validationResponse == ValidationResponse.valid &&
         validationResponseWarnings.isEmpty;
   }
 
   @override
   String toQueryParameters() {
-    return 'hasEmail=$hasEmail&hasPhone=$hasPhone&hasPublicNote=$hasPublicNote&hasPrivateNote=$hasPrivateNote&isArchived=$isArchived&isFlagged=$isFlagged&validationResponse=${validationResponse.name}&validationResponseWarnings=${validationResponseWarnings.map((e) => e.name).join(",")}';
+    return 'hasEmail=$hasEmail&hasPhone=$hasPhone&hasPublicNote=$hasPublicNote&hasPrivateNote=$hasPrivateNote&isArchived=$isArchived&isFlagged=$isFlagged&validationResponseWarnings=${validationResponseWarnings.map((e) => e.name).join(",")}';
   }
 
   @override
@@ -85,7 +72,6 @@ class UsersFilter implements Filter {
       'hasPublicNote': hasPublicNote,
       'isFlagged': isFlagged,
       'isArchived': isArchived,
-      'validationResponse': validationResponse.name,
       'validationResponseWarnings':
           validationResponseWarnings.map((e) => e.name).toList(),
     };
@@ -101,11 +87,9 @@ class UsersFilter implements Filter {
       hasPublicNote: json['hasPublicNote'] as bool? ?? false,
       isArchived: json['isArchived'] as bool? ?? false,
       isFlagged: json['isFlagged'] as bool? ?? false,
-      validationResponse:
-          ValidationResponse.fromValue(json['validationResponse'] as String?),
       validationResponseWarnings: (json['validationResponseWarnings']
                   as List<dynamic>?)
-              ?.map((e) => ValidationResponseWarnings.fromValue(e as String))
+              ?.map((e) => ValidationResponseWarnings.fromString(e as String))
               .toList() ??
           [],
     );
