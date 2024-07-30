@@ -59,7 +59,8 @@ class UserRepository {
     String url =
         "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/get_user?id=$id";
     Response response = await _dio.get(url);
-    if (response.data["responseType"] == "ok") {
+    if (response.data["responseType"] == "ok" &&
+        response.data["body"] != null) {
       User user = User.fromJson(response.data["body"]);
       return user;
     } else {

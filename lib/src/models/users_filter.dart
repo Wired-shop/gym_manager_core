@@ -8,7 +8,7 @@ class UsersFilter implements Filter {
   bool hasPrivateNote;
   bool isArchived;
   bool isFlagged;
-  List<ValidationResponseWarnings> validationResponseWarnings;
+  List<ValidationResponseWarnings>? validationResponseWarnings;
 
   UsersFilter({
     this.name,
@@ -25,8 +25,7 @@ class UsersFilter implements Filter {
         hasPublicNote = hasPublicNote ?? false,
         hasPrivateNote = hasPrivateNote ?? false,
         isArchived = isArchived ?? false,
-        isFlagged = isFlagged ?? false,
-        validationResponseWarnings = validationResponseWarnings ?? [];
+        isFlagged = isFlagged ?? false;
 
   @override
   clear() {
@@ -37,7 +36,7 @@ class UsersFilter implements Filter {
     hasPrivateNote = false;
     isArchived = false;
     isFlagged = false;
-    validationResponseWarnings = [];
+    validationResponseWarnings = null;
   }
 
   @override
@@ -49,12 +48,12 @@ class UsersFilter implements Filter {
         hasPrivateNote == false &&
         isArchived == false &&
         isFlagged == false &&
-        validationResponseWarnings.isEmpty;
+        validationResponseWarnings == null;
   }
 
   @override
   String toQueryParameters() {
-    return 'hasEmail=$hasEmail&hasPhone=$hasPhone&hasPublicNote=$hasPublicNote&hasPrivateNote=$hasPrivateNote&isArchived=$isArchived&isFlagged=$isFlagged&validationResponseWarnings=${validationResponseWarnings.map((e) => e.name).join(",")}';
+    return 'hasEmail=$hasEmail&hasPhone=$hasPhone&hasPublicNote=$hasPublicNote&hasPrivateNote=$hasPrivateNote&isArchived=$isArchived&isFlagged=$isFlagged&validationResponseWarnings=${validationResponseWarnings?.map((e) => e.name).join(",")}';
   }
 
   @override
@@ -73,7 +72,7 @@ class UsersFilter implements Filter {
       'isFlagged': isFlagged,
       'isArchived': isArchived,
       'validationResponseWarnings':
-          validationResponseWarnings.map((e) => e.name).toList(),
+          validationResponseWarnings?.map((e) => e.name).toList(),
     };
   }
 

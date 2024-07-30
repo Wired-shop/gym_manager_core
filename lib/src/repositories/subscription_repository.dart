@@ -10,7 +10,8 @@ class SubscriptionRepository {
     String url =
         "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/get_subscription?badgeCode=$badgeCode&id=$id&userId=$userId";
     Response response = await _dio.get(url);
-    if (response.data["responseType"] == "ok") {
+    if (response.data["responseType"] == "ok" &&
+        response.data["body"] != null) {
       Subscription subscription = Subscription.fromJson(response.data["body"]);
       return subscription;
     } else {

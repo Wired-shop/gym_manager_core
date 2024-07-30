@@ -5,6 +5,7 @@ void main(List<String> arguments) async {
   //listenEntry();
   //listenUsers();
   //insertUser();
+  print(await SubscriptionRepository.get(userId: 362));
 }
 
 Future<void> editUser(int id) async {
