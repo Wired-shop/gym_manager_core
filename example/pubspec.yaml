@@ -9,7 +9,7 @@ environment:
 # Add regular dependencies here.
 dependencies:
   web_socket_channel: ^3.0.0
-  gym_manager_backend:
+  gym_manager_core:
     path: '../'
   # path: ^1.8.0
 

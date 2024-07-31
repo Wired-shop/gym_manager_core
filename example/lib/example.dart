@@ -1,4 +1,4 @@
-import 'package:gym_manager_backend/backend.dart';
+import 'package:gym_manager_core/core.dart';
 
 void main(List<String> arguments) async {
   //editUser(362);

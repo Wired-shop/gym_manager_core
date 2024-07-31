@@ -1,4 +1,4 @@
-import 'package:gym_manager_backend/src/enums/entry_response.dart';
+import 'package:gym_manager_core/core.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'entry.g.dart';
 
