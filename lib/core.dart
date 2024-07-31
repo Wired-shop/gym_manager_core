@@ -1,4 +1,4 @@
-library gym_manager_backend;
+library gym_manager_core;
 
 export 'src/services/api_service.dart';
 
