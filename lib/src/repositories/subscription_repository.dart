@@ -15,7 +15,7 @@ class SubscriptionRepository {
       Subscription subscription = Subscription.fromJson(response.data["body"]);
       return subscription;
     } else {
-      throw response.data;
+      return null;
     }
   }
 

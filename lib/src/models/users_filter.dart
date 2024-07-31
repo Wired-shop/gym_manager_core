@@ -41,8 +41,7 @@ class UsersFilter implements Filter {
 
   @override
   bool isClear() {
-    return name == null &&
-        hasEmail == false &&
+    return hasEmail == false &&
         hasPhone == false &&
         hasPublicNote == false &&
         hasPrivateNote == false &&

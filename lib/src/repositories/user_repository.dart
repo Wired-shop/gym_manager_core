@@ -64,7 +64,7 @@ class UserRepository {
       User user = User.fromJson(response.data["body"]);
       return user;
     } else {
-      throw response.data;
+      return null;
     }
   }
 
