@@ -6,11 +6,10 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 class UserRepository {
   static final Dio _dio = Dio();
 
-  static Stream<List<User>> stream(
-      {String? q, String? badgeCode, UsersFilter? filter}) {
+  static Stream<List<User>> stream({String? q, UsersFilter? filter}) {
     return WebSocketChannel.connect(
       Uri.parse(
-          'ws://localhost:${ApiService.getIstance().getPort()}/list_users_stream?badgeCode=$badgeCode&q=$q&${filter?.toQueryParameters()}'),
+          'ws://localhost:${ApiService.getIstance().getPort()}/list_users_stream?&q=$q&${filter?.toQueryParameters()}'),
     ).stream.asyncMap((response) {
       return List<Map<String, dynamic>>.from(json.decode(response.toString()))
           .map((e) => User.fromJson(e))
