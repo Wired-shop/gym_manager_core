@@ -2,7 +2,6 @@ import 'package:gym_manager_core/core.dart';
 
 class UsersFilter implements Filter {
   String? name;
-  String? badgeCode;
   bool hasEmail;
   bool hasPhone;
   bool hasPublicNote;
@@ -13,7 +12,6 @@ class UsersFilter implements Filter {
 
   UsersFilter({
     this.name,
-    this.badgeCode,
     bool? hasEmail,
     bool? hasPhone,
     bool? hasPrivateNote,
@@ -32,7 +30,6 @@ class UsersFilter implements Filter {
   @override
   clear() {
     name = null;
-    badgeCode = null;
     hasEmail = false;
     hasPhone = false;
     hasPublicNote = false;
@@ -44,8 +41,7 @@ class UsersFilter implements Filter {
 
   @override
   bool isClear() {
-    return badgeCode == null &&
-        hasEmail == false &&
+    return hasEmail == false &&
         hasPhone == false &&
         hasPublicNote == false &&
         hasPrivateNote == false &&
@@ -56,7 +52,7 @@ class UsersFilter implements Filter {
 
   @override
   String toQueryParameters() {
-    return 'badgeCode=$badgeCode&hasEmail=$hasEmail&hasPhone=$hasPhone&hasPublicNote=$hasPublicNote&hasPrivateNote=$hasPrivateNote&isArchived=$isArchived&isFlagged=$isFlagged&validationResponseWarnings=${validationResponseWarnings?.map((e) => e.name).join(",")}';
+    return 'hasEmail=$hasEmail&hasPhone=$hasPhone&hasPublicNote=$hasPublicNote&hasPrivateNote=$hasPrivateNote&isArchived=$isArchived&isFlagged=$isFlagged&validationResponseWarnings=${validationResponseWarnings?.map((e) => e.name).join(",")}';
   }
 
   @override
@@ -68,7 +64,6 @@ class UsersFilter implements Filter {
   Map<String, dynamic> toJson() {
     return {
       'name': name,
-      'badgeCode': badgeCode,
       'hasEmail': hasEmail,
       'hasPhone': hasPhone,
       'hasPrivateNote': hasPrivateNote,
@@ -84,7 +79,6 @@ class UsersFilter implements Filter {
   UsersFilter fromJson(Map<String, dynamic> json) {
     return UsersFilter(
       name: json['name'] as String?,
-      badgeCode: json['badgeCode'] as String?,
       hasEmail: json['hasEmail'] as bool? ?? false,
       hasPhone: json['hasPhone'] as bool? ?? false,
       hasPrivateNote: json['hasPrivateNote'] as bool? ?? false,
