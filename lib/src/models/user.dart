@@ -12,6 +12,7 @@ class User {
   String? surname;
   DateTime? birthday;
   String? gender;
+  String? job;
 
 //Address
   String? address;
@@ -80,6 +81,7 @@ class User {
     this.archived,
     this.birthday,
     this.gender,
+    this.job,
     this.validationResult,
   });
 

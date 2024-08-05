@@ -43,6 +43,7 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
           ? null
           : DateTime.parse(json['birthday'] as String),
       gender: json['gender'] as String?,
+      job: json['job'] as String?,
       validationResult: json['validationResult'] == null
           ? null
           : ValidationResult.fromJson(
@@ -58,6 +59,7 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'address': instance.address,
       'fiscalCode': instance.fiscalCode,
       'city': instance.city,
+      'job': instance.job,
       'zipCode': instance.zipCode,
       'province': instance.province,
       'phone': instance.phone,
