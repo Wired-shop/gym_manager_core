@@ -1,25 +1,31 @@
 class Shift {
-  int id;
+  int? id;
   int courseId;
   int dayOfWeek;
-  int hour;
-  int minute;
+  int startHour;
+  int startMinute;
+  int endHour;
+  int endMinute;
 
   Shift({
-    required this.id,
+    this.id,
     required this.courseId,
     required this.dayOfWeek,
-    required this.hour,
-    required this.minute,
+    required this.startHour,
+    required this.startMinute,
+    required this.endHour,
+    required this.endMinute,
   });
 
   factory Shift.fromJson(Map<String, dynamic> json) {
     return Shift(
-      id: json['id'] as int,
+      id: json['id'] as int?,
       courseId: json['courseId'] as int,
       dayOfWeek: json['dayOfWeek'] as int,
-      hour: json['hour'] as int,
-      minute: json['minute'] as int,
+      startHour: json['startHour'] as int,
+      startMinute: json['startMinute'] as int,
+      endHour: json['endHour'] as int,
+      endMinute: json['endMinute'] as int,
     );
   }
 
@@ -28,8 +34,10 @@ class Shift {
       'id': id,
       'courseId': courseId,
       'dayOfWeek': dayOfWeek,
-      'hour': hour,
-      'minute': minute,
+      'startHour': startHour,
+      'startMinute': startMinute,
+      'endHour': endHour,
+      'endMinute': endMinute,
     };
   }
 }
