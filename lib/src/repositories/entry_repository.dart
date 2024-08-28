@@ -5,11 +5,6 @@ import '../services/api_service.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class EntryRepository {
-<<<<<<< HEAD
-  static final Dio _dio = Dio();
-
-=======
->>>>>>> 4a894ca (Aggiunto supporto ai corsi)
   static Future insert(Entry entry) async {
     String url =
         "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/insert_entry";
@@ -26,7 +21,7 @@ class EntryRepository {
   static Future<List<Entry>> list({DateTime? dateTime, int? userId}) async {
     String url =
         '${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/list_entries?date=${dateTime?.toIso8601String()}&userId=$userId';
-    Response response = await _dio.get(url);
+    Response response = await ApiService.getIstance().dio.get(url);
     if (response.data["responseType"] == "ok") {
       List<Entry> entries = (response.data["body"] as List<dynamic>)
           .map((e) => Entry.fromJson(e))
