@@ -5,7 +5,10 @@ void main(List<String> arguments) async {
   //listenEntry();
   //listenUsers();
   //insertUser();
-  print(await SubscriptionRepository.get(userId: 362));
+  //print(await SubscriptionRepository.get(userId: 362));
+
+  await CourseRepository.insert(Course(name: 'Palestra'));
+  print(await CourseRepository.list());
 }
 
 Future<void> editUser(int id) async {

@@ -8,6 +8,9 @@ export 'src/models/entry.dart';
 export 'src/models/validation_result.dart';
 export 'src/models/filter.dart';
 export 'src/models/users_filter.dart';
+export 'src/models/course.dart';
+export 'src/models/shift.dart';
+export 'src/models/reservation.dart';
 
 export 'src/enums/document_type.dart';
 export 'src/enums/validation_response.dart';
@@ -19,3 +22,6 @@ export 'src/repositories/entry_repository.dart';
 export 'src/repositories/file_repository.dart';
 export 'src/repositories/subscription_repository.dart';
 export 'src/repositories/user_repository.dart';
+export 'src/repositories/course_repository.dart';
+export 'src/repositories/shift_repository.dart';
+export 'src/repositories/reservation_repository.dart';

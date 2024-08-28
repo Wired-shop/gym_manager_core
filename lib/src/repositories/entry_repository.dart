@@ -5,12 +5,16 @@ import '../services/api_service.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class EntryRepository {
+<<<<<<< HEAD
   static final Dio _dio = Dio();
 
+=======
+>>>>>>> 4a894ca (Aggiunto supporto ai corsi)
   static Future insert(Entry entry) async {
     String url =
         "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/insert_entry";
-    Response response = await _dio.post(url, data: entry.toJson());
+    Response response =
+        await ApiService.getIstance().dio.post(url, data: entry.toJson());
     if (response.data["responseType"] == "ok") {
       Entry entry = Entry.fromJson(response.data["body"]);
       return entry;

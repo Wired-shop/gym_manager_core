@@ -4,8 +4,6 @@ import '../enums/document_type.dart';
 import '../services/api_service.dart';
 
 class FileRepository {
-  static final Dio _dio = Dio();
-
   static Future<File> download(String path) async {
     File file = File(path);
     file.createSync();
@@ -20,8 +18,9 @@ class FileRepository {
       required DocumentType documentType}) async {
     String url =
         "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/upload_file?fileName=${documentType.name}&userId=$userId";
-    Response response =
-        await _dio.post(url, data: {"bytes": bytes, "extension": extension});
+    Response response = await ApiService.getIstance()
+        .dio
+        .post(url, data: {"bytes": bytes, "extension": extension});
     if (response.data["responseType"] == "ok") {
       return response.data["body"].toString();
     }
@@ -29,7 +28,7 @@ class FileRepository {
   }
 
   static Future<List<int>> get(String path) async {
-    Response response = await _dio.get(
+    Response response = await ApiService.getIstance().dio.get(
         "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/get_file?path=$path");
     if (response.data["responseType"] == "ok") {
       return (response.data["body"] as List).map<int>((e) => e).toList();
@@ -41,7 +40,7 @@ class FileRepository {
   static Future delete(String path) async {
     String url =
         "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/delete_file?path=$path";
-    Response response = await _dio.get(url);
+    Response response = await ApiService.getIstance().dio.delete(url);
     if (response.data["responseType"] == "error") {
       throw response.data;
     }

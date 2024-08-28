@@ -12,8 +12,9 @@ class ApiService {
     return _instance;
   }
 
+  Dio dio = Dio();
+
   Future<bool> test() async {
-    Dio dio = Dio();
     String url =
         "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/list_users";
     Response response = await dio.get(url);
