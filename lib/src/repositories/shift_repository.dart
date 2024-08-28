@@ -7,7 +7,7 @@ class ShiftRepository {
   static Stream<List<Shift>> stream({int? courseId}) {
     return WebSocketChannel.connect(
       Uri.parse(
-          'ws://localhost:${ApiService.getIstance().getPort()}/list_shifts_stream?courseId=$courseId}'),
+          'ws://localhost:${ApiService.getIstance().getPort()}/list_shifts_stream?courseId=$courseId'),
     ).stream.asyncMap((response) {
       return List<Map<String, dynamic>>.from(json.decode(response.toString()))
           .map((e) => Shift.fromJson(e))
