@@ -8,6 +8,7 @@ class UsersFilter implements Filter {
   bool hasPrivateNote;
   bool isArchived;
   bool isFlagged;
+  int? courseId;
   List<ValidationResponseWarnings>? validationResponseWarnings;
 
   UsersFilter({
@@ -18,7 +19,7 @@ class UsersFilter implements Filter {
     bool? hasPublicNote,
     bool? isArchived,
     bool? isFlagged,
-    ValidationResponse? validationResponse,
+    this.courseId,
     List<ValidationResponseWarnings>? validationResponseWarnings,
   })  : hasEmail = hasEmail ?? false,
         hasPhone = hasPhone ?? false,
@@ -36,6 +37,7 @@ class UsersFilter implements Filter {
     hasPrivateNote = false;
     isArchived = false;
     isFlagged = false;
+    courseId = null;
     validationResponseWarnings = null;
   }
 
@@ -47,12 +49,13 @@ class UsersFilter implements Filter {
         hasPrivateNote == false &&
         isArchived == false &&
         isFlagged == false &&
+        courseId == null &&
         validationResponseWarnings == null;
   }
 
   @override
   String toQueryParameters() {
-    return 'hasEmail=$hasEmail&hasPhone=$hasPhone&hasPublicNote=$hasPublicNote&hasPrivateNote=$hasPrivateNote&isArchived=$isArchived&isFlagged=$isFlagged&validationResponseWarnings=${validationResponseWarnings?.map((e) => e.name).join(",")}';
+    return 'courseId=$courseId&hasEmail=$hasEmail&hasPhone=$hasPhone&hasPublicNote=$hasPublicNote&hasPrivateNote=$hasPrivateNote&isArchived=$isArchived&isFlagged=$isFlagged&validationResponseWarnings=${validationResponseWarnings?.map((e) => e.name).join(",")}';
   }
 
   @override
@@ -70,6 +73,7 @@ class UsersFilter implements Filter {
       'hasPublicNote': hasPublicNote,
       'isFlagged': isFlagged,
       'isArchived': isArchived,
+      'courseId': courseId,
       'validationResponseWarnings':
           validationResponseWarnings?.map((e) => e.name).toList(),
     };
@@ -85,6 +89,7 @@ class UsersFilter implements Filter {
       hasPublicNote: json['hasPublicNote'] as bool? ?? false,
       isArchived: json['isArchived'] as bool? ?? false,
       isFlagged: json['isFlagged'] as bool? ?? false,
+      courseId: json['courseId'] as int?,
       validationResponseWarnings: (json['validationResponseWarnings']
                   as List<dynamic>?)
               ?.map((e) => ValidationResponseWarnings.fromString(e as String))

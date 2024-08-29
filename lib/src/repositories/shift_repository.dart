@@ -17,7 +17,7 @@ class ShiftRepository {
 
   static Future<List<Shift>> list({int? courseId}) async {
     String url =
-        '${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/list_courses?courseId=$courseId';
+        '${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/list_shifts?courseId=$courseId';
     Response response = await ApiService.getIstance().dio.get(url);
     if (response.data["responseType"] == "ok") {
       List<Shift> shifts = (response.data["body"] as List<dynamic>)
