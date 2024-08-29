@@ -5,6 +5,7 @@ part 'subscription.g.dart';
 class Subscription {
   int? id;
   int userId;
+  int? courseId;
   DateTime expiration;
   DateTime? creation;
   String? badgeCode;
@@ -15,6 +16,7 @@ class Subscription {
     required this.userId,
     required this.expiration,
     this.creation,
+    this.courseId,
     this.badgeCode,
     this.dailyAccessLimit,
   });
