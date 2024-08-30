@@ -11,7 +11,7 @@ Subscription _$SubscriptionFromJson(Map<String, dynamic> json) => Subscription(
       userId: json['userId'] as int,
       courseId: json['courseId'] as int?,
       badgeCode: json['badgeCode'] as String?,
-      dailyAccessLimit: json['dailyAccessLimit'] as int?,
+      accessesAvaiable: json['accessesAvaiable'] as int?,
       creation: DateTime.parse(json['creation'] as String),
       expiration: DateTime.parse(json['expiration'] as String),
     );
@@ -24,5 +24,5 @@ Map<String, dynamic> _$SubscriptionToJson(Subscription instance) =>
       'creation': instance.creation?.toIso8601String(),
       'expiration': instance.expiration.toIso8601String(),
       'badgeCode': instance.badgeCode,
-      'dailyAccessLimit': instance.dailyAccessLimit,
+      'accessesAvaiable': instance.accessesAvaiable,
     };
