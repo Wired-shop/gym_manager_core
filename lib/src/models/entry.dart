@@ -4,12 +4,15 @@ part 'entry.g.dart';
 
 @JsonSerializable()
 class Entry {
+  int? id;
   int userId;
   int subscriptionId;
+
   DateTime date;
   EntryResponse response;
 
   Entry({
+    this.id,
     required this.userId,
     required this.subscriptionId,
     required this.date,

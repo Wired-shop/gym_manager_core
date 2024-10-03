@@ -7,7 +7,7 @@ class CourseRepository {
   static Stream<List<Course>> stream() {
     return WebSocketChannel.connect(
       Uri.parse(
-          'ws://localhost:${ApiService.getIstance().getPort()}/list_courses_stream'),
+          'ws://localhost:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/courses/stream'),
     ).stream.asyncMap((response) {
       return List<Map<String, dynamic>>.from(json.decode(response.toString()))
           .map((e) => Course.fromJson(e))
@@ -15,23 +15,29 @@ class CourseRepository {
     });
   }
 
-  static Future insert(Course course) async {
+  static Future<Course> insert({required Course course}) async {
     String url =
-        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/insert_course";
-    Response response =
-        await ApiService.getIstance().dio.post(url, data: course.toJson());
+        "http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/courses";
+    Response response = await ApiService.getIstance().dio.post(
+          url,
+          data: course.toJson(),
+          options: ApiService.getIstance().getAuthCredentials(),
+        );
     if (response.data["responseType"] == "ok") {
-      Course course = Course.fromJson(response.data["body"]);
-      return course;
+      Course newCourse = Course.fromJson(response.data["body"]);
+      return newCourse;
     } else {
       throw response.data;
     }
   }
 
-  static Future<List<Course>> list() async {
+  static Future<List<Course>> list({required int gymId}) async {
     String url =
-        '${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/list_courses';
-    Response response = await ApiService.getIstance().dio.get(url);
+        'http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/courses';
+    Response response = await ApiService.getIstance().dio.get(
+          url,
+          options: ApiService.getIstance().getAuthCredentials(),
+        );
     if (response.data["responseType"] == "ok") {
       List<Course> courses = (response.data["body"] as List<dynamic>)
           .map((e) => Course.fromJson(e))
@@ -42,23 +48,30 @@ class CourseRepository {
     }
   }
 
-  static Future update(Course course) async {
+  static Future<Course> update(
+      {required int id, required Course course}) async {
     String url =
-        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/update_course";
-    Response response =
-        await ApiService.getIstance().dio.post(url, data: course.toJson());
+        "http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/courses/$id";
+    Response response = await ApiService.getIstance().dio.put(
+          url,
+          data: course.toJson(),
+          options: ApiService.getIstance().getAuthCredentials(),
+        );
     if (response.data["responseType"] == "ok") {
-      Course course = Course.fromJson(response.data["body"]);
-      return course;
+      Course updatedCourse = Course.fromJson(response.data["body"]);
+      return updatedCourse;
     } else {
       throw response.data;
     }
   }
 
-  static Future<Course?> get({int? id}) async {
+  static Future<Course?> get({required int id}) async {
     String url =
-        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/get_course?id=$id";
-    Response response = await ApiService.getIstance().dio.get(url);
+        "http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/courses/$id";
+    Response response = await ApiService.getIstance().dio.get(
+          url,
+          options: ApiService.getIstance().getAuthCredentials(),
+        );
     if (response.data["responseType"] == "ok" &&
         response.data["body"] != null) {
       Course course = Course.fromJson(response.data["body"]);
@@ -68,10 +81,13 @@ class CourseRepository {
     }
   }
 
-  static Future delete(int id) async {
+  static Future delete({required int id}) async {
     String url =
-        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/delete_course?id=$id";
-    Response response = await ApiService.getIstance().dio.delete(url);
+        "http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/courses/$id";
+    Response response = await ApiService.getIstance().dio.delete(
+          url,
+          options: ApiService.getIstance().getAuthCredentials(),
+        );
     if (response.data["responseType"] == "error") {
       throw response.data;
     }

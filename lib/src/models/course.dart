@@ -9,6 +9,6 @@ class Course {
   }
 
   Map<String, dynamic> toJson() {
-    return {'id': id, 'name': name};
+    return {'name': name, 'id': id};
   }
 }

@@ -25,4 +25,3 @@ export 'src/repositories/user_repository.dart';
 export 'src/repositories/course_repository.dart';
 export 'src/repositories/shift_repository.dart';
 export 'src/repositories/reservation_repository.dart';
-export 'src/repositories/smtp_repository.dart';

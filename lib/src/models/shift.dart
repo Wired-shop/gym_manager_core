@@ -1,6 +1,6 @@
 class Shift {
   int? id;
-  int courseId;
+  int? courseId;
   int dayOfWeek;
   String start;
   String end;
@@ -15,11 +15,12 @@ class Shift {
 
   factory Shift.fromJson(Map<String, dynamic> json) {
     return Shift(
-        id: json['id'] as int?,
-        courseId: json['courseId'] as int,
-        dayOfWeek: json['dayOfWeek'] as int,
-        start: json['start'] as String,
-        end: json['end'] as String);
+      id: json['id'] as int?,
+      courseId: json['courseId'] as int?,
+      dayOfWeek: json['dayOfWeek'] as int,
+      start: json['start'].toString(),
+      end: json['end'].toString(),
+    );
   }
 
   Map<String, dynamic> toJson() {

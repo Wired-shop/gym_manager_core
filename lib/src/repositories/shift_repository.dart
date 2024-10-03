@@ -4,10 +4,10 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 import 'dart:convert';
 
 class ShiftRepository {
-  static Stream<List<Shift>> stream({int? courseId}) {
+  static Stream<List<Shift>> stream({required int gymId}) {
     return WebSocketChannel.connect(
       Uri.parse(
-          'ws://localhost:${ApiService.getIstance().getPort()}/list_shifts_stream?courseId=$courseId'),
+          'ws://localhost:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/shifts/stream'),
     ).stream.asyncMap((response) {
       return List<Map<String, dynamic>>.from(json.decode(response.toString()))
           .map((e) => Shift.fromJson(e))
@@ -15,10 +15,13 @@ class ShiftRepository {
     });
   }
 
-  static Future<List<Shift>> list({int? courseId}) async {
+  static Future<List<Shift>> list({required int gymId}) async {
     String url =
-        '${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/list_shifts?courseId=$courseId';
-    Response response = await ApiService.getIstance().dio.get(url);
+        'http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/shifts';
+    Response response = await ApiService.getIstance().dio.get(
+          url,
+          options: ApiService.getIstance().getAuthCredentials(),
+        );
     if (response.data["responseType"] == "ok") {
       List<Shift> shifts = (response.data["body"] as List<dynamic>)
           .map((e) => Shift.fromJson(e))
@@ -29,36 +32,45 @@ class ShiftRepository {
     }
   }
 
-  static Future insert(Shift shift) async {
+  static Future<Shift> insert({required Shift shift}) async {
     String url =
-        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/insert_shift";
-    Response response =
-        await ApiService.getIstance().dio.post(url, data: shift.toJson());
+        'http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/shifts';
+    Response response = await ApiService.getIstance().dio.post(
+          url,
+          data: shift.toJson(),
+          options: ApiService.getIstance().getAuthCredentials(),
+        );
     if (response.data["responseType"] == "ok") {
-      Shift shift = Shift.fromJson(response.data["body"]);
-      return shift;
+      Shift newShift = Shift.fromJson(response.data["body"]);
+      return newShift;
     } else {
       throw response.data;
     }
   }
 
-  static Future update(Shift shift) async {
+  static Future<Shift> update({required int id, required Shift shift}) async {
     String url =
-        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/update_shift";
-    Response response =
-        await ApiService.getIstance().dio.post(url, data: shift.toJson());
+        'http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/shifts/$id';
+    Response response = await ApiService.getIstance().dio.put(
+          url,
+          data: shift.toJson(),
+          options: ApiService.getIstance().getAuthCredentials(),
+        );
     if (response.data["responseType"] == "ok") {
-      Shift course = Shift.fromJson(response.data["body"]);
-      return course;
+      Shift updatedShift = Shift.fromJson(response.data["body"]);
+      return updatedShift;
     } else {
       throw response.data;
     }
   }
 
-  static Future<Shift?> get({int? id}) async {
+  static Future<Shift?> get({required int id}) async {
     String url =
-        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/get_shift?id=$id";
-    Response response = await ApiService.getIstance().dio.get(url);
+        'http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/shifts/$id';
+    Response response = await ApiService.getIstance().dio.get(
+          url,
+          options: ApiService.getIstance().getAuthCredentials(),
+        );
     if (response.data["responseType"] == "ok" &&
         response.data["body"] != null) {
       Shift shift = Shift.fromJson(response.data["body"]);
@@ -68,10 +80,13 @@ class ShiftRepository {
     }
   }
 
-  static Future delete(int id) async {
+  static Future delete({required int id}) async {
     String url =
-        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/delete_shift?id=$id";
-    Response response = await ApiService.getIstance().dio.delete(url);
+        'http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/shifts/$id';
+    Response response = await ApiService.getIstance().dio.delete(
+          url,
+          options: ApiService.getIstance().getAuthCredentials(),
+        );
     if (response.data["responseType"] == "error") {
       throw response.data;
     }

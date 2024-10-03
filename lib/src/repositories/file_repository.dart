@@ -4,32 +4,42 @@ import '../enums/document_type.dart';
 import '../services/api_service.dart';
 
 class FileRepository {
-  static Future<File> download(String path) async {
+  static Future<File> download({required String path}) async {
     File file = File(path);
     file.createSync();
-    file.writeAsBytesSync(await get(path));
+    file.writeAsBytesSync(await get(path: path));
     return file;
   }
 
-  static Future<String> upload(
-      {required List<int> bytes,
-      required int userId,
-      required String extension,
-      required DocumentType documentType}) async {
+  static Future<String> upload({
+    required List<int> bytes,
+    required int userId,
+    required String extension,
+    required DocumentType documentType,
+  }) async {
     String url =
-        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/upload_file?fileName=${documentType.name}&userId=$userId";
-    Response response = await ApiService.getIstance()
-        .dio
-        .post(url, data: {"bytes": bytes, "extension": extension});
+        'http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/files';
+    Response response = await ApiService.getIstance().dio.post(
+          url,
+          data: {
+            "bytes": bytes,
+            "extension": extension,
+            "fileName": documentType.name,
+            "userId": userId,
+          },
+          options: ApiService.getIstance().getAuthCredentials(),
+        );
     if (response.data["responseType"] == "ok") {
       return response.data["body"].toString();
     }
     throw response.data;
   }
 
-  static Future<List<int>> get(String path) async {
+  static Future<List<int>> get({required String path}) async {
     Response response = await ApiService.getIstance().dio.get(
-        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/get_file?path=$path");
+          'http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/files/$path',
+          options: ApiService.getIstance().getAuthCredentials(),
+        );
     if (response.data["responseType"] == "ok") {
       return (response.data["body"] as List).map<int>((e) => e).toList();
     } else {
@@ -37,10 +47,13 @@ class FileRepository {
     }
   }
 
-  static Future delete(String path) async {
+  static Future delete({required String path}) async {
     String url =
-        "${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/delete_file?path=$path";
-    Response response = await ApiService.getIstance().dio.delete(url);
+        'http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/files/$path';
+    Response response = await ApiService.getIstance().dio.delete(
+          url,
+          options: ApiService.getIstance().getAuthCredentials(),
+        );
     if (response.data["responseType"] == "error") {
       throw response.data;
     }

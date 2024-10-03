@@ -6,8 +6,9 @@ class Subscription {
   int? id;
   int userId;
   int? courseId;
-  DateTime expiration;
+
   DateTime? creation;
+  DateTime expiration;
   String? badgeCode;
   int? accessesAvaiable;
 
@@ -15,10 +16,10 @@ class Subscription {
     this.id,
     required this.userId,
     required this.expiration,
-    this.creation,
     this.courseId,
     this.badgeCode,
     this.accessesAvaiable,
+    this.creation,
   });
 
   factory Subscription.fromJson(Map<String, dynamic> json) =>
