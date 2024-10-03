@@ -15,9 +15,9 @@ class ShiftRepository {
     });
   }
 
-  static Future<List<Shift>> list() async {
+  static Future<List<Shift>> list({int? courseId}) async {
     String url =
-        'http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/shifts';
+        'http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/shifts?courseId=$courseId';
     Response response = await ApiService.getIstance().dio.get(
           url,
           options: ApiService.getIstance().getAuthCredentials(),
