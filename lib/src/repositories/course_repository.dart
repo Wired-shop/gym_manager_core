@@ -1,14 +1,22 @@
 import 'package:dio/dio.dart';
 import 'package:gym_manager_core/core.dart';
+import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'dart:convert';
 
 class CourseRepository {
-  static Stream<List<Course>> stream() {
-    return WebSocketChannel.connect(
-      Uri.parse(
-          'ws://localhost:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/courses/stream'),
-    ).stream.asyncMap((response) {
+  static Stream<List<Course>> stream({String? q, UsersFilter? filter}) {
+    String basicAuth =
+        'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}';
+    String wsUrl =
+        'ws://localhost:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/courses/stream';
+    WebSocketChannel channel = IOWebSocketChannel.connect(
+      Uri.parse(wsUrl),
+      headers: {
+        'Authorization': basicAuth,
+      },
+    );
+    return channel.stream.asyncMap((response) {
       return List<Map<String, dynamic>>.from(json.decode(response.toString()))
           .map((e) => Course.fromJson(e))
           .toList();

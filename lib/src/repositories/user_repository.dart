@@ -1,14 +1,22 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:gym_manager_core/core.dart';
+import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class UserRepository {
   static Stream<List<User>> stream({String? q, UsersFilter? filter}) {
-    return WebSocketChannel.connect(
-      Uri.parse(
-          'ws://localhost:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/users/stream?q=$q&${filter?.toQueryParameters()}'),
-    ).stream.asyncMap((response) {
+    String basicAuth =
+        'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}';
+    String wsUrl =
+        'ws://localhost:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/users/stream?q=$q&${filter?.toQueryParameters()}';
+    WebSocketChannel channel = IOWebSocketChannel.connect(
+      Uri.parse(wsUrl),
+      headers: {
+        'Authorization': basicAuth,
+      },
+    );
+    return channel.stream.asyncMap((response) {
       return List<Map<String, dynamic>>.from(json.decode(response.toString()))
           .map((e) => User.fromJson(e))
           .toList();
@@ -18,6 +26,7 @@ class UserRepository {
   static Future<List<User>> list({String? q, UsersFilter? filter}) async {
     String url =
         'http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/users?q=$q&${filter?.toQueryParameters()}';
+    print(url);
     Response response = await ApiService.getIstance().dio.get(
           url,
           options: Options(headers: {
@@ -25,7 +34,8 @@ class UserRepository {
                 'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
           }),
         );
-    if (response.data["responseType"] == "ok") {
+    print(response.data);
+    if (response.data["responseType"].contains("ok")) {
       List<User> users = (response.data["body"] as List<dynamic>)
           .map((e) => User.fromJson(e))
           .toList();
