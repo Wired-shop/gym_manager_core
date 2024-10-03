@@ -20,7 +20,7 @@ class SubscriptionRepository {
     }
   }
 
-  static Future<List<Subscription>> list({required int gymId}) async {
+  static Future<List<Subscription>> list() async {
     String url =
         "http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/subscriptions";
     Response response = await ApiService.getIstance().dio.get(

@@ -11,12 +11,11 @@ class FileRepository {
     return file;
   }
 
-  static Future<String> upload({
-    required List<int> bytes,
-    required int userId,
-    required String extension,
-    required DocumentType documentType,
-  }) async {
+  static Future<String> upload(
+      {required List<int> bytes,
+      required int userId,
+      required String extension,
+      required DocumentType documentType}) async {
     String url =
         'http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/files';
     Response response = await ApiService.getIstance().dio.post(

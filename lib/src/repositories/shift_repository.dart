@@ -4,7 +4,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 import 'dart:convert';
 
 class ShiftRepository {
-  static Stream<List<Shift>> stream({required int gymId}) {
+  static Stream<List<Shift>> stream() {
     return WebSocketChannel.connect(
       Uri.parse(
           'ws://localhost:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/shifts/stream'),
@@ -15,7 +15,7 @@ class ShiftRepository {
     });
   }
 
-  static Future<List<Shift>> list({required int gymId}) async {
+  static Future<List<Shift>> list() async {
     String url =
         'http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/shifts';
     Response response = await ApiService.getIstance().dio.get(
