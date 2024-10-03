@@ -20,7 +20,10 @@ class ShiftRepository {
         'http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/shifts?courseId=$courseId';
     Response response = await ApiService.getIstance().dio.get(
           url,
-          options: ApiService.getIstance().getAuthCredentials(),
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+          }),
         );
     if (response.data["responseType"] == "ok") {
       List<Shift> shifts = (response.data["body"] as List<dynamic>)
@@ -38,7 +41,10 @@ class ShiftRepository {
     Response response = await ApiService.getIstance().dio.post(
           url,
           data: shift.toJson(),
-          options: ApiService.getIstance().getAuthCredentials(),
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+          }),
         );
     if (response.data["responseType"] == "ok") {
       Shift newShift = Shift.fromJson(response.data["body"]);
@@ -54,7 +60,10 @@ class ShiftRepository {
     Response response = await ApiService.getIstance().dio.put(
           url,
           data: shift.toJson(),
-          options: ApiService.getIstance().getAuthCredentials(),
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+          }),
         );
     if (response.data["responseType"] == "ok") {
       Shift updatedShift = Shift.fromJson(response.data["body"]);
@@ -69,7 +78,10 @@ class ShiftRepository {
         'http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/shifts/$id';
     Response response = await ApiService.getIstance().dio.get(
           url,
-          options: ApiService.getIstance().getAuthCredentials(),
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+          }),
         );
     if (response.data["responseType"] == "ok" &&
         response.data["body"] != null) {
@@ -85,7 +97,10 @@ class ShiftRepository {
         'http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/shifts/$id';
     Response response = await ApiService.getIstance().dio.delete(
           url,
-          options: ApiService.getIstance().getAuthCredentials(),
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+          }),
         );
     if (response.data["responseType"] == "error") {
       throw response.data;

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import '../models/subscription.dart';
 import 'package:dio/dio.dart';
 import '../services/api_service.dart';
@@ -9,7 +11,10 @@ class SubscriptionRepository {
         "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/subscriptions?badgeCode=$badgeCode&id=$id&userId=$userId";
     Response response = await ApiService.getIstance().dio.get(
           url,
-          options: ApiService.getIstance().getAuthCredentials(),
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+          }),
         );
     if (response.data["responseType"] == "ok" &&
         response.data["body"] != null) {
@@ -25,7 +30,10 @@ class SubscriptionRepository {
         "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/subscriptions";
     Response response = await ApiService.getIstance().dio.get(
           url,
-          options: ApiService.getIstance().getAuthCredentials(),
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+          }),
         );
     if (response.data["responseType"] == "ok") {
       List<Subscription> subscriptions =
@@ -44,7 +52,10 @@ class SubscriptionRepository {
     Response response = await ApiService.getIstance().dio.put(
           url,
           data: subscription.toJson(),
-          options: ApiService.getIstance().getAuthCredentials(),
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+          }),
         );
     if (response.data["responseType"] == "error") {
       throw response.data;
@@ -57,7 +68,10 @@ class SubscriptionRepository {
     Response response = await ApiService.getIstance().dio.post(
           url,
           data: subscription.toJson(),
-          options: ApiService.getIstance().getAuthCredentials(),
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+          }),
         );
     if (response.data["responseType"] == "ok") {
       Subscription newSubscription =
@@ -73,7 +87,10 @@ class SubscriptionRepository {
         "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/subscriptions/$id";
     Response response = await ApiService.getIstance().dio.delete(
           url,
-          options: ApiService.getIstance().getAuthCredentials(),
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+          }),
         );
     if (response.data["responseType"] == "error") {
       throw response.data;

@@ -21,7 +21,10 @@ class CourseRepository {
     Response response = await ApiService.getIstance().dio.post(
           url,
           data: course.toJson(),
-          options: ApiService.getIstance().getAuthCredentials(),
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+          }),
         );
     if (response.data["responseType"] == "ok") {
       Course newCourse = Course.fromJson(response.data["body"]);
@@ -36,7 +39,10 @@ class CourseRepository {
         'http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/courses';
     Response response = await ApiService.getIstance().dio.get(
           url,
-          options: ApiService.getIstance().getAuthCredentials(),
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+          }),
         );
     if (response.data["responseType"] == "ok") {
       List<Course> courses = (response.data["body"] as List<dynamic>)
@@ -54,7 +60,10 @@ class CourseRepository {
     Response response = await ApiService.getIstance().dio.put(
           url,
           data: course.toJson(),
-          options: ApiService.getIstance().getAuthCredentials(),
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+          }),
         );
     if (response.data["responseType"] == "ok") {
       Course updatedCourse = Course.fromJson(response.data["body"]);
@@ -69,7 +78,10 @@ class CourseRepository {
         "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/courses/$id";
     Response response = await ApiService.getIstance().dio.get(
           url,
-          options: ApiService.getIstance().getAuthCredentials(),
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+          }),
         );
     if (response.data["responseType"] == "ok" &&
         response.data["body"] != null) {
@@ -85,7 +97,10 @@ class CourseRepository {
         "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/courses/$id";
     Response response = await ApiService.getIstance().dio.delete(
           url,
-          options: ApiService.getIstance().getAuthCredentials(),
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+          }),
         );
     if (response.data["responseType"] == "error") {
       throw response.data;

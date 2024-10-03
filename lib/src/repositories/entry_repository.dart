@@ -11,7 +11,10 @@ class EntryRepository {
     Response response = await ApiService.getIstance().dio.post(
           url,
           data: entry.toJson(),
-          options: ApiService.getIstance().getAuthCredentials(),
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+          }),
         );
     if (response.data["responseType"] == "ok") {
       Entry newEntry = Entry.fromJson(response.data["body"]);
@@ -26,7 +29,10 @@ class EntryRepository {
         "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/entries?date=${dateTime?.toIso8601String()}&userId=$userId";
     Response response = await ApiService.getIstance().dio.get(
           url,
-          options: ApiService.getIstance().getAuthCredentials(),
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+          }),
         );
     if (response.data["responseType"] == "ok") {
       List<Entry> entries = (response.data["body"] as List<dynamic>)

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 
 class ApiService {
@@ -37,12 +35,6 @@ class ApiService {
     _PORT = _localPORT;
   }
 
-  void setAuthCredentials(
-      {required String username, required String password}) {
-    _username = username;
-    _password = password;
-  }
-
   void setGymId(int id) {
     _gymId = id;
   }
@@ -63,10 +55,20 @@ class ApiService {
     _remotePORT = port;
   }
 
-  Options getAuthCredentials() {
-    String basicAuth =
-        'Basic ${base64Encode(utf8.encode('$_username:$_password'))}';
-    return Options(headers: {'Authorization': basicAuth});
+  void setUsername(String username) {
+    _username = username;
+  }
+
+  void setPassword(String password) {
+    _password = password;
+  }
+
+  String? getUsername() {
+    return _username;
+  }
+
+  String? getPassword() {
+    return _password;
   }
 
   int? getGymId() {

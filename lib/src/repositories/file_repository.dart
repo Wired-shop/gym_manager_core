@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import '../enums/document_type.dart';
@@ -26,7 +27,10 @@ class FileRepository {
             "fileName": documentType.name,
             "userId": userId,
           },
-          options: ApiService.getIstance().getAuthCredentials(),
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+          }),
         );
     if (response.data["responseType"] == "ok") {
       return response.data["body"].toString();
@@ -37,7 +41,10 @@ class FileRepository {
   static Future<List<int>> get({required String path}) async {
     Response response = await ApiService.getIstance().dio.get(
           'http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/files/$path',
-          options: ApiService.getIstance().getAuthCredentials(),
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+          }),
         );
     if (response.data["responseType"] == "ok") {
       return (response.data["body"] as List).map<int>((e) => e).toList();
@@ -51,7 +58,10 @@ class FileRepository {
         'http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/files/$path';
     Response response = await ApiService.getIstance().dio.delete(
           url,
-          options: ApiService.getIstance().getAuthCredentials(),
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+          }),
         );
     if (response.data["responseType"] == "error") {
       throw response.data;
