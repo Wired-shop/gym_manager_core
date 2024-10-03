@@ -6,8 +6,12 @@ String password = "ciao1234";
 
 void main(List<String> arguments) async {
   //Auth
-  ApiService.getIstance().setAuthCredentials(email, password);
+  ApiService.getIstance()
+      .setAuthCredentials(username: email, password: password);
   ApiService.getIstance().setGymId(1);
+
+  ApiService.getIstance().switchToLocal();
+  ApiService.getIstance().switchToRemote();
 
   //Users
   print(await UserRepository.list());

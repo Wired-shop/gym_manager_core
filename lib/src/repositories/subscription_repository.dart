@@ -6,7 +6,7 @@ class SubscriptionRepository {
   static Future<Subscription?> get(
       {int? id, String? badgeCode, int? userId}) async {
     String url =
-        "http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/subscriptions?badgeCode=$badgeCode&id=$id&userId=$userId";
+        "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/subscriptions?badgeCode=$badgeCode&id=$id&userId=$userId";
     Response response = await ApiService.getIstance().dio.get(
           url,
           options: ApiService.getIstance().getAuthCredentials(),
@@ -22,7 +22,7 @@ class SubscriptionRepository {
 
   static Future<List<Subscription>> list() async {
     String url =
-        "http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/subscriptions";
+        "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/subscriptions";
     Response response = await ApiService.getIstance().dio.get(
           url,
           options: ApiService.getIstance().getAuthCredentials(),
@@ -40,7 +40,7 @@ class SubscriptionRepository {
 
   static Future update({required Subscription subscription}) async {
     String url =
-        "http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/subscriptions";
+        "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/subscriptions";
     Response response = await ApiService.getIstance().dio.put(
           url,
           data: subscription.toJson(),
@@ -53,7 +53,7 @@ class SubscriptionRepository {
 
   static Future insert({required Subscription subscription}) async {
     String url =
-        "http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/subscriptions";
+        "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/subscriptions";
     Response response = await ApiService.getIstance().dio.post(
           url,
           data: subscription.toJson(),
@@ -70,7 +70,7 @@ class SubscriptionRepository {
 
   static Future delete({required int id}) async {
     String url =
-        "http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/subscriptions/$id";
+        "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/subscriptions/$id";
     Response response = await ApiService.getIstance().dio.delete(
           url,
           options: ApiService.getIstance().getAuthCredentials(),

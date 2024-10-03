@@ -7,7 +7,7 @@ class CourseRepository {
   static Stream<List<Course>> stream() {
     return WebSocketChannel.connect(
       Uri.parse(
-          'ws://localhost:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/courses/stream'),
+          'ws://localhost:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/courses/stream'),
     ).stream.asyncMap((response) {
       return List<Map<String, dynamic>>.from(json.decode(response.toString()))
           .map((e) => Course.fromJson(e))
@@ -17,7 +17,7 @@ class CourseRepository {
 
   static Future<Course> insert({required Course course}) async {
     String url =
-        "http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/courses";
+        "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/courses";
     Response response = await ApiService.getIstance().dio.post(
           url,
           data: course.toJson(),
@@ -33,7 +33,7 @@ class CourseRepository {
 
   static Future<List<Course>> list() async {
     String url =
-        'http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/courses';
+        'http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/courses';
     Response response = await ApiService.getIstance().dio.get(
           url,
           options: ApiService.getIstance().getAuthCredentials(),
@@ -50,7 +50,7 @@ class CourseRepository {
 
   static Future<Course> update({required Course course}) async {
     String url =
-        "http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/courses/";
+        "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/courses/";
     Response response = await ApiService.getIstance().dio.put(
           url,
           data: course.toJson(),
@@ -66,7 +66,7 @@ class CourseRepository {
 
   static Future<Course?> get({required int id}) async {
     String url =
-        "http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/courses/$id";
+        "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/courses/$id";
     Response response = await ApiService.getIstance().dio.get(
           url,
           options: ApiService.getIstance().getAuthCredentials(),
@@ -82,7 +82,7 @@ class CourseRepository {
 
   static Future delete({required int id}) async {
     String url =
-        "http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/courses/$id";
+        "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/courses/$id";
     Response response = await ApiService.getIstance().dio.delete(
           url,
           options: ApiService.getIstance().getAuthCredentials(),

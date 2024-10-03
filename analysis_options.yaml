@@ -14,6 +14,7 @@
 analyzer:
   errors:
     avoid_function_literals_in_foreach_calls: ignore
+    non_constant_identifier_names: ignore
 include: package:lints/recommended.yaml
 
 # Uncomment the following section to specify additional rules.

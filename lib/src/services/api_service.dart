@@ -3,11 +3,21 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 
 class ApiService {
-  String _databaseIp = "127.0.0.1";
-  int _databasePort = 3000;
+  String _localIP = "127.0.0.1";
+  int _localPORT = 3000;
+
+  String _remoteIP = "85.235.151.228";
+  int _remotePORT = 3000;
+
+  String _IP = "127.0.0.1";
+  int _PORT = 3000;
+
   String? _username;
   String? _password;
+
   int? _gymId;
+
+  Dio dio = Dio();
 
   ApiService._privateConstructor();
 
@@ -17,23 +27,40 @@ class ApiService {
     return _instance;
   }
 
-  Dio dio = Dio();
-
-  void setIp(String ip) {
-    _databaseIp = ip;
+  void switchToRemote() {
+    _IP = _remoteIP;
+    _PORT = _remotePORT;
   }
 
-  void setPort(int port) {
-    _databasePort = port;
+  void switchToLocal() {
+    _IP = _localIP;
+    _PORT = _localPORT;
   }
 
-  void setAuthCredentials(String username, String password) {
+  void setAuthCredentials(
+      {required String username, required String password}) {
     _username = username;
     _password = password;
   }
 
   void setGymId(int id) {
     _gymId = id;
+  }
+
+  void setLocalIP(String ip) {
+    _localIP = ip;
+  }
+
+  void setLocalPORT(int port) {
+    _localPORT = port;
+  }
+
+  void setRemoteIP(String ip) {
+    _remoteIP = ip;
+  }
+
+  void setRemotePORT(int port) {
+    _remotePORT = port;
   }
 
   Options getAuthCredentials() {
@@ -46,11 +73,27 @@ class ApiService {
     return _gymId;
   }
 
-  String getIp() {
-    return _databaseIp;
+  String getIP() {
+    return _IP;
   }
 
-  int getPort() {
-    return _databasePort;
+  int getPORT() {
+    return _PORT;
+  }
+
+  String getLocalIP() {
+    return _localIP;
+  }
+
+  int getLocalPORT() {
+    return _localPORT;
+  }
+
+  String getRemoteIP() {
+    return _remoteIP;
+  }
+
+  int getRemotePORT() {
+    return _remotePORT;
   }
 }

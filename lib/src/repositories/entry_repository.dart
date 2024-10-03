@@ -7,7 +7,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 class EntryRepository {
   static Future<Entry> insert({required Entry entry}) async {
     String url =
-        "http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/entries/";
+        "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/entries/";
     Response response = await ApiService.getIstance().dio.post(
           url,
           data: entry.toJson(),
@@ -23,7 +23,7 @@ class EntryRepository {
 
   static Future<List<Entry>> list({DateTime? dateTime, int? userId}) async {
     String url =
-        "http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/entries?date=${dateTime?.toIso8601String()}&userId=$userId";
+        "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/entries?date=${dateTime?.toIso8601String()}&userId=$userId";
     Response response = await ApiService.getIstance().dio.get(
           url,
           options: ApiService.getIstance().getAuthCredentials(),
@@ -41,7 +41,7 @@ class EntryRepository {
   static Stream<List<Entry>> stream({DateTime? dateTime, int? userId}) {
     return WebSocketChannel.connect(
       Uri.parse(
-          'ws://localhost:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/entries/stream?date=${dateTime?.toIso8601String()}&userId=$userId'),
+          'ws://localhost:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/entries/stream?date=${dateTime?.toIso8601String()}&userId=$userId'),
     ).stream.asyncMap((response) {
       return List<Map<String, dynamic>>.from(json.decode(response.toString()))
           .map((e) => Entry.fromJson(e))
