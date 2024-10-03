@@ -48,9 +48,9 @@ class UserRepository {
     }
   }
 
-  static Future update({required int id, required User user}) async {
+  static Future update({required User user}) async {
     String url =
-        "http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/users/$id";
+        "http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/users";
     Response response = await ApiService.getIstance().dio.post(
           url,
           data: user.toJson(),

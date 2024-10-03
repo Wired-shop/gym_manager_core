@@ -38,10 +38,9 @@ class SubscriptionRepository {
     }
   }
 
-  static Future update(
-      {required int id, required Subscription subscription}) async {
+  static Future update({required Subscription subscription}) async {
     String url =
-        "http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/subscriptions/$id";
+        "http://${ApiService.getIstance().getIp()}:${ApiService.getIstance().getPort()}/gyms/${ApiService.getIstance().getGymId()}/subscriptions";
     Response response = await ApiService.getIstance().dio.put(
           url,
           data: subscription.toJson(),
