@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:gym_manager_core/core.dart';
 
-class FileRepository {
+class SyncRepository {
   static Future<Map<String, dynamic>> sync(String remoteIP) async {
     String url =
         "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/sync/$remoteIP";
