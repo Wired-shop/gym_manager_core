@@ -45,7 +45,7 @@ class UserRepository {
     }
   }
 
-  static Future insert({required User user}) async {
+  static Future<User> insert({required User user}) async {
     String url =
         "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/users";
     Response response = await ApiService.getIstance().dio.post(
@@ -67,7 +67,7 @@ class UserRepository {
   static Future update({required User user}) async {
     String url =
         "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/users";
-    Response response = await ApiService.getIstance().dio.post(
+    Response response = await ApiService.getIstance().dio.put(
           url,
           data: user.toJson(),
           options: Options(headers: {

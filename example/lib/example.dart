@@ -11,9 +11,6 @@ void main(List<String> arguments) async {
   ApiService.getIstance().setGymId(1);
 
   //Users
-  UserRepository.stream().listen((data) {
-    print(data);
-  });
 
-  await UserRepository.insert(user: User(name: "saffasfafafasfas"));
+  print(await SubscriptionRepository.get(userId: 5));
 }

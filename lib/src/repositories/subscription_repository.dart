@@ -62,7 +62,8 @@ class SubscriptionRepository {
     }
   }
 
-  static Future insert({required Subscription subscription}) async {
+  static Future<Subscription> insert(
+      {required Subscription subscription}) async {
     String url =
         "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/subscriptions";
     Response response = await ApiService.getIstance().dio.post(
