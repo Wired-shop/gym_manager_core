@@ -12,5 +12,7 @@ void main(List<String> arguments) async {
 
   //Users
 
+  print(await UserRepository.insert(user: User(name: "Patrick")));
+
   print(await SubscriptionRepository.get(userId: 5));
 }

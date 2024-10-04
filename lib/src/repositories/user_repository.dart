@@ -57,8 +57,7 @@ class UserRepository {
           }),
         );
     if (response.data["responseType"] == "ok") {
-      User newUser = User.fromJson(response.data["body"]);
-      return newUser;
+      return response.data["body"];
     } else {
       throw response.data;
     }
