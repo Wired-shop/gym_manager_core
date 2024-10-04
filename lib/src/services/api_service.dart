@@ -1,19 +1,12 @@
 import 'package:dio/dio.dart';
 
 class ApiService {
-  String _localIP = "127.0.0.1";
-  int _localPORT = 3000;
-
-  String _remoteIP = "85.235.151.228";
-  int _remotePORT = 3000;
-
   String _IP = "127.0.0.1";
   int _PORT = 3000;
+  String? _gymId;
 
   String? _username;
   String? _password;
-
-  String? _gymId;
 
   Dio dio = Dio();
 
@@ -25,34 +18,16 @@ class ApiService {
     return _instance;
   }
 
-  void switchToRemote() {
-    _IP = _remoteIP;
-    _PORT = _remotePORT;
-  }
-
-  void switchToLocal() {
-    _IP = _localIP;
-    _PORT = _localPORT;
-  }
-
   void setGymId(String id) {
     _gymId = id;
   }
 
-  void setLocalIP(String ip) {
-    _localIP = ip;
+  void setIP(String IP) {
+    _IP = IP;
   }
 
-  void setLocalPORT(int port) {
-    _localPORT = port;
-  }
-
-  void setRemoteIP(String ip) {
-    _remoteIP = ip;
-  }
-
-  void setRemotePORT(int port) {
-    _remotePORT = port;
+  void setRemotePORT(int PORT) {
+    _PORT = PORT;
   }
 
   void setUsername(String username) {
@@ -81,21 +56,5 @@ class ApiService {
 
   int getPORT() {
     return _PORT;
-  }
-
-  String getLocalIP() {
-    return _localIP;
-  }
-
-  int getLocalPORT() {
-    return _localPORT;
-  }
-
-  String getRemoteIP() {
-    return _remoteIP;
-  }
-
-  int getRemotePORT() {
-    return _remotePORT;
   }
 }
