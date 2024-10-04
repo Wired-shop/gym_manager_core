@@ -8,7 +8,7 @@ void main(List<String> arguments) async {
   //Auth
   ApiService.getIstance().setUsername(email);
   ApiService.getIstance().setPassword(password);
-  ApiService.getIstance().setGymId(1);
+  ApiService.getIstance().setGymId("1");
 
   //Users
 

@@ -13,7 +13,7 @@ class ApiService {
   String? _username;
   String? _password;
 
-  int? _gymId;
+  String? _gymId;
 
   Dio dio = Dio();
 
@@ -35,7 +35,7 @@ class ApiService {
     _PORT = _localPORT;
   }
 
-  void setGymId(int id) {
+  void setGymId(String id) {
     _gymId = id;
   }
 
@@ -71,7 +71,7 @@ class ApiService {
     return _password;
   }
 
-  int? getGymId() {
+  String? getGymId() {
     return _gymId;
   }
 
