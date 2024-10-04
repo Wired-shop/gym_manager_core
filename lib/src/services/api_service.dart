@@ -26,7 +26,7 @@ class ApiService {
     _IP = IP;
   }
 
-  void setRemotePORT(int PORT) {
+  void setPORT(int PORT) {
     _PORT = PORT;
   }
 
