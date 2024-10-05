@@ -11,6 +11,9 @@ void main(List<String> arguments) async {
   ApiService.getIstance().setGymId("1");
 
   //Users
+  CourseRepository.stream().listen((data) {
+    print(data.length);
+  });
 
   print((await CourseRepository.get(id: 14))?.name);
 }

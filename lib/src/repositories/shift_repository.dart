@@ -1,28 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:gym_manager_core/core.dart';
-import 'package:web_socket_channel/io.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 import 'dart:convert';
 
 class ShiftRepository {
-  static Stream<List<Shift>> stream() {
-    String basicAuth =
-        'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}';
-    String wsUrl =
-        'ws://localhost:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/courses/shifts';
-    WebSocketChannel channel = IOWebSocketChannel.connect(
-      Uri.parse(wsUrl),
-      headers: {
-        'Authorization': basicAuth,
-      },
-    );
-    return channel.stream.asyncMap((response) {
-      return List<Map<String, dynamic>>.from(json.decode(response.toString()))
-          .map((e) => Shift.fromJson(e))
-          .toList();
-    });
-  }
-
   static Future<List<Shift>> list({int? courseId}) async {
     String url =
         'http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/shifts?courseId=$courseId';

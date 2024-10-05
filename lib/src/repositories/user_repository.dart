@@ -9,7 +9,7 @@ class UserRepository {
     String basicAuth =
         'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}';
     String wsUrl =
-        'ws://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/users/stream?q=$q&${filter?.toQueryParameters()}';
+        'ws://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/stream/users?q=$q&${filter?.toQueryParameters()}';
     WebSocketChannel channel = IOWebSocketChannel.connect(
       Uri.parse(wsUrl),
       headers: {
