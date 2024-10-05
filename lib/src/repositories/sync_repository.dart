@@ -4,10 +4,11 @@ import 'package:dio/dio.dart';
 import 'package:gym_manager_core/core.dart';
 
 class SyncRepository {
-  static Future<Map<String, dynamic>> sync(String remoteIP) async {
+  static Future<Map<String, dynamic>> sync(
+      {required String IP, required int PORT}) async {
     String url =
-        "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/sync/$remoteIP";
-    Response response = await ApiService.getIstance().dio.post(
+        "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/sync?ip=$IP&port=$PORT";
+    Response response = await ApiService.getIstance().dio.get(
           url,
           options: Options(headers: {
             'Authorization':
