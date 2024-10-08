@@ -5,7 +5,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 import 'dart:convert';
 
 class CourseRepository {
-  static Stream<List<Course>> stream({String? q, UsersFilter? filter}) {
+  static Stream<List<Course>> stream() {
     String basicAuth =
         'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}';
     String wsUrl =

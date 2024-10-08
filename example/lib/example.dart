@@ -10,10 +10,8 @@ void main(List<String> arguments) async {
   ApiService.getIstance().setPassword(password);
   ApiService.getIstance().setGymId("1");
 
-  //Users
-  CourseRepository.stream().listen((data) {
-    print(data.length);
-  });
+  Shift shift = await ShiftRepository.insert(
+      shift: Shift(courseId: 20, dayOfWeek: 1, start: "11:20", end: "12:00"));
 
-  print((await CourseRepository.get(id: 14))?.name);
+  print((await ShiftRepository.get(id: shift.id!))?.toJson());
 }
