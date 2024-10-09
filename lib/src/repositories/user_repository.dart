@@ -80,9 +80,28 @@ class UserRepository {
     }
   }
 
-  static Future<User?> get({required int id, String? email}) async {
+  static Future<User?> get({required int id}) async {
     String url =
-        "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/users/$id?email=$email";
+        "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/users/$id";
+    Response response = await ApiService.getIstance().dio.get(
+          url,
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+          }),
+        );
+    if (response.data["responseType"] == "ok" &&
+        response.data["body"] != null) {
+      User user = User.fromJson(response.data["body"]);
+      return user;
+    } else {
+      return null;
+    }
+  }
+
+  static Future<User?> getUserByEmail({required String email}) async {
+    String url =
+        "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/users/emails/$email";
     Response response = await ApiService.getIstance().dio.get(
           url,
           options: Options(headers: {
