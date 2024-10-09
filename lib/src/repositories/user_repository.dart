@@ -80,9 +80,9 @@ class UserRepository {
     }
   }
 
-  static Future<User?> get({required int id}) async {
+  static Future<User?> get({required int id, String? email}) async {
     String url =
-        "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/users/$id";
+        "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/users/$id?email=$email";
     Response response = await ApiService.getIstance().dio.get(
           url,
           options: Options(headers: {
