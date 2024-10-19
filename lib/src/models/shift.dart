@@ -1,9 +1,11 @@
+import 'package:gym_manager_core/src/models/time_of_day.dart';
+
 class Shift {
   int? id;
   int? courseId;
   int dayOfWeek;
-  String start;
-  String end;
+  TimeOfDay start;
+  TimeOfDay end;
 
   Shift({
     this.id,
@@ -18,8 +20,8 @@ class Shift {
       id: json['id'] as int?,
       courseId: json['courseId'] as int?,
       dayOfWeek: json['dayOfWeek'] as int,
-      start: json['start'].toString(),
-      end: json['end'].toString(),
+      start: TimeOfDay.fromString(json['start']),
+      end: TimeOfDay.fromString(json['end']),
     );
   }
 

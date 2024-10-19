@@ -12,6 +12,8 @@ export 'src/models/course.dart';
 export 'src/models/shift.dart';
 export 'src/models/reservation.dart';
 
+export 'src/models/time_of_day.dart';
+
 export 'src/enums/document_type.dart';
 export 'src/enums/validation_response.dart';
 export 'src/enums/validation_response_warnings.dart';
