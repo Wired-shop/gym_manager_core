@@ -30,7 +30,7 @@ class Shift {
       'id': id,
       'courseId': courseId,
       'dayOfWeek': dayOfWeek,
-      'start': start,
+      'start': start.toString(),
       'end': end,
     };
   }

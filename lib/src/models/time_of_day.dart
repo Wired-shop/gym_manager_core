@@ -14,6 +14,7 @@ class TimeOfDay {
 
   // Costruttore factory da stringa (formato "HH:mm")
   factory TimeOfDay.fromString(String time) {
+    if (time.length > 5) time = time.substring(0, 5);
     final parts = time.split(':');
     if (parts.length != 2) {
       throw FormatException('Formato orario non valido. Utilizzare HH:mm');
