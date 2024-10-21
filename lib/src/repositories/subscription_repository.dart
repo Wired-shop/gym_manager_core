@@ -25,6 +25,30 @@ class SubscriptionRepository {
     }
   }
 
+   static Future import({required List<Subscription> subscriptions}) async {
+    String url =
+        "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/subscriptions/import";
+    List<Map<String, dynamic>> subscriptionsMapped =
+        subscriptions.map((subscription) => subscription.toJson()).toList();
+    Response response = await ApiService.getIstance().dio.post(
+          url,
+          data: jsonEncode(subscriptionsMapped),
+          options: Options(
+            contentType: "application/json",
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization':
+                  'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+            },
+          ),
+        );
+    if (response.data["responseType"] == "ok") {
+      return response.data["body"];
+    } else {
+      throw response.data;
+    }
+  }
+
   static Future<List<Subscription>> list() async {
     String url =
         "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/subscriptions";

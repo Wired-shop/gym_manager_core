@@ -9,8 +9,4 @@ void main(List<String> arguments) async {
   ApiService.getIstance().setUsername(email);
   ApiService.getIstance().setPassword(password);
   ApiService.getIstance().setGymId("1");
-
-  CourseRepository.stream().listen((data) {
-    print(data.first.toJson());
-  });
 }

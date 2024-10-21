@@ -43,6 +43,30 @@ class UserRepository {
     }
   }
 
+  static Future import({required List<User> users}) async {
+    String url =
+        "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/users/import";
+    List<Map<String, dynamic>> usersMapped =
+        users.map((user) => user.toJson()).toList();
+    Response response = await ApiService.getIstance().dio.post(
+          url,
+          data: jsonEncode(usersMapped),
+          options: Options(
+            contentType: "application/json",
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization':
+                  'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+            },
+          ),
+        );
+    if (response.data["responseType"] == "ok") {
+      return response.data["body"];
+    } else {
+      throw response.data;
+    }
+  }
+
   static Future<User> insert({required User user}) async {
     String url =
         "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/users";
