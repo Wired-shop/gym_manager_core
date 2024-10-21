@@ -11,7 +11,7 @@ class Course {
       id: json['id'] as int?,
       name: json['name'] as String,
       description: json['description'] as String?,
-      imageUrl: json['imageUrl'] as String,
+      imageUrl: json['imageUrl'] as String?,
     );
   }
 
