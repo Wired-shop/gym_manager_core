@@ -39,6 +39,8 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       archived: json['archived'] as int?,
       tpPro: json['tpPro'] as int?,
       id: json['id'] as int?,
+      forceBlock: json['forceBlock'] as int?,
+      birthdayCity: json['birthdayCity'] as String?,
       birthday: json['birthday'] == null
           ? null
           : DateTime.parse(json['birthday'] as String),
@@ -55,6 +57,7 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'name': instance.name,
       'surname': instance.surname,
       'birthday': instance.birthday?.toIso8601String(),
+      'birthdayCity': instance.birthdayCity,
       'gender': instance.gender,
       'address': instance.address,
       'fiscalCode': instance.fiscalCode,
@@ -83,5 +86,6 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'flagged': instance.flagged,
       'archived': instance.archived,
       'tpPro': instance.tpPro,
+      'forceBlock': instance.forceBlock,
       'validationResult': instance.validationResult?.toJson(),
     };

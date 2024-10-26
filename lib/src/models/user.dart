@@ -10,13 +10,14 @@ class User {
 //Informations
   String? name;
   String? surname;
+  String? birthdayCity;
   DateTime? birthday;
   String? gender;
   String? job;
 
 //Address
-  String? address;
   String? fiscalCode;
+  String? address;
   String? city;
   int? zipCode;
   String? province;
@@ -48,6 +49,7 @@ class User {
   int? flagged;
   int? archived;
   int? tpPro;
+  int? forceBlock;
 
   //Validation
   ValidationResult? validationResult;
@@ -77,9 +79,11 @@ class User {
     this.affiliationDocument,
     this.subscriptionDocument,
     this.flagged,
+    this.forceBlock,
     this.tpPro,
     this.archived,
     this.birthday,
+    this.birthdayCity,
     this.gender,
     this.job,
     this.validationResult,
