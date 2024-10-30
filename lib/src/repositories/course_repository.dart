@@ -7,9 +7,9 @@ import 'dart:convert';
 class CourseRepository {
   static Stream<List<Course>> stream() {
     String basicAuth =
-        'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}';
+        'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}';
     String wsUrl =
-        'ws://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/stream/courses';
+        'ws://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/stream/courses';
     WebSocketChannel channel = IOWebSocketChannel.connect(
       Uri.parse(wsUrl),
       headers: {
@@ -25,13 +25,13 @@ class CourseRepository {
 
   static Future<Course> insert({required Course course}) async {
     String url =
-        "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/courses";
-    Response response = await ApiService.getIstance().dio.post(
+        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/courses";
+    Response response = await ApiService.getInstance().dio.post(
           url,
           data: course.toJson(),
           options: Options(headers: {
             'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
           }),
         );
     if (response.data["responseType"] == "ok") {
@@ -44,12 +44,12 @@ class CourseRepository {
 
   static Future<List<Course>> list() async {
     String url =
-        'http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/courses';
-    Response response = await ApiService.getIstance().dio.get(
+        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/courses';
+    Response response = await ApiService.getInstance().dio.get(
           url,
           options: Options(headers: {
             'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
           }),
         );
     if (response.data["responseType"] == "ok") {
@@ -64,13 +64,13 @@ class CourseRepository {
 
   static Future<Course> update({required Course course}) async {
     String url =
-        "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/courses/";
-    Response response = await ApiService.getIstance().dio.put(
+        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/courses/";
+    Response response = await ApiService.getInstance().dio.put(
           url,
           data: course.toJson(),
           options: Options(headers: {
             'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
           }),
         );
     if (response.data["responseType"] == "ok") {
@@ -83,12 +83,12 @@ class CourseRepository {
 
   static Future<Course?> get({required int id}) async {
     String url =
-        "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/courses/$id";
-    Response response = await ApiService.getIstance().dio.get(
+        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/courses/$id";
+    Response response = await ApiService.getInstance().dio.get(
           url,
           options: Options(headers: {
             'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
           }),
         );
     if (response.data["responseType"] == "ok" &&
@@ -102,12 +102,12 @@ class CourseRepository {
 
   static Future delete({required int id}) async {
     String url =
-        "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/courses/$id";
-    Response response = await ApiService.getIstance().dio.delete(
+        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/courses/$id";
+    Response response = await ApiService.getInstance().dio.delete(
           url,
           options: Options(headers: {
             'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
           }),
         );
     if (response.data["responseType"] == "error") {

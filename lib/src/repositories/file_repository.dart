@@ -18,8 +18,8 @@ class FileRepository {
       required String extension,
       required DocumentType documentType}) async {
     String url =
-        'http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/files';
-    Response response = await ApiService.getIstance().dio.post(
+        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/files';
+    Response response = await ApiService.getInstance().dio.post(
           url,
           data: {
             "bytes": bytes,
@@ -29,7 +29,7 @@ class FileRepository {
           },
           options: Options(headers: {
             'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
           }),
         );
     if (response.data["responseType"] == "ok") {
@@ -39,11 +39,11 @@ class FileRepository {
   }
 
   static Future<List<int>> get({required String path}) async {
-    Response response = await ApiService.getIstance().dio.get(
-          'http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/files?path=$path',
+    Response response = await ApiService.getInstance().dio.get(
+          'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/files?path=$path',
           options: Options(headers: {
             'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
           }),
         );
     if (response.data["responseType"] == "ok") {
@@ -55,12 +55,12 @@ class FileRepository {
 
   static Future delete({required String path}) async {
     String url =
-        'http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/files?path=$path';
-    Response response = await ApiService.getIstance().dio.delete(
+        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/files?path=$path';
+    Response response = await ApiService.getInstance().dio.delete(
           url,
           options: Options(headers: {
             'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
           }),
         );
     if (response.data["responseType"] == "error") {

@@ -8,12 +8,12 @@ class SubscriptionRepository {
   static Future<Subscription?> get(
       {int? id, String? badgeCode, int? userId}) async {
     String url =
-        "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/subscriptions?badgeCode=$badgeCode&id=$id&userId=$userId";
-    Response response = await ApiService.getIstance().dio.get(
+        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/subscriptions?badgeCode=$badgeCode&id=$id&userId=$userId";
+    Response response = await ApiService.getInstance().dio.get(
           url,
           options: Options(headers: {
             'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
           }),
         );
     if (response.data["responseType"] == "ok" &&
@@ -25,12 +25,12 @@ class SubscriptionRepository {
     }
   }
 
-   static Future import({required List<Subscription> subscriptions}) async {
+  static Future import({required List<Subscription> subscriptions}) async {
     String url =
-        "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/subscriptions/import";
+        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/subscriptions/import";
     List<Map<String, dynamic>> subscriptionsMapped =
         subscriptions.map((subscription) => subscription.toJson()).toList();
-    Response response = await ApiService.getIstance().dio.post(
+    Response response = await ApiService.getInstance().dio.post(
           url,
           data: jsonEncode(subscriptionsMapped),
           options: Options(
@@ -38,7 +38,7 @@ class SubscriptionRepository {
             headers: {
               'Content-Type': 'application/json',
               'Authorization':
-                  'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+                  'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
             },
           ),
         );
@@ -51,12 +51,12 @@ class SubscriptionRepository {
 
   static Future<List<Subscription>> list() async {
     String url =
-        "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/subscriptions";
-    Response response = await ApiService.getIstance().dio.get(
+        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/subscriptions";
+    Response response = await ApiService.getInstance().dio.get(
           url,
           options: Options(headers: {
             'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
           }),
         );
     if (response.data["responseType"] == "ok") {
@@ -72,13 +72,13 @@ class SubscriptionRepository {
 
   static Future update({required Subscription subscription}) async {
     String url =
-        "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/subscriptions";
-    Response response = await ApiService.getIstance().dio.put(
+        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/subscriptions";
+    Response response = await ApiService.getInstance().dio.put(
           url,
           data: subscription.toJson(),
           options: Options(headers: {
             'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
           }),
         );
     if (response.data["responseType"] == "error") {
@@ -89,13 +89,13 @@ class SubscriptionRepository {
   static Future<Subscription> insert(
       {required Subscription subscription}) async {
     String url =
-        "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/subscriptions";
-    Response response = await ApiService.getIstance().dio.post(
+        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/subscriptions";
+    Response response = await ApiService.getInstance().dio.post(
           url,
           data: subscription.toJson(),
           options: Options(headers: {
             'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
           }),
         );
     if (response.data["responseType"] == "ok") {
@@ -109,12 +109,12 @@ class SubscriptionRepository {
 
   static Future delete({required int id}) async {
     String url =
-        "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/subscriptions/$id";
-    Response response = await ApiService.getIstance().dio.delete(
+        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/subscriptions/$id";
+    Response response = await ApiService.getInstance().dio.delete(
           url,
           options: Options(headers: {
             'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
           }),
         );
     if (response.data["responseType"] == "error") {

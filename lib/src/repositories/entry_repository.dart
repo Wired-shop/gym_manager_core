@@ -8,13 +8,13 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 class EntryRepository {
   static Future<Entry> insert({required Entry entry}) async {
     String url =
-        "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/entries/";
-    Response response = await ApiService.getIstance().dio.post(
+        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/entries/";
+    Response response = await ApiService.getInstance().dio.post(
           url,
           data: entry.toJson(),
           options: Options(headers: {
             'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
           }),
         );
     if (response.data["responseType"] == "ok") {
@@ -27,12 +27,12 @@ class EntryRepository {
 
   static Future<List<Entry>> list({DateTime? dateTime, int? userId}) async {
     String url =
-        "http://${ApiService.getIstance().getIP()}:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/entries?date=${dateTime?.toIso8601String()}&userId=$userId";
-    Response response = await ApiService.getIstance().dio.get(
+        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/entries?date=${dateTime?.toIso8601String()}&userId=$userId";
+    Response response = await ApiService.getInstance().dio.get(
           url,
           options: Options(headers: {
             'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}'
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
           }),
         );
     if (response.data["responseType"] == "ok") {
@@ -47,9 +47,9 @@ class EntryRepository {
 
   static Stream<List<Entry>> stream({DateTime? dateTime}) {
     String basicAuth =
-        'Basic ${base64Encode(utf8.encode('${ApiService.getIstance().getUsername()}:${ApiService.getIstance().getPassword()}'))}';
+        'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}';
     String wsUrl =
-        'ws://localhost:${ApiService.getIstance().getPORT()}/gyms/${ApiService.getIstance().getGymId()}/stream/entries?date=${dateTime?.toIso8601String()}';
+        'ws://localhost:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/stream/entries?date=${dateTime?.toIso8601String()}';
     WebSocketChannel channel = IOWebSocketChannel.connect(
       Uri.parse(wsUrl),
       headers: {

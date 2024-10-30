@@ -14,7 +14,7 @@ class ApiService {
 
   static final ApiService _instance = ApiService._privateConstructor();
 
-  static ApiService getIstance() {
+  static ApiService getInstance() {
     return _instance;
   }
 

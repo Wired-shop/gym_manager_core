@@ -6,7 +6,7 @@ String password = "ciao1234";
 
 void main(List<String> arguments) async {
   //Auth
-  ApiService.getIstance().setUsername(email);
-  ApiService.getIstance().setPassword(password);
-  ApiService.getIstance().setGymId("1");
+  ApiService.getInstance().setUsername(email);
+  ApiService.getInstance().setPassword(password);
+  ApiService.getInstance().setGymId("1");
 }
