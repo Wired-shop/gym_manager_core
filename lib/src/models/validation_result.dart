@@ -26,6 +26,10 @@ class ValidationResult {
         ValidationResponseWarnings.affiliazioneAssente,
         ValidationResponseWarnings.iscrizioneAssente,
         ValidationResponseWarnings.certificatoMedicoAssente,
+        ValidationResponseWarnings.abbonamentoInScadenza,
+        ValidationResponseWarnings.affiliazioneInScadenza,
+        ValidationResponseWarnings.iscrizioneInScadenza,
+        ValidationResponseWarnings.certificatoMedicoInScadenza
       ];
     } else if (response == ValidationResponse.valid) {
       return [];
