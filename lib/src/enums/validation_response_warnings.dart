@@ -8,6 +8,10 @@ enum ValidationResponseWarnings {
   abbonamentoAssente,
   abbonamentoScaduto,
   accessiTerminati,
+  iscrizioneInScadenza,
+  abbonamentoInScadenza,
+  affiliazioneInScadenza,
+  certificatoMedicoInScadenza,
   bloccato,
   sconosciuto;
 
@@ -45,6 +49,14 @@ enum ValidationResponseWarnings {
         return "Accessi terminati";
       case ValidationResponseWarnings.bloccato:
         return "Bloccato";
+      case ValidationResponseWarnings.abbonamentoInScadenza:
+        return "Abbonamento in scadenza";
+      case ValidationResponseWarnings.certificatoMedicoInScadenza:
+        return "Certificato medico in scadenza";
+      case ValidationResponseWarnings.affiliazioneInScadenza:
+        return "Affiliazione in scadenza";
+      case ValidationResponseWarnings.iscrizioneInScadenza:
+        return "Iscrizione in scadenza";
     }
   }
 }
