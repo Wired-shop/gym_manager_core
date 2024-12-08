@@ -9,4 +9,6 @@ void main(List<String> arguments) async {
   ApiService.getInstance().setUsername(email);
   ApiService.getInstance().setPassword(password);
   ApiService.getInstance().setGymId("1");
+
+  print(await UserRepository.list());
 }

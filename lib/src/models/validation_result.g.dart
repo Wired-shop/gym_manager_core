@@ -29,6 +29,11 @@ const _$ValidationResponseEnumMap = {
 };
 
 const _$ValidationResponseWarningsEnumMap = {
+  ValidationResponseWarnings.affiliazioneInScadenza: 'affiliazioneInScadenza',
+  ValidationResponseWarnings.abbonamentoInScadenza: 'abbonamentoInScadenza',
+  ValidationResponseWarnings.certificatoMedicoInScadenza:
+      'certificatoMedicoInScadenza',
+  ValidationResponseWarnings.iscrizioneInScadenza: 'iscrizioneInScadenza',
   ValidationResponseWarnings.iscrizioneScaduta: 'iscrizioneScaduta',
   ValidationResponseWarnings.affiliazioneScaduta: 'affiliazioneScaduta',
   ValidationResponseWarnings.certificatoMedicoScaduto:

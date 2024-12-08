@@ -2,6 +2,10 @@ enum EntryResponseWarnings {
   iscrizioneScaduta,
   affiliazioneScaduta,
   certificatoMedicoScaduto,
+  abbonamentoInScadenza,
+  certificatoMedicoInScadenza,
+  iscrizioneInScadenza,
+  affiliazioneInScadenza,
   abbonamentoScaduto,
   accessiTerminati,
   sconosciuto;
