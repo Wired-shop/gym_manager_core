@@ -29,11 +29,6 @@ const _$ValidationResponseEnumMap = {
 };
 
 const _$ValidationResponseWarningsEnumMap = {
-  ValidationResponseWarnings.affiliazioneInScadenza: 'affiliazioneInScadenza',
-  ValidationResponseWarnings.abbonamentoInScadenza: 'abbonamentoInScadenza',
-  ValidationResponseWarnings.certificatoMedicoInScadenza:
-      'certificatoMedicoInScadenza',
-  ValidationResponseWarnings.iscrizioneInScadenza: 'iscrizioneInScadenza',
   ValidationResponseWarnings.iscrizioneScaduta: 'iscrizioneScaduta',
   ValidationResponseWarnings.affiliazioneScaduta: 'affiliazioneScaduta',
   ValidationResponseWarnings.certificatoMedicoScaduto:
@@ -43,6 +38,11 @@ const _$ValidationResponseWarningsEnumMap = {
   ValidationResponseWarnings.certificatoMedicoAssente:
       'certificatoMedicoAssente',
   ValidationResponseWarnings.abbonamentoAssente: 'abbonamentoAssente',
+  ValidationResponseWarnings.abbonamentoInScadenza: 'abbonamentoInScadenza',
+  ValidationResponseWarnings.affiliazioneInScadenza: 'affiliazioneInScadenza',
+  ValidationResponseWarnings.iscrizioneInScadenza: 'iscrizioneInScadenza',
+  ValidationResponseWarnings.certificatoMedicoInScadenza:
+      'certificatoMedicoInScadenza',
   ValidationResponseWarnings.abbonamentoScaduto: 'abbonamentoScaduto',
   ValidationResponseWarnings.accessiTerminati: 'accessiTerminati',
   ValidationResponseWarnings.sconosciuto: 'sconosciuto',
