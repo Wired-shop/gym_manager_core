@@ -22,14 +22,13 @@ class UsersFilter implements Filter {
     bool? isFlagged,
     bool? isForceBlocked,
     this.courseId,
-    List<ValidationResponseWarnings>? validationResponseWarnings,
+    this.validationResponseWarnings,
   })  : hasEmail = hasEmail ?? false,
         hasPhone = hasPhone ?? false,
         hasPublicNote = hasPublicNote ?? false,
         hasPrivateNote = hasPrivateNote ?? false,
         isArchived = isArchived ?? false,
         isForceBlocked = isForceBlocked ?? false,
-        validationResponseWarnings = validationResponseWarnings ?? [],
         isFlagged = isFlagged ?? false;
 
   @override
@@ -85,7 +84,7 @@ class UsersFilter implements Filter {
                     .split(',')
                     .map((e) => ValidationResponseWarnings.fromString(e))
                     .toList()
-            : null;
+            : [];
   }
 
   @override
