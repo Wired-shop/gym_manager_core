@@ -66,7 +66,26 @@ class UsersFilter implements Filter {
 
   @override
   fromQueryParameters(Map<String, dynamic> map) {
-    throw UnimplementedError();
+    hasEmail = map['hasEmail'] == 'true';
+    hasPhone = map['hasPhone'] == 'true';
+    hasPublicNote = map['hasPublicNote'] == 'true';
+    hasPrivateNote = map['hasPrivateNote'] == 'true';
+    isArchived = map['isArchived'] == 'true';
+    isFlagged = map['isFlagged'] == 'true';
+    isForceBlocked = map['isForceBlocked'] == 'true';
+    courseId = map['courseId'].toString() != 'null'
+        ? int.tryParse(map['courseId'])
+        : null;
+    validationResponseWarnings =
+        !(map['validationResponseWarnings'].toString()).contains('null')
+            ? map['validationResponseWarnings'].toString().trim().isEmpty
+                ? []
+                : map['validationResponseWarnings']
+                    .toString()
+                    .split(',')
+                    .map((e) => ValidationResponseWarnings.fromString(e))
+                    .toList()
+            : null;
   }
 
   @override
