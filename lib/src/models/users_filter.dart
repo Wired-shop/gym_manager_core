@@ -29,6 +29,7 @@ class UsersFilter implements Filter {
         hasPrivateNote = hasPrivateNote ?? false,
         isArchived = isArchived ?? false,
         isForceBlocked = isForceBlocked ?? false,
+        validationResponseWarnings = validationResponseWarnings ?? [],
         isFlagged = isFlagged ?? false;
 
   @override

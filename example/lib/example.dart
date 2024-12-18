@@ -5,10 +5,13 @@ String email = "patrick1@gmail.com";
 String password = "ciao1234";
 
 void main(List<String> arguments) async {
-  //Auth
-  ApiService.getInstance().setUsername(email);
-  ApiService.getInstance().setPassword(password);
-  ApiService.getInstance().setGymId("1");
-
-  print(await UserRepository.list());
+  UsersFilter filter1 = UsersFilter(validationResponseWarnings: [
+    ValidationResponseWarnings.abbonamentoAssente,
+  ]);
+  UsersFilter filter2 = UsersFilter(validationResponseWarnings: [
+    ValidationResponseWarnings.abbonamentoAssente,
+  ]);
+  print(filter1.toJson().entries.toList());
+  print(filter2.toJson().entries.toList());
+  print(filter1 == filter2);
 }
