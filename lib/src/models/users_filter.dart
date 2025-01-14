@@ -13,6 +13,7 @@ class UsersFilter implements Filter {
   int? idleDays;
   String? gender;
   int? years;
+  int? creation;
   List<ValidationResponseWarnings>? validationResponseWarnings;
 
   UsersFilter({
@@ -28,6 +29,7 @@ class UsersFilter implements Filter {
     this.gender,
     this.years,
     this.courseId,
+    this.creation,
     this.validationResponseWarnings,
   })  : hasEmail = hasEmail ?? false,
         hasPhone = hasPhone ?? false,
@@ -52,6 +54,7 @@ class UsersFilter implements Filter {
     idleDays = null;
     years = null;
     gender = null;
+    creation = null;
   }
 
   @override
@@ -67,12 +70,13 @@ class UsersFilter implements Filter {
         validationResponseWarnings == null &&
         years == null &&
         gender == null &&
-        idleDays == null;
+        idleDays == null &&
+        creation == null;
   }
 
   @override
   String toQueryParameters() {
-    return 'courseId=$courseId&hasEmail=$hasEmail&hasPhone=$hasPhone&hasPublicNote=$hasPublicNote&hasPrivateNote=$hasPrivateNote&isArchived=$isArchived&isFlagged=$isFlagged&isForceBlocked=$isForceBlocked&idleDays=$idleDays&years=$years&gender=$gender&validationResponseWarnings=${validationResponseWarnings?.map((e) => e.name).join(",")}';
+    return 'courseId=$courseId&hasEmail=$hasEmail&hasPhone=$hasPhone&hasPublicNote=$hasPublicNote&hasPrivateNote=$hasPrivateNote&isArchived=$isArchived&isFlagged=$isFlagged&isForceBlocked=$isForceBlocked&idleDays=$idleDays&years=$years&gender=$gender&creation=$creation&validationResponseWarnings=${validationResponseWarnings?.map((e) => e.name).join(",")}';
   }
 
   @override
@@ -92,7 +96,11 @@ class UsersFilter implements Filter {
         : null;
     years =
         map['years'].toString() != 'null' ? int.tryParse(map['years']) : null;
-    gender = map['years'].toString() != 'null' ? map['years'].toString() : null;
+    gender =
+        map['gender'].toString() != 'null' ? map['gender'].toString() : null;
+    creation = map['creation'].toString() != 'null'
+        ? int.tryParse(map['creation'])
+        : null;
     validationResponseWarnings =
         !(map['validationResponseWarnings'].toString()).contains('null')
             ? map['validationResponseWarnings'].toString().trim().isEmpty
@@ -120,6 +128,7 @@ class UsersFilter implements Filter {
       'gender': gender,
       'years': years,
       'idleDays': idleDays,
+      'creation': creation,
       'validationResponseWarnings':
           validationResponseWarnings?.map((e) => e.name).toList(),
     };
@@ -140,6 +149,7 @@ class UsersFilter implements Filter {
       idleDays: json['idleDays'] as int?,
       gender: json['gender'] as String?,
       years: json['years'] as int?,
+      creation: json['creation'] as int?,
       validationResponseWarnings: (json['validationResponseWarnings']
                   as List<dynamic>?)
               ?.map((e) => ValidationResponseWarnings.fromString(e as String))
