@@ -10,6 +10,9 @@ class UsersFilter implements Filter {
   bool isFlagged;
   bool isForceBlocked;
   int? courseId;
+  int? idleDays;
+  String? gender;
+  int? years;
   List<ValidationResponseWarnings>? validationResponseWarnings;
 
   UsersFilter({
@@ -21,6 +24,9 @@ class UsersFilter implements Filter {
     bool? isArchived,
     bool? isFlagged,
     bool? isForceBlocked,
+    this.idleDays,
+    this.gender,
+    this.years,
     this.courseId,
     this.validationResponseWarnings,
   })  : hasEmail = hasEmail ?? false,
@@ -43,6 +49,9 @@ class UsersFilter implements Filter {
     isForceBlocked = false;
     courseId = null;
     validationResponseWarnings = null;
+    idleDays = null;
+    years = null;
+    gender = null;
   }
 
   @override
@@ -55,12 +64,15 @@ class UsersFilter implements Filter {
         isForceBlocked == false &&
         isFlagged == false &&
         courseId == null &&
-        validationResponseWarnings == null;
+        validationResponseWarnings == null &&
+        years == null &&
+        gender == null &&
+        idleDays == null;
   }
 
   @override
   String toQueryParameters() {
-    return 'courseId=$courseId&hasEmail=$hasEmail&hasPhone=$hasPhone&hasPublicNote=$hasPublicNote&hasPrivateNote=$hasPrivateNote&isArchived=$isArchived&isFlagged=$isFlagged&isForceBlocked=$isForceBlocked&validationResponseWarnings=${validationResponseWarnings?.map((e) => e.name).join(",")}';
+    return 'courseId=$courseId&hasEmail=$hasEmail&hasPhone=$hasPhone&hasPublicNote=$hasPublicNote&hasPrivateNote=$hasPrivateNote&isArchived=$isArchived&isFlagged=$isFlagged&isForceBlocked=$isForceBlocked&idleDays=$idleDays&years=$years&gender=$gender&validationResponseWarnings=${validationResponseWarnings?.map((e) => e.name).join(",")}';
   }
 
   @override
@@ -75,6 +87,12 @@ class UsersFilter implements Filter {
     courseId = map['courseId'].toString() != 'null'
         ? int.tryParse(map['courseId'])
         : null;
+    idleDays = map['idleDays'].toString() != 'null'
+        ? int.tryParse(map['idleDays'])
+        : null;
+    years =
+        map['years'].toString() != 'null' ? int.tryParse(map['years']) : null;
+    gender = map['years'].toString() != 'null' ? map['years'].toString() : null;
     validationResponseWarnings =
         !(map['validationResponseWarnings'].toString()).contains('null')
             ? map['validationResponseWarnings'].toString().trim().isEmpty
@@ -99,6 +117,9 @@ class UsersFilter implements Filter {
       'isArchived': isArchived,
       'isForceBlocked': isForceBlocked,
       'courseId': courseId,
+      'gender': gender,
+      'years': years,
+      'idleDays': idleDays,
       'validationResponseWarnings':
           validationResponseWarnings?.map((e) => e.name).toList(),
     };
@@ -116,6 +137,9 @@ class UsersFilter implements Filter {
       isFlagged: json['isFlagged'] as bool? ?? false,
       isForceBlocked: json['isForceBlocked'] as bool? ?? false,
       courseId: json['courseId'] as int?,
+      idleDays: json['idleDays'] as int?,
+      gender: json['gender'] as String?,
+      years: json['years'] as int?,
       validationResponseWarnings: (json['validationResponseWarnings']
                   as List<dynamic>?)
               ?.map((e) => ValidationResponseWarnings.fromString(e as String))

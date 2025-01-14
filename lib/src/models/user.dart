@@ -54,6 +54,8 @@ class User {
   //Validation
   ValidationResult? validationResult;
 
+  DateTime? creation;
+
   User({
     this.id,
     this.name,
@@ -86,6 +88,7 @@ class User {
     this.birthdayCity,
     this.gender,
     this.job,
+    this.creation,
     this.validationResult,
   });
 
