@@ -1,18 +1,19 @@
 import 'package:gym_manager_core/core.dart';
+import 'package:gym_manager_core/src/models/int_filter_range.dart';
 
 class UsersFilter implements Filter {
   String? name;
-  bool hasEmail;
-  bool hasPhone;
-  bool hasPublicNote;
-  bool hasPrivateNote;
-  bool isArchived;
-  bool isFlagged;
-  bool isForceBlocked;
+  bool? hasEmail;
+  bool? hasPhone;
+  bool? hasPublicNote;
+  bool? hasPrivateNote;
+  bool? isArchived;
+  bool? isFlagged;
+  bool? isForceBlocked;
   int? courseId;
   int? idleDays;
   String? gender;
-  int? years;
+  IntFilterRange? yearsRange;
   int? creation;
   List<ValidationResponseWarnings>? validationResponseWarnings;
 
@@ -27,7 +28,7 @@ class UsersFilter implements Filter {
     bool? isForceBlocked,
     this.idleDays,
     this.gender,
-    this.years,
+    this.yearsRange,
     this.courseId,
     this.creation,
     this.validationResponseWarnings,
@@ -52,7 +53,7 @@ class UsersFilter implements Filter {
     courseId = null;
     validationResponseWarnings = null;
     idleDays = null;
-    years = null;
+    yearsRange = null;
     gender = null;
     creation = null;
   }
@@ -68,7 +69,7 @@ class UsersFilter implements Filter {
         isFlagged == false &&
         courseId == null &&
         validationResponseWarnings == null &&
-        years == null &&
+        yearsRange == null &&
         gender == null &&
         idleDays == null &&
         creation == null;
@@ -76,7 +77,7 @@ class UsersFilter implements Filter {
 
   @override
   String toQueryParameters() {
-    return 'courseId=$courseId&hasEmail=$hasEmail&hasPhone=$hasPhone&hasPublicNote=$hasPublicNote&hasPrivateNote=$hasPrivateNote&isArchived=$isArchived&isFlagged=$isFlagged&isForceBlocked=$isForceBlocked&idleDays=$idleDays&years=$years&gender=$gender&creation=$creation&validationResponseWarnings=${validationResponseWarnings?.map((e) => e.name).join(",")}';
+    return 'courseId=$courseId&hasEmail=$hasEmail&hasPhone=$hasPhone&hasPublicNote=$hasPublicNote&hasPrivateNote=$hasPrivateNote&isArchived=$isArchived&isFlagged=$isFlagged&isForceBlocked=$isForceBlocked&idleDays=$idleDays&yearsRange=${yearsRange?.toQueryParameters()}&gender=$gender&creation=$creation&validationResponseWarnings=${validationResponseWarnings?.map((e) => e.name).join(",")}';
   }
 
   @override
@@ -94,8 +95,8 @@ class UsersFilter implements Filter {
     idleDays = map['idleDays'].toString() != 'null'
         ? int.tryParse(map['idleDays'])
         : null;
-    years =
-        map['years'].toString() != 'null' ? int.tryParse(map['years']) : null;
+    yearsRange = IntFilterRange.fromQueryParameters(
+        map: map, intFilterRangeName: "yearsRange");
     gender =
         map['gender'].toString() != 'null' ? map['gender'].toString() : null;
     creation = map['creation'].toString() != 'null'
@@ -126,7 +127,7 @@ class UsersFilter implements Filter {
       'isForceBlocked': isForceBlocked,
       'courseId': courseId,
       'gender': gender,
-      'years': years,
+      'yearsRange': yearsRange?.toQueryParameters(),
       'idleDays': idleDays,
       'creation': creation,
       'validationResponseWarnings':
@@ -148,7 +149,8 @@ class UsersFilter implements Filter {
       courseId: json['courseId'] as int?,
       idleDays: json['idleDays'] as int?,
       gender: json['gender'] as String?,
-      years: json['years'] as int?,
+      yearsRange: IntFilterRange.fromQueryParameters(
+          map: json, intFilterRangeName: "yearsRange"),
       creation: json['creation'] as int?,
       validationResponseWarnings: (json['validationResponseWarnings']
                   as List<dynamic>?)

@@ -8,6 +8,7 @@ export 'src/models/entry.dart';
 export 'src/models/validation_result.dart';
 export 'src/models/filter.dart';
 export 'src/models/users_filter.dart';
+export 'src/models/int_filter_range.dart';
 export 'src/models/course.dart';
 export 'src/models/shift.dart';
 export 'src/models/reservation.dart';
