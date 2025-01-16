@@ -1,19 +1,19 @@
 import 'package:gym_manager_core/core.dart';
 
 void main(List<String> arguments) async {
-  UsersFilter filter1 = UsersFilter(validationResponseWarnings: [
+  ApiService.getInstance().setGymId("1");
+  ApiService.getInstance().setIP("127.0.0.1");
+  ApiService.getInstance().setPORT(3000);
+
+  ApiService.getInstance().setUsername("patrick@gmail.com");
+  ApiService.getInstance().setPassword("ciao1234");
+
+  UsersFilter filter =
+      UsersFilter(yearsRange: null, validationResponseWarnings: [
     ValidationResponseWarnings.abbonamentoAssente,
   ]);
-  UsersFilter filter2 = UsersFilter(validationResponseWarnings: [
-    ValidationResponseWarnings.abbonamentoAssente,
-    ValidationResponseWarnings.abbonamentoAssente,
-  ]);
-  print(filter1.toJson().entries.toList());
-  print(filter2.toJson().entries.toList());
-  print(filter1 == filter2);
 
-  UsersFilter filter3 = UsersFilter();
-  print(filter3.toJson().entries.toList());
+  print(filter.toJson().toString());
 
-  print(filter3.isClear());
+  print(await UserRepository.list(filter: filter));
 }

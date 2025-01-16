@@ -25,7 +25,13 @@ class UserRepository {
 
   static Future<List<User>> list({String? q, UsersFilter? filter}) async {
     String url =
-        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/users?q=$q&filter=${filter?.toQueryParameters()}';
+        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/users?q=$q";
+
+    if (filter != null) {
+      url += "&${filter.toQueryParameters()}";
+    }
+
+    print(url);
     Response response = await ApiService.getInstance().dio.get(
           url,
           options: Options(headers: {

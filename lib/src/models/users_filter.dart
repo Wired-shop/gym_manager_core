@@ -1,5 +1,4 @@
 import 'package:gym_manager_core/core.dart';
-import 'package:gym_manager_core/src/models/int_filter_range.dart';
 
 class UsersFilter implements Filter {
   String? name;
