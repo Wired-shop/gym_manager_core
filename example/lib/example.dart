@@ -8,12 +8,10 @@ void main(List<String> arguments) async {
   ApiService.getInstance().setUsername("patrick@gmail.com");
   ApiService.getInstance().setPassword("ciao1234");
 
-  UsersFilter filter =
-      UsersFilter(yearsRange: null, validationResponseWarnings: [
-    ValidationResponseWarnings.abbonamentoAssente,
+  UsersFilter filter = UsersFilter(validationResponseWarnings: [
+    ValidationResponseWarnings.abbonamentoAssente
   ]);
 
-  print(filter.toJson().toString());
-
-  print(await UserRepository.list(filter: filter));
+  print((await UserRepository.list(filter: filter))
+      .map((e) => "${e.name} ${e.surname}"));
 }

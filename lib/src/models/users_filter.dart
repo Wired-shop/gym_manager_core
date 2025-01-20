@@ -25,13 +25,14 @@ class UsersFilter implements Filter {
     bool? isArchived,
     bool? isFlagged,
     bool? isForceBlocked,
+    IntFilterRange? yearsRange,
     this.idleDays,
     this.gender,
-    this.yearsRange,
     this.courseId,
     this.creation,
     this.validationResponseWarnings,
-  })  : hasEmail = hasEmail ?? false,
+  })  : yearsRange = yearsRange ?? IntFilterRange(),
+        hasEmail = hasEmail ?? false,
         hasPhone = hasPhone ?? false,
         hasPublicNote = hasPublicNote ?? false,
         hasPrivateNote = hasPrivateNote ?? false,
@@ -52,7 +53,7 @@ class UsersFilter implements Filter {
     courseId = null;
     validationResponseWarnings = null;
     idleDays = null;
-    yearsRange = null;
+    yearsRange = IntFilterRange();
     gender = null;
     creation = null;
   }
@@ -68,7 +69,7 @@ class UsersFilter implements Filter {
         isFlagged == false &&
         courseId == null &&
         validationResponseWarnings == null &&
-        yearsRange == null &&
+        (yearsRange?.start == null && yearsRange?.end == null) &&
         gender == null &&
         idleDays == null &&
         creation == null;
