@@ -25,9 +25,10 @@ class EntryRepository {
     }
   }
 
-  static Future<List<Entry>> list({DateTime? dateTime, int? userId}) async {
+  static Future<List<Entry>> list(
+      {DateTime? startDate, DateTime? endDate, int? userId}) async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/entries?date=${dateTime?.toIso8601String()}&userId=$userId";
+        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/entries?startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}&userId=$userId";
     Response response = await ApiService.getInstance().dio.get(
           url,
           options: Options(headers: {
@@ -45,11 +46,11 @@ class EntryRepository {
     }
   }
 
-  static Stream<List<Entry>> stream({DateTime? dateTime}) {
+  static Stream<List<Entry>> stream({DateTime? startDate, DateTime? endDate}) {
     String basicAuth =
         'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}';
     String wsUrl =
-        'ws://localhost:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/stream/entries?date=${dateTime?.toIso8601String()}';
+        'ws://localhost:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/stream/entries?startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}';
     WebSocketChannel channel = IOWebSocketChannel.connect(
       Uri.parse(wsUrl),
       headers: {
