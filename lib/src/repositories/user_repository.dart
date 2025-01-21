@@ -5,12 +5,11 @@ import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class UserRepository {
-  static Stream<List<User>> stream(
-      {String? q, UsersFilter? filter, int? inExpiringDays = 10}) {
+  static Stream<List<User>> stream({String? q, UsersFilter? filter}) {
     String basicAuth =
         'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}';
     String wsUrl =
-        'ws://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/stream/users?q=$q&${filter?.toQueryParameters()}&inExpiringDays=$inExpiringDays';
+        'ws://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/stream/users?q=$q&${filter?.toQueryParameters()}';
     WebSocketChannel channel = IOWebSocketChannel.connect(
       Uri.parse(wsUrl),
       headers: {
@@ -24,10 +23,9 @@ class UserRepository {
     });
   }
 
-  static Future<List<User>> list(
-      {String? q, UsersFilter? filter, int? inExpiringDays = 10}) async {
+  static Future<List<User>> list({String? q, UsersFilter? filter}) async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/users?q=$q&inExpiringDays=$inExpiringDays";
+        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/users?q=$q";
     if (filter != null) {
       url += "&${filter.toQueryParameters()}";
     }

@@ -12,6 +12,7 @@ export 'src/models/int_filter_range.dart';
 export 'src/models/course.dart';
 export 'src/models/shift.dart';
 export 'src/models/reservation.dart';
+export 'src/models/configs.dart';
 
 export 'src/models/time_of_day.dart';
 
