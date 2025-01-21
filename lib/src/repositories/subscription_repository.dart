@@ -25,6 +25,28 @@ class SubscriptionRepository {
     }
   }
 
+  static Future<List<Subscription>> list() async {
+    String url =
+        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/subscriptions/all";
+    Response response = await ApiService.getInstance().dio.get(
+          url,
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
+          }),
+        );
+    if (response.data["responseType"] == "ok") {
+      print(response.data["body"]);
+      List<Subscription> subscriptions =
+          (response.data["body"] as List<dynamic>)
+              .map((e) => Subscription.fromJson(e))
+              .toList();
+      return subscriptions;
+    } else {
+      throw response.data;
+    }
+  }
+
   static Future import({required List<Subscription> subscriptions}) async {
     String url =
         "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/subscriptions/import";
@@ -44,27 +66,6 @@ class SubscriptionRepository {
         );
     if (response.data["responseType"] == "ok") {
       return response.data["body"];
-    } else {
-      throw response.data;
-    }
-  }
-
-  static Future<List<Subscription>> list() async {
-    String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/subscriptions";
-    Response response = await ApiService.getInstance().dio.get(
-          url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
-        );
-    if (response.data["responseType"] == "ok") {
-      List<Subscription> subscriptions =
-          (response.data["body"] as List<dynamic>)
-              .map((e) => Subscription.fromJson(e))
-              .toList();
-      return subscriptions;
     } else {
       throw response.data;
     }

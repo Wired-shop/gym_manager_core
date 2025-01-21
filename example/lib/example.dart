@@ -10,7 +10,21 @@ void main(List<String> arguments) async {
 
   UsersFilter filter = UsersFilter(gender: "Maschio");
 
-  print(filter.toQueryParameters());
-  print((await UserRepository.list(filter: filter))
-      .map((e) => "${e.name} ${e.surname}"));
+  Map<String, dynamic> map = {
+    "id": 1,
+    "userId": 1,
+    "courseId": 3,
+    "creation": "2028-01-13T00:00:00.000",
+    "expiration": "2028-01-13T00:00:00.000",
+    "badgeCode": null,
+    "accessesAvaiable": null
+  };
+  Subscription sub = Subscription.fromJson(map);
+  List<Course> courses = await CourseRepository.list();
+  print("ciao");
+
+  List<Subscription> subscriptions = await SubscriptionRepository.list();
+  Subscription? subscriptions2 = await SubscriptionRepository.get(userId: 1);
+
+  print("ciao");
 }
