@@ -29,3 +29,4 @@ export 'src/repositories/course_repository.dart';
 export 'src/repositories/shift_repository.dart';
 export 'src/repositories/reservation_repository.dart';
 export 'src/repositories/sync_repository.dart';
+export 'src/repositories/configs_repository.dart';
