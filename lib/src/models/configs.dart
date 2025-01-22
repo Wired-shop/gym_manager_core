@@ -1,7 +1,7 @@
 class Configs {
-  int? inExpiringDays;
+  int inExpiringDays;
 
-  Configs({this.inExpiringDays});
+  Configs({this.inExpiringDays = 10});
 
   Map<String, dynamic> toJson() {
     return {"inExpiringDays": inExpiringDays};
@@ -9,7 +9,7 @@ class Configs {
 
   factory Configs.fromJson(Map<String, dynamic> json) {
     return Configs(
-      inExpiringDays: json['inExpiringDays'] as int?,
+      inExpiringDays: json['inExpiringDays'] as int,
     );
   }
 }

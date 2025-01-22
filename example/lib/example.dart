@@ -8,23 +8,12 @@ void main(List<String> arguments) async {
   ApiService.getInstance().setUsername("patrick@gmail.com");
   ApiService.getInstance().setPassword("ciao1234");
 
-  UsersFilter filter = UsersFilter(gender: "Maschio");
+  User? user = await UserRepository.get(id: 10);
+  print(user);
 
-  Map<String, dynamic> map = {
-    "id": 1,
-    "userId": 1,
-    "courseId": 3,
-    "creation": "2028-01-13T00:00:00.000",
-    "expiration": "2028-01-13T00:00:00.000",
-    "badgeCode": null,
-    "accessesAvaiable": null
-  };
-  Subscription sub = Subscription.fromJson(map);
-  List<Course> courses = await CourseRepository.list();
-  print("ciao");
+  user?.medicalCertificateExpiration = DateTime.now();
+  await UserRepository.update(user: user!);
 
-  List<Subscription> subscriptions = await SubscriptionRepository.list();
-  Subscription? subscriptions2 = await SubscriptionRepository.get(userId: 1);
-
-  print("ciao");
+  user = await UserRepository.get(id: 10);
+  print(user);
 }
