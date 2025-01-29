@@ -90,6 +90,6 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'archived': instance.archived,
       'tpPro': instance.tpPro,
       'forceBlock': instance.forceBlock,
-      'creation': instance.creation,
+      'creation': instance.creation?.toIso8601String(),
       'validationResult': instance.validationResult?.toJson(),
     };

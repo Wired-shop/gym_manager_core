@@ -51,7 +51,7 @@ class User {
   int? tpPro;
   int? forceBlock;
 
-  //Validation
+  //Validaition
   ValidationResult? validationResult;
 
   DateTime? creation;
