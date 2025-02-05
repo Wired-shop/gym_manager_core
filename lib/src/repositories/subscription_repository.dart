@@ -36,7 +36,6 @@ class SubscriptionRepository {
           }),
         );
     if (response.data["responseType"] == "ok") {
-      print(response.data["body"]);
       List<Subscription> subscriptions =
           (response.data["body"] as List<dynamic>)
               .map((e) => Subscription.fromJson(e))
