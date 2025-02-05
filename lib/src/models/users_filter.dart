@@ -78,7 +78,9 @@ class UsersFilter implements Filter {
   @override
   String toQueryParameters() {
     String encodedValidationResponseWarnings =
-        validationResponseWarnings?.map((e) => e.name).join(",") == null
+        (validationResponseWarnings?.map((e) => e.name).join(",").length ??
+                    0) ==
+                0
             ? "null"
             : "[]";
     return 'courseId=$courseId&hasEmail=$hasEmail&hasPhone=$hasPhone&hasPublicNote=$hasPublicNote&hasPrivateNote=$hasPrivateNote&isArchived=$isArchived&isFlagged=$isFlagged&isForceBlocked=$isForceBlocked&idleDays=$idleDays&yearsRange=${yearsRange?.toQueryParameters()}&gender=$gender&creation=$creation&validationResponseWarnings=$encodedValidationResponseWarnings';
