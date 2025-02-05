@@ -78,11 +78,7 @@ class UsersFilter implements Filter {
   @override
   String toQueryParameters() {
     String encodedValidationResponseWarnings =
-        (validationResponseWarnings?.map((e) => e.name).join(",").length ??
-                    0) ==
-                0
-            ? "null"
-            : "[]";
+        validationResponseWarnings?.map((e) => e.name).join(",") ?? "null";
     return 'courseId=$courseId&hasEmail=$hasEmail&hasPhone=$hasPhone&hasPublicNote=$hasPublicNote&hasPrivateNote=$hasPrivateNote&isArchived=$isArchived&isFlagged=$isFlagged&isForceBlocked=$isForceBlocked&idleDays=$idleDays&yearsRange=${yearsRange?.toQueryParameters()}&gender=$gender&creation=$creation&validationResponseWarnings=$encodedValidationResponseWarnings';
   }
 
@@ -108,8 +104,8 @@ class UsersFilter implements Filter {
     creation = map['creation'].toString() != 'null'
         ? int.tryParse(map['creation'])
         : null;
-    validationResponseWarnings =
-        !(map['validationResponseWarnings'].toString()).contains('null')
+    validationResponseWarnings = map.containsKey("validationResponseWarnings")
+        ? !(map['validationResponseWarnings'].toString()).contains('null')
             ? map['validationResponseWarnings'].toString().trim().isEmpty
                 ? []
                 : map['validationResponseWarnings']
@@ -117,7 +113,8 @@ class UsersFilter implements Filter {
                     .split(',')
                     .map((e) => ValidationResponseWarnings.fromString(e))
                     .toList()
-            : [];
+            : null
+        : null;
   }
 
   @override
