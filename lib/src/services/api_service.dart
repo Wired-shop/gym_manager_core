@@ -5,9 +5,6 @@ class ApiService {
   int _PORT = 3000;
   String? _gymId;
 
-  String? _username;
-  String? _password;
-
   Dio dio = Dio();
 
   ApiService._privateConstructor();
@@ -28,22 +25,6 @@ class ApiService {
 
   void setPORT(int PORT) {
     _PORT = PORT;
-  }
-
-  void setUsername(String username) {
-    _username = username;
-  }
-
-  void setPassword(String password) {
-    _password = password;
-  }
-
-  String? getUsername() {
-    return _username;
-  }
-
-  String? getPassword() {
-    return _password;
   }
 
   String? getGymId() {

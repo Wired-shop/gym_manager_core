@@ -6,15 +6,10 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 class ShiftRepository {
   static Stream<List<Shift>> stream({int? courseId}) {
-    String basicAuth =
-        'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}';
     String wsUrl =
         'ws://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/stream/shifts?courseId=$courseId';
     WebSocketChannel channel = IOWebSocketChannel.connect(
       Uri.parse(wsUrl),
-      headers: {
-        'Authorization': basicAuth,
-      },
     );
     return channel.stream.asyncMap((response) {
       return List<Map<String, dynamic>>.from(json.decode(response.toString()))
@@ -28,10 +23,6 @@ class ShiftRepository {
         'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/shifts?courseId=$courseId';
     Response response = await ApiService.getInstance().dio.get(
           url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
         );
     if (response.data["responseType"] == "ok") {
       List<Shift> shifts = (response.data["body"] as List<dynamic>)
@@ -49,10 +40,6 @@ class ShiftRepository {
     Response response = await ApiService.getInstance().dio.post(
           url,
           data: shift.toJson(),
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
         );
     if (response.data["responseType"] == "ok") {
       Shift newShift = Shift.fromJson(response.data["body"]);
@@ -68,10 +55,6 @@ class ShiftRepository {
     Response response = await ApiService.getInstance().dio.put(
           url,
           data: shift.toJson(),
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
         );
     if (response.data["responseType"] == "ok") {
       Shift updatedShift = Shift.fromJson(response.data["body"]);
@@ -86,10 +69,6 @@ class ShiftRepository {
         'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/shifts/$id';
     Response response = await ApiService.getInstance().dio.get(
           url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
         );
     if (response.data["responseType"] == "ok" &&
         response.data["body"] != null) {
@@ -105,10 +84,6 @@ class ShiftRepository {
         'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/shifts/$id';
     Response response = await ApiService.getInstance().dio.delete(
           url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
         );
     if (response.data["responseType"] == "error") {
       throw response.data;

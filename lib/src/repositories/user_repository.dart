@@ -6,15 +6,10 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 class UserRepository {
   static Stream<List<User>> stream({String? q, UsersFilter? filter}) {
-    String basicAuth =
-        'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}';
     String wsUrl =
         'ws://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/stream/users?q=$q&${filter?.toQueryParameters()}';
     WebSocketChannel channel = IOWebSocketChannel.connect(
       Uri.parse(wsUrl),
-      headers: {
-        'Authorization': basicAuth,
-      },
     );
     return channel.stream.asyncMap((response) {
       return List<Map<String, dynamic>>.from(json.decode(response.toString()))
@@ -31,10 +26,6 @@ class UserRepository {
     }
     Response response = await ApiService.getInstance().dio.get(
           url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
         );
     if (response.data["responseType"].contains("ok")) {
       List<User> users = (response.data["body"] as List<dynamic>)
@@ -56,11 +47,6 @@ class UserRepository {
           data: jsonEncode(usersMapped),
           options: Options(
             contentType: "application/json",
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization':
-                  'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
-            },
           ),
         );
     if (response.data["responseType"] == "ok") {
@@ -76,10 +62,6 @@ class UserRepository {
     Response response = await ApiService.getInstance().dio.post(
           url,
           data: user.toJson(),
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
         );
     if (response.data["responseType"] == "ok") {
       return User.fromJson(response.data["body"]);
@@ -94,10 +76,6 @@ class UserRepository {
     Response response = await ApiService.getInstance().dio.put(
           url,
           data: user.toJson(),
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
         );
     if (response.data["responseType"] == "ok") {
       User updatedUser = User.fromJson(response.data["body"]);
@@ -112,10 +90,6 @@ class UserRepository {
         "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/users/$id";
     Response response = await ApiService.getInstance().dio.get(
           url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
         );
     if (response.data["responseType"] == "ok" &&
         response.data["body"] != null) {
@@ -131,10 +105,6 @@ class UserRepository {
         "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/users/emails/$email";
     Response response = await ApiService.getInstance().dio.get(
           url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
         );
     if (response.data["responseType"] == "ok" &&
         response.data["body"] != null) {
@@ -150,10 +120,6 @@ class UserRepository {
         "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/users/$id";
     Response response = await ApiService.getInstance().dio.delete(
           url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
         );
     if (response.data["responseType"] == "error") {
       throw response.data;

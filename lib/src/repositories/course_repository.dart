@@ -6,15 +6,10 @@ import 'dart:convert';
 
 class CourseRepository {
   static Stream<List<Course>> stream() {
-    String basicAuth =
-        'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}';
     String wsUrl =
         'ws://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/stream/courses';
     WebSocketChannel channel = IOWebSocketChannel.connect(
       Uri.parse(wsUrl),
-      headers: {
-        'Authorization': basicAuth,
-      },
     );
     return channel.stream.asyncMap((response) {
       return List<Map<String, dynamic>>.from(json.decode(response.toString()))
@@ -29,10 +24,6 @@ class CourseRepository {
     Response response = await ApiService.getInstance().dio.post(
           url,
           data: course.toJson(),
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
         );
     if (response.data["responseType"] == "ok") {
       Course newCourse = Course.fromJson(response.data["body"]);
@@ -47,10 +38,6 @@ class CourseRepository {
         'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/courses';
     Response response = await ApiService.getInstance().dio.get(
           url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
         );
     if (response.data["responseType"] == "ok") {
       List<Course> courses = (response.data["body"] as List<dynamic>)
@@ -68,10 +55,6 @@ class CourseRepository {
     Response response = await ApiService.getInstance().dio.put(
           url,
           data: course.toJson(),
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
         );
     if (response.data["responseType"] == "ok") {
       Course updatedCourse = Course.fromJson(response.data["body"]);
@@ -86,10 +69,6 @@ class CourseRepository {
         "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/courses/$id";
     Response response = await ApiService.getInstance().dio.get(
           url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
         );
     if (response.data["responseType"] == "ok" &&
         response.data["body"] != null) {
@@ -105,10 +84,6 @@ class CourseRepository {
         "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/courses/$id";
     Response response = await ApiService.getInstance().dio.delete(
           url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
         );
     if (response.data["responseType"] == "error") {
       throw response.data;

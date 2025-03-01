@@ -5,9 +5,6 @@ void main(List<String> arguments) async {
   ApiService.getInstance().setIP("127.0.0.1");
   ApiService.getInstance().setPORT(3000);
 
-  ApiService.getInstance().setUsername("patrick@gmail.com");
-  ApiService.getInstance().setPassword("ciao1234");
-
   User? user = await UserRepository.get(id: 10);
   print(user);
 

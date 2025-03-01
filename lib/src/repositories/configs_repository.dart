@@ -9,10 +9,6 @@ class ConfigsRepository {
     Response response = await ApiService.getInstance().dio.post(
           url,
           data: configs.toJson(),
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
         );
     if (response.data["responseType"] == "ok") {
       return response.data["body"];
@@ -26,10 +22,6 @@ class ConfigsRepository {
         "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/configs";
     Response response = await ApiService.getInstance().dio.get(
           url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
         );
     if (response.data["responseType"] == "ok" &&
         response.data["body"] != null) {

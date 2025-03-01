@@ -11,10 +11,6 @@ class SubscriptionRepository {
         "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/subscriptions?badgeCode=$badgeCode&id=$id&userId=$userId";
     Response response = await ApiService.getInstance().dio.get(
           url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
         );
     if (response.data["responseType"] == "ok" &&
         response.data["body"] != null) {
@@ -30,10 +26,6 @@ class SubscriptionRepository {
         "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/subscriptions/all";
     Response response = await ApiService.getInstance().dio.get(
           url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
         );
     if (response.data["responseType"] == "ok") {
       List<Subscription> subscriptions =
@@ -56,11 +48,6 @@ class SubscriptionRepository {
           data: jsonEncode(subscriptionsMapped),
           options: Options(
             contentType: "application/json",
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization':
-                  'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
-            },
           ),
         );
     if (response.data["responseType"] == "ok") {
@@ -76,10 +63,6 @@ class SubscriptionRepository {
     Response response = await ApiService.getInstance().dio.put(
           url,
           data: subscription.toJson(),
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
         );
     if (response.data["responseType"] == "error") {
       throw response.data;
@@ -93,10 +76,6 @@ class SubscriptionRepository {
     Response response = await ApiService.getInstance().dio.post(
           url,
           data: subscription.toJson(),
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
         );
     if (response.data["responseType"] == "ok") {
       Subscription newSubscription =
@@ -112,10 +91,6 @@ class SubscriptionRepository {
         "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/subscriptions/$id";
     Response response = await ApiService.getInstance().dio.delete(
           url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
         );
     if (response.data["responseType"] == "error") {
       throw response.data;

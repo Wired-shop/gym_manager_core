@@ -20,18 +20,14 @@ class FileRepository {
     String url =
         'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/files';
     Response response = await ApiService.getInstance().dio.post(
-          url,
-          data: {
-            "bytes": bytes,
-            "extension": extension,
-            "fileName": documentType.name,
-            "userId": userId,
-          },
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
-        );
+      url,
+      data: {
+        "bytes": bytes,
+        "extension": extension,
+        "fileName": documentType.name,
+        "userId": userId,
+      },
+    );
     if (response.data["responseType"] == "ok") {
       return response.data["body"]["filePath"];
     }
@@ -41,10 +37,6 @@ class FileRepository {
   static Future<List<int>> get({required String path}) async {
     Response response = await ApiService.getInstance().dio.get(
           'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/files?path=$path',
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
         );
     if (response.data["responseType"] == "ok") {
       return (response.data["body"] as List).map<int>((e) => e).toList();
@@ -58,10 +50,6 @@ class FileRepository {
         'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/files?path=$path';
     Response response = await ApiService.getInstance().dio.delete(
           url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getUsername()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
         );
     if (response.data["responseType"] == "error") {
       throw response.data;
