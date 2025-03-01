@@ -1,7 +1,6 @@
 import 'package:gym_manager_core/core.dart';
 
 void main(List<String> arguments) async {
-  ApiService.getInstance().setGymId("1");
   ApiService.getInstance().setIP("127.0.0.1");
   ApiService.getInstance().setPORT(3000);
 

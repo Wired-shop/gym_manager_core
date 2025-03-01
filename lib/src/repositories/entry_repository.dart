@@ -8,7 +8,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 class EntryRepository {
   static Future<Entry> insert({required Entry entry}) async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/entries/";
+        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/entries/";
     Response response = await ApiService.getInstance().dio.post(
           url,
           data: entry.toJson(),
@@ -24,7 +24,7 @@ class EntryRepository {
   static Future<List<Entry>> list(
       {DateTime? startDate, DateTime? endDate, int? userId}) async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/entries?startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}&userId=$userId";
+        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/entries?startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}&userId=$userId";
     Response response = await ApiService.getInstance().dio.get(
           url,
         );
@@ -40,7 +40,7 @@ class EntryRepository {
 
   static Stream<List<Entry>> stream({DateTime? startDate, DateTime? endDate}) {
     String wsUrl =
-        'ws://localhost:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/stream/entries?startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}';
+        'ws://localhost:${ApiService.getInstance().getPORT()}/stream/entries?startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}';
     WebSocketChannel channel = IOWebSocketChannel.connect(
       Uri.parse(wsUrl),
     );

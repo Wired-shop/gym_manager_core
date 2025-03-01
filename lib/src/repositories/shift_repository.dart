@@ -7,7 +7,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 class ShiftRepository {
   static Stream<List<Shift>> stream({int? courseId}) {
     String wsUrl =
-        'ws://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/stream/shifts?courseId=$courseId';
+        'ws://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/stream/shifts?courseId=$courseId';
     WebSocketChannel channel = IOWebSocketChannel.connect(
       Uri.parse(wsUrl),
     );
@@ -20,7 +20,7 @@ class ShiftRepository {
 
   static Future<List<Shift>> list({int? courseId}) async {
     String url =
-        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/shifts?courseId=$courseId';
+        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/shifts?courseId=$courseId';
     Response response = await ApiService.getInstance().dio.get(
           url,
         );
@@ -36,7 +36,7 @@ class ShiftRepository {
 
   static Future<Shift> insert({required Shift shift}) async {
     String url =
-        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/shifts';
+        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/shifts';
     Response response = await ApiService.getInstance().dio.post(
           url,
           data: shift.toJson(),
@@ -51,7 +51,7 @@ class ShiftRepository {
 
   static Future<Shift> update({required Shift shift}) async {
     String url =
-        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/shifts';
+        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/shifts';
     Response response = await ApiService.getInstance().dio.put(
           url,
           data: shift.toJson(),
@@ -66,7 +66,7 @@ class ShiftRepository {
 
   static Future<Shift?> get({required int id}) async {
     String url =
-        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/shifts/$id';
+        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/shifts/$id';
     Response response = await ApiService.getInstance().dio.get(
           url,
         );
@@ -81,7 +81,7 @@ class ShiftRepository {
 
   static Future delete({required int id}) async {
     String url =
-        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/shifts/$id';
+        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/shifts/$id';
     Response response = await ApiService.getInstance().dio.delete(
           url,
         );

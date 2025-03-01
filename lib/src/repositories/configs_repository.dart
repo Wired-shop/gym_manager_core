@@ -1,11 +1,10 @@
-import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:gym_manager_core/core.dart';
 
 class ConfigsRepository {
   static Future<String> write({required Configs configs}) async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/configs";
+        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/configs";
     Response response = await ApiService.getInstance().dio.post(
           url,
           data: configs.toJson(),
@@ -19,7 +18,7 @@ class ConfigsRepository {
 
   static Future<Configs?> read() async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/configs";
+        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/configs";
     Response response = await ApiService.getInstance().dio.get(
           url,
         );

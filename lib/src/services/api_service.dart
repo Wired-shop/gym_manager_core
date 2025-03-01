@@ -3,7 +3,6 @@ import 'package:dio/dio.dart';
 class ApiService {
   String _IP = "127.0.0.1";
   int _PORT = 3000;
-  String? _gymId;
 
   Dio dio = Dio();
 
@@ -15,20 +14,12 @@ class ApiService {
     return _instance;
   }
 
-  void setGymId(String id) {
-    _gymId = id;
-  }
-
   void setIP(String IP) {
     _IP = IP;
   }
 
   void setPORT(int PORT) {
     _PORT = PORT;
-  }
-
-  String? getGymId() {
-    return _gymId;
   }
 
   String getIP() {

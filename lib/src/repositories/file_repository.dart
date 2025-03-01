@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import '../enums/document_type.dart';
@@ -18,7 +17,7 @@ class FileRepository {
       required String extension,
       required DocumentType documentType}) async {
     String url =
-        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/files';
+        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/files';
     Response response = await ApiService.getInstance().dio.post(
       url,
       data: {
@@ -36,7 +35,7 @@ class FileRepository {
 
   static Future<List<int>> get({required String path}) async {
     Response response = await ApiService.getInstance().dio.get(
-          'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/files?path=$path',
+          'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/files?path=$path',
         );
     if (response.data["responseType"] == "ok") {
       return (response.data["body"] as List).map<int>((e) => e).toList();
@@ -47,7 +46,7 @@ class FileRepository {
 
   static Future delete({required String path}) async {
     String url =
-        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/files?path=$path';
+        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/files?path=$path';
     Response response = await ApiService.getInstance().dio.delete(
           url,
         );
