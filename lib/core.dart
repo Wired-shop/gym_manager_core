@@ -13,7 +13,7 @@ export 'src/models/course.dart';
 export 'src/models/shift.dart';
 export 'src/models/reservation.dart';
 export 'src/models/configs.dart';
-
+export 'src/models/account.dart';
 export 'src/models/time_of_day.dart';
 
 export 'src/enums/document_type.dart';
