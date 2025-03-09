@@ -6,12 +6,16 @@ import '../services/api_service.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class EntryRepository {
-  static Future<Entry> insert({required Entry entry}) async {
+  static Future<Entry> insert(Entry entry) async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/entries/";
+        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/entries/";
     Response response = await ApiService.getInstance().dio.post(
           url,
           data: entry.toJson(),
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
+          }),
         );
     if (response.data["responseType"] == "ok") {
       Entry newEntry = Entry.fromJson(response.data["body"]);
@@ -24,9 +28,13 @@ class EntryRepository {
   static Future<List<Entry>> list(
       {DateTime? startDate, DateTime? endDate, int? userId}) async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/entries?startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}&userId=$userId";
+        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/entries?startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}&userId=$userId";
     Response response = await ApiService.getInstance().dio.get(
           url,
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
+          }),
         );
     if (response.data["responseType"] == "ok") {
       List<Entry> entries = (response.data["body"] as List<dynamic>)
@@ -39,10 +47,15 @@ class EntryRepository {
   }
 
   static Stream<List<Entry>> stream({DateTime? startDate, DateTime? endDate}) {
+    String basicAuth =
+        'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}';
     String wsUrl =
-        'ws://localhost:${ApiService.getInstance().getPORT()}/stream/entries?startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}';
+        'ws://localhost:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/stream/entries?startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}';
     WebSocketChannel channel = IOWebSocketChannel.connect(
       Uri.parse(wsUrl),
+      headers: {
+        'Authorization': basicAuth,
+      },
     );
     return channel.stream.asyncMap((response) {
       return List<Map<String, dynamic>>.from(json.decode(response.toString()))

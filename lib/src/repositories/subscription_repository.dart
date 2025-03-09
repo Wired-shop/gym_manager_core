@@ -5,12 +5,31 @@ import 'package:dio/dio.dart';
 import '../services/api_service.dart';
 
 class SubscriptionRepository {
+  static Future<void> truncate() async {
+    String url =
+        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/subscriptions/truncate";
+    Response response = await ApiService.getInstance().dio.post(
+          url,
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
+          }),
+        );
+    if (response.data["responseType"] != "ok") {
+      throw response.data;
+    }
+  }
+
   static Future<Subscription?> get(
       {int? id, String? badgeCode, int? userId}) async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/subscriptions?badgeCode=$badgeCode&id=$id&userId=$userId";
+        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/subscriptions?badgeCode=$badgeCode&id=$id&userId=$userId";
     Response response = await ApiService.getInstance().dio.get(
           url,
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
+          }),
         );
     if (response.data["responseType"] == "ok" &&
         response.data["body"] != null) {
@@ -23,9 +42,13 @@ class SubscriptionRepository {
 
   static Future<List<Subscription>> list() async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/subscriptions/all";
+        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/subscriptions/all";
     Response response = await ApiService.getInstance().dio.get(
           url,
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
+          }),
         );
     if (response.data["responseType"] == "ok") {
       List<Subscription> subscriptions =
@@ -38,59 +61,56 @@ class SubscriptionRepository {
     }
   }
 
-  static Future import({required List<Subscription> subscriptions}) async {
+  static Future update(Subscription subscription) async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/subscriptions/import";
-    List<Map<String, dynamic>> subscriptionsMapped =
-        subscriptions.map((subscription) => subscription.toJson()).toList();
-    Response response = await ApiService.getInstance().dio.post(
-          url,
-          data: jsonEncode(subscriptionsMapped),
-          options: Options(
-            contentType: "application/json",
-          ),
-        );
-    if (response.data["responseType"] == "ok") {
-      return response.data["body"];
-    } else {
-      throw response.data;
-    }
-  }
-
-  static Future update({required Subscription subscription}) async {
-    String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/subscriptions";
+        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/subscriptions";
     Response response = await ApiService.getInstance().dio.put(
           url,
           data: subscription.toJson(),
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
+          }),
         );
     if (response.data["responseType"] == "error") {
       throw response.data;
     }
   }
 
-  static Future<Subscription> insert(
-      {required Subscription subscription}) async {
+  static Future<List<Subscription>> insert(
+      List<Subscription> subscriptions) async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/subscriptions";
+        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/subscriptions";
+    List<Map<String, dynamic>> subscriptionsMapped =
+        subscriptions.map((subscription) => subscription.toJson()).toList();
     Response response = await ApiService.getInstance().dio.post(
           url,
-          data: subscription.toJson(),
+          data: subscriptionsMapped,
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
+          }),
         );
     if (response.data["responseType"] == "ok") {
-      Subscription newSubscription =
-          Subscription.fromJson(response.data["body"]);
-      return newSubscription;
+      List<Subscription> insertedSubscriptions =
+          (response.data["body"] as List<dynamic>)
+              .map((e) => Subscription.fromJson(e))
+              .toList();
+      return insertedSubscriptions;
     } else {
       throw response.data;
     }
   }
 
-  static Future delete({required int id}) async {
+  static Future delete(int id) async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/subscriptions/$id";
+        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/subscriptions/$id";
     Response response = await ApiService.getInstance().dio.delete(
           url,
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
+          }),
         );
     if (response.data["responseType"] == "error") {
       throw response.data;

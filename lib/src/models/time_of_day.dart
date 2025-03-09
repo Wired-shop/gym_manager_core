@@ -2,7 +2,6 @@ class TimeOfDay {
   final int hour;
   final int minute;
 
-  // Costruttore con validazione
   TimeOfDay({required this.hour, required this.minute}) {
     if (hour < 0 || hour > 23) {
       throw ArgumentError('L\'ora deve essere tra 0 e 23');
@@ -12,7 +11,6 @@ class TimeOfDay {
     }
   }
 
-  // Costruttore factory da stringa (formato "HH:mm")
   factory TimeOfDay.fromString(String time) {
     if (time.length > 5) time = time.substring(0, 5);
     final parts = time.split(':');
@@ -31,25 +29,25 @@ class TimeOfDay {
     return TimeOfDay(hour: hour, minute: minute);
   }
 
-  // Costruttore factory dall'ora corrente
   factory TimeOfDay.now() {
     final now = DateTime.now();
     return TimeOfDay(hour: now.hour, minute: now.minute);
   }
 
-  // Conversione in stringa formato 24 ore
   String format24Hour() {
     return '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
   }
 
-  // Conversione in stringa formato 12 ore
   String format12Hour() {
     final period = hour < 12 ? 'AM' : 'PM';
     final displayHour = hour == 0 ? 12 : (hour > 12 ? hour - 12 : hour);
     return '${displayHour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')} $period';
   }
 
-  // Confronto con un altro TimeOfDay
+  int toMinutes() {
+    return hour * 60 + minute;
+  }
+
   bool isAfter(TimeOfDay other) {
     if (hour > other.hour) return true;
     if (hour < other.hour) return false;
@@ -62,7 +60,6 @@ class TimeOfDay {
     return minute < other.minute;
   }
 
-  // Aggiunge minuti all'orario corrente
   TimeOfDay addMinutes(int minutesToAdd) {
     if (minutesToAdd < 0) {
       throw ArgumentError('I minuti da aggiungere devono essere positivi');
@@ -75,7 +72,6 @@ class TimeOfDay {
     return TimeOfDay(hour: newHour, minute: newMinute);
   }
 
-  // Override di equals e hashCode per confronti corretti
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
@@ -85,7 +81,6 @@ class TimeOfDay {
   @override
   int get hashCode => Object.hash(hour, minute);
 
-  // Override di toString per debug
   @override
   String toString() => format24Hour();
 }
