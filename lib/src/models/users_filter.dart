@@ -4,6 +4,7 @@ class UsersFilter implements Filter {
   String? name;
   bool? hasEmail;
   bool? hasPhone;
+  bool? hasTpPro;
   bool? hasPublicNote;
   bool? hasPrivateNote;
   bool? isArchived;
@@ -19,6 +20,7 @@ class UsersFilter implements Filter {
   UsersFilter({
     this.name,
     bool? hasEmail,
+    bool? hasTpPro,
     bool? hasPhone,
     bool? hasPrivateNote,
     bool? hasPublicNote,
@@ -33,6 +35,7 @@ class UsersFilter implements Filter {
     this.validationResponseWarnings,
   })  : yearsRange = yearsRange ?? IntFilterRange(),
         hasEmail = hasEmail ?? false,
+        hasTpPro = hasTpPro ?? false,
         hasPhone = hasPhone ?? false,
         hasPublicNote = hasPublicNote ?? false,
         hasPrivateNote = hasPrivateNote ?? false,
@@ -44,6 +47,7 @@ class UsersFilter implements Filter {
   clear() {
     name = null;
     hasEmail = false;
+    hasTpPro = false;
     hasPhone = false;
     hasPublicNote = false;
     hasPrivateNote = false;
@@ -61,6 +65,7 @@ class UsersFilter implements Filter {
   @override
   bool isClear() {
     return hasEmail == false &&
+        hasTpPro == false &&
         hasPhone == false &&
         hasPublicNote == false &&
         hasPrivateNote == false &&
@@ -79,12 +84,13 @@ class UsersFilter implements Filter {
   String toQueryParameters() {
     String encodedValidationResponseWarnings =
         validationResponseWarnings?.map((e) => e.name).join(",") ?? "null";
-    return 'courseId=$courseId&hasEmail=$hasEmail&hasPhone=$hasPhone&hasPublicNote=$hasPublicNote&hasPrivateNote=$hasPrivateNote&isArchived=$isArchived&isFlagged=$isFlagged&isForceBlocked=$isForceBlocked&idleDays=$idleDays&yearsRange=${yearsRange?.toQueryParameters()}&gender=$gender&creation=$creation&validationResponseWarnings=$encodedValidationResponseWarnings';
+    return 'courseId=$courseId&hasEmail=$hasEmail&hasTpPro=$hasTpPro&hasPhone=$hasPhone&hasPublicNote=$hasPublicNote&hasPrivateNote=$hasPrivateNote&isArchived=$isArchived&isFlagged=$isFlagged&isForceBlocked=$isForceBlocked&idleDays=$idleDays&yearsRange=${yearsRange?.toQueryParameters()}&gender=$gender&creation=$creation&validationResponseWarnings=$encodedValidationResponseWarnings';
   }
 
   @override
   fromQueryParameters(Map<String, dynamic> map) {
     hasEmail = map['hasEmail'] == 'true';
+    hasTpPro = map['hasTpPro'] == 'true';
     hasPhone = map['hasPhone'] == 'true';
     hasPublicNote = map['hasPublicNote'] == 'true';
     hasPrivateNote = map['hasPrivateNote'] == 'true';
@@ -122,6 +128,7 @@ class UsersFilter implements Filter {
     return {
       'name': name,
       'hasEmail': hasEmail,
+      'hasTpPro': hasEmail,
       'hasPhone': hasPhone,
       'hasPrivateNote': hasPrivateNote,
       'hasPublicNote': hasPublicNote,
@@ -143,6 +150,7 @@ class UsersFilter implements Filter {
     return UsersFilter(
       name: json['name'] as String?,
       hasEmail: json['hasEmail'] as bool? ?? false,
+      hasTpPro: json['hasTpPro'] as bool? ?? false,
       hasPhone: json['hasPhone'] as bool? ?? false,
       hasPrivateNote: json['hasPrivateNote'] as bool? ?? false,
       hasPublicNote: json['hasPublicNote'] as bool? ?? false,
