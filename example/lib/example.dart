@@ -4,12 +4,11 @@ void main(List<String> arguments) async {
   ApiService.getInstance().setIP("127.0.0.1");
   ApiService.getInstance().setPORT(3000);
 
-  User? user = await UserRepository.get(10);
-  print(user);
+  ApiService.getInstance().setGymId("1");
+  ApiService.getInstance().setEmail("patrick@gmail.com");
+  ApiService.getInstance().setPassword("ciao1234");
 
-  user?.medicalCertificateExpiration = DateTime.now();
-  await UserRepository.update(user!);
-
-  user = await UserRepository.get(10);
-  print(user);
+  CourseRepository.stream().listen((_) {
+    print(_);
+  });
 }

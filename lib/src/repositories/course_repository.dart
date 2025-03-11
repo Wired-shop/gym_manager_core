@@ -7,10 +7,8 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 class CourseRepository {
   static Stream<List<Course>> stream() {
     String wsUrl =
-        'ws://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/stream/courses';
-    WebSocketChannel channel = IOWebSocketChannel.connect(
-      Uri.parse(wsUrl),
-    );
+        'ws://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/stream/courses';
+    WebSocketChannel channel = IOWebSocketChannel.connect(Uri.parse(wsUrl));
     return channel.stream.asyncMap((response) {
       return List<Map<String, dynamic>>.from(json.decode(response.toString()))
           .map((e) => Course.fromJson(e))
