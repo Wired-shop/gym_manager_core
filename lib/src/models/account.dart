@@ -1,5 +1,6 @@
 class Account {
   String email;
+  String gymId;
   String password;
   String? imageUrl;
   AccountRole? role;
@@ -7,6 +8,7 @@ class Account {
   Account({
     required this.email,
     required this.password,
+    required this.gymId,
     this.imageUrl,
     this.role,
   });
@@ -15,6 +17,7 @@ class Account {
     return <String, dynamic>{
       'email': email,
       'password': password,
+      'gymId': gymId,
       'role': role?.name,
       'imageUrl': imageUrl,
     };
@@ -24,6 +27,7 @@ class Account {
     return Account(
       email: map['email'] as String,
       password: map['password'] as String,
+      gymId: map['gymId'] as String,
       imageUrl: map['imageUrl'] as String?,
       role: map['role'] == AccountRole.admin.name
           ? AccountRole.admin
