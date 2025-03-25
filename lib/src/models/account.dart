@@ -3,7 +3,6 @@ class Account {
   String gymId;
   String password;
   String? name;
-  String? description;
   String? image;
   AccountRole? role;
 
@@ -11,6 +10,7 @@ class Account {
     required this.email,
     required this.password,
     required this.gymId,
+    this.name,
     this.image,
     this.role,
   });
@@ -20,8 +20,9 @@ class Account {
       'email': email,
       'password': password,
       'gymId': gymId,
-      'role': role?.name,
+      'name': name,
       'image': image,
+      'role': role?.name,
     };
   }
 
@@ -30,6 +31,7 @@ class Account {
       email: map['email'] as String,
       password: map['password'] as String,
       gymId: map['gymId'] as String,
+      name: map['name'] as String?,
       image: map['image'] as String?,
       role: map['role'] == AccountRole.admin.name
           ? AccountRole.admin
