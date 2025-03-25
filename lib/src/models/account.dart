@@ -1,38 +1,35 @@
-import 'dart:convert';
-
 class Account {
   String email;
   String password;
+  String? imageUrl;
   AccountRole? role;
 
   Account({
     required this.email,
     required this.password,
+    this.imageUrl,
     this.role,
   });
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'email': email,
       'password': password,
       'role': role?.name,
+      'imageUrl': imageUrl,
     };
   }
 
-  factory Account.fromMap(Map<String, dynamic> map) {
+  factory Account.fromJson(Map<String, dynamic> map) {
     return Account(
       email: map['email'] as String,
       password: map['password'] as String,
+      imageUrl: map['imageUrl'] as String?,
       role: map['role'] == AccountRole.admin.name
           ? AccountRole.admin
           : AccountRole.user,
     );
   }
-
-  Map<String, dynamic> toJson() => {"email": email, "password": password};
-
-  factory Account.fromJson(String source) =>
-      Account.fromMap(json.decode(source) as Map<String, dynamic>);
 }
 
 enum AccountRole {
