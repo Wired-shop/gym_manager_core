@@ -10,6 +10,9 @@ class Shift {
   int occupiedSeats;
   String? name;
   String? trainer;
+  int publishable;
+  int? visibleBeforePublishTime;
+  String? gymId;
 
   Shift({
     this.id,
@@ -21,6 +24,9 @@ class Shift {
     this.name,
     this.occupiedSeats = 0,
     this.trainer,
+    required this.publishable,
+    this.visibleBeforePublishTime,
+    this.gymId,
   });
 
   factory Shift.fromJson(Map<String, dynamic> json) {
@@ -34,6 +40,9 @@ class Shift {
       occupiedSeats: json['occupiedSeats'] as int? ?? 0,
       trainer: json['trainer'] as String?,
       name: json['name'] as String?,
+      publishable: json['publishable'] as int,
+      visibleBeforePublishTime: json['visibleBeforePublishTime'] as int?,
+      gymId: json['gymId'] as String?,
     );
   }
 
@@ -48,6 +57,9 @@ class Shift {
       'occupiedSeats': occupiedSeats,
       'trainer': trainer,
       'name': name,
+      'publishable': publishable,
+      'visibleBeforePublishTime': visibleBeforePublishTime,
+      'gymId': gymId,
     };
   }
 }
