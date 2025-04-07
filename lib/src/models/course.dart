@@ -2,7 +2,7 @@ class Course {
   int? id;
   String name;
   String? description;
-  String? imageUrl;
+  String? encodedImage;
   String? difficulty;
   String? trainer;
   int? kcal;
@@ -12,7 +12,7 @@ class Course {
       {this.id,
       required this.name,
       this.description,
-      this.imageUrl,
+      this.encodedImage,
       this.difficulty,
       this.trainer,
       this.meanDuration,
@@ -23,7 +23,7 @@ class Course {
       id: json['id'] as int?,
       name: json['name'] as String,
       description: json['description'] as String?,
-      imageUrl: json['imageUrl'] as String?,
+      encodedImage: json['encodedImage'] as String?,
       difficulty: json['difficulty'] as String?,
       trainer: json['trainer'] as String?,
       kcal: json['kcal'] as int?,
@@ -36,7 +36,7 @@ class Course {
       'name': name,
       'id': id,
       'description': description,
-      'imageUrl': imageUrl,
+      'encodedImage': encodedImage,
       'difficulty': difficulty,
       'trainer': trainer,
       'kcal': kcal,
