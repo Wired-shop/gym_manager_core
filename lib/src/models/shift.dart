@@ -62,4 +62,13 @@ class Shift {
       'gymId': gymId,
     };
   }
+
+   DateTime getNextWeekday() {
+    final DateTime now = DateTime.now();
+    int daysUntilNextWeekday = dayOfWeek - now.weekday;
+    if (daysUntilNextWeekday <= 0) {
+      daysUntilNextWeekday += 7;
+    }
+    return now.add(Duration(days: daysUntilNextWeekday));
+  }
 }
