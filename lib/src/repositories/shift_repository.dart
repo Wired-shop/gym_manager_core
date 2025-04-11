@@ -18,9 +18,12 @@ class ShiftRepository {
     }
   }
 
-  static Future<List<Shift>> list(int courseId) async {
+  static Future<List<Shift>> list({
+    required int courseId,
+    bool? publishable,
+  }) async {
     String url =
-        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/shifts?courseId=$courseId';
+        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/shifts?courseId=$courseId&publishable=$publishable';
     Response response = await ApiService.getInstance().dio.get(
           url,
           options: Options(headers: {
