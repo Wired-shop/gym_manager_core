@@ -6,7 +6,7 @@ class ReservationRepository {
   static Future<List<Reservation>> list(
       {int? courseId, int? userId, DateTime? dateTime}) async {
     String url =
-        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/reservations?courseId=$courseId&userId=$userId&dateTime=$dateTime';
+        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/reservations?courseId=$courseId&userId=$userId&dateTime=${dateTime?.toIso8601String()}}';
     Response response = await ApiService.getInstance().dio.get(
           url,
           options: Options(headers: {
