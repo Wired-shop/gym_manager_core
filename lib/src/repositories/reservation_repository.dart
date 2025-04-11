@@ -3,9 +3,10 @@ import 'package:dio/dio.dart';
 import 'package:gym_manager_core/core.dart';
 
 class ReservationRepository {
-  static Future<List<Reservation>> list({int? courseId, int? userId}) async {
+  static Future<List<Reservation>> list(
+      {int? courseId, int? userId, DateTime? dateTime}) async {
     String url =
-        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/reservations?courseId=$courseId&userId=$userId';
+        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/reservations?courseId=$courseId&userId=$userId&dateTime=$dateTime';
     Response response = await ApiService.getInstance().dio.get(
           url,
           options: Options(headers: {
