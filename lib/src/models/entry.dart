@@ -21,4 +21,9 @@ class Entry {
 
   factory Entry.fromJson(Map<String, dynamic> json) => _$EntryFromJson(json);
   Map<String, dynamic> toJson() => _$EntryToJson(this);
+
+  @override
+  String toString() {
+    return toJson().toString();
+  }
 }

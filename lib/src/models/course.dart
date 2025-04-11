@@ -43,4 +43,9 @@ class Course {
       'meanDuration': meanDuration
     };
   }
+
+  @override
+  String toString() {
+    return toJson().toString();
+  }
 }

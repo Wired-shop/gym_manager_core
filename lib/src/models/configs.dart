@@ -12,4 +12,8 @@ class Configs {
       inExpiringDays: json['inExpiringDays'] as int,
     );
   }
+  @override
+  String toString() {
+    return toJson().toString();
+  }
 }

@@ -34,4 +34,9 @@ class Reservation {
       'dateTime': dateTime?.toIso8601String(),
     };
   }
+
+  @override
+  String toString() {
+    return toJson().toString();
+  }
 }

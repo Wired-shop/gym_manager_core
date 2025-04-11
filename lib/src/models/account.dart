@@ -38,6 +38,10 @@ class Account {
           : AccountRole.user,
     );
   }
+  @override
+  String toString() {
+    return toJson().toString();
+  }
 }
 
 enum AccountRole {
