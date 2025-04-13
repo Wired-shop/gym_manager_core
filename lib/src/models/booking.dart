@@ -1,27 +1,26 @@
-class Reservation {
+class Booking {
   int? id;
   int shiftId;
   int courseId;
   int userId;
-  DateTime? dateTime;
+  DateTime? date;
 
-  Reservation({
+  Booking({
     this.id,
     required this.shiftId,
     required this.courseId,
     required this.userId,
-    this.dateTime,
+    this.date,
   });
 
-  factory Reservation.fromJson(Map<String, dynamic> json) {
-    return Reservation(
+  factory Booking.fromJson(Map<String, dynamic> json) {
+    return Booking(
       id: json['id'] as int?,
       shiftId: json['shiftId'] as int,
       courseId: json['courseId'] as int,
       userId: json['userId'] as int,
-      dateTime: json['dateTime'] == null
-          ? null
-          : DateTime.parse(json['dateTime'] as String),
+      date:
+          json['date'] == null ? null : DateTime.parse(json['date'] as String),
     );
   }
 
@@ -31,7 +30,7 @@ class Reservation {
       'shiftId': shiftId,
       'courseId': courseId,
       'userId': userId,
-      'dateTime': dateTime?.toIso8601String(),
+      'date': date?.toIso8601String(),
     };
   }
 

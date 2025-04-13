@@ -11,7 +11,8 @@ export 'src/models/users_filter.dart';
 export 'src/models/int_filter_range.dart';
 export 'src/models/course.dart';
 export 'src/models/shift.dart';
-export 'src/models/reservation.dart';
+export 'src/models/bookable_shift.dart';
+export 'src/models/booking.dart';
 export 'src/models/configs.dart';
 export 'src/models/account.dart';
 export 'src/models/time_of_day.dart';
@@ -28,7 +29,7 @@ export 'src/repositories/subscription_repository.dart';
 export 'src/repositories/user_repository.dart';
 export 'src/repositories/course_repository.dart';
 export 'src/repositories/shift_repository.dart';
-export 'src/repositories/reservation_repository.dart';
+export 'src/repositories/booking_repository.dart';
 export 'src/repositories/configs_repository.dart';
 
 export 'src/utils/sync_utils.dart';

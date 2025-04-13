@@ -15,6 +15,6 @@ void main(List<String> arguments) async {
   print(shifts);
 
   List<Reservation> reservations =
-      await ReservationRepository.list(dateTime: DateTime(2025, 05, 11));
+      await ReservationRepository.list(date: DateTime(2025, 05, 11));
   print(reservations);
 }

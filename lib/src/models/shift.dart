@@ -10,8 +10,7 @@ class Shift {
   int occupiedSeats;
   String? name;
   String? trainer;
-  int publishable;
-  int? visibleBeforePublishTime;
+  int bookable;
   String? gymId;
 
   Shift({
@@ -24,8 +23,7 @@ class Shift {
     this.name,
     this.occupiedSeats = 0,
     this.trainer,
-    required this.publishable,
-    this.visibleBeforePublishTime,
+    required this.bookable,
     this.gymId,
   });
 
@@ -40,8 +38,7 @@ class Shift {
       occupiedSeats: json['occupiedSeats'] as int? ?? 0,
       trainer: json['trainer'] as String?,
       name: json['name'] as String?,
-      publishable: json['publishable'] as int,
-      visibleBeforePublishTime: json['visibleBeforePublishTime'] as int?,
+      bookable: json['bookable'] as int,
       gymId: json['gymId'] as String?,
     );
   }
@@ -57,19 +54,9 @@ class Shift {
       'occupiedSeats': occupiedSeats,
       'trainer': trainer,
       'name': name,
-      'publishable': publishable,
-      'visibleBeforePublishTime': visibleBeforePublishTime,
+      'bookable': bookable,
       'gymId': gymId,
     };
-  }
-
-  DateTime getNextWeekday() {
-    final DateTime now = DateTime.now();
-    int daysUntilNextWeekday = dayOfWeek - now.weekday;
-    if (daysUntilNextWeekday <= 0) {
-      daysUntilNextWeekday += 7;
-    }
-    return now.add(Duration(days: daysUntilNextWeekday));
   }
 
   @override
