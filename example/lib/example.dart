@@ -4,17 +4,13 @@ void main(List<String> arguments) async {
   ApiService.getInstance().setIP("127.0.0.1");
   ApiService.getInstance().setPORT(3000);
 
-  ApiService.getInstance().setGymId("pleiadi");
+  ApiService.getInstance().setGymId("1");
 
   var email = "ptrnic@gmail.com";
   var password = "ciao1234";
   ApiService.getInstance().setEmail(email);
   ApiService.getInstance().setPassword(password);
 
-  List<Shift> shifts = await ShiftRepository.list(courseId: 1);
-  print(shifts);
-
-  List<Reservation> reservations =
-      await ReservationRepository.list(date: DateTime(2025, 05, 11));
-  print(reservations);
+  List<BookableShift> bookableShifts = await BookableShiftRepository.list();
+  print(bookableShifts);
 }

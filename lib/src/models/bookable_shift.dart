@@ -1,11 +1,13 @@
 class BookableShift {
   int? id;
   int shiftId;
+  int courseId;
   DateTime date;
 
   BookableShift({
     this.id,
     required this.shiftId,
+    required this.courseId,
     required this.date,
   });
 
@@ -13,6 +15,7 @@ class BookableShift {
     return BookableShift(
       id: json['id'] as int?,
       shiftId: json['shiftId'] as int,
+      courseId: json['courseId'] as int,
       date: DateTime.parse(json['date'] as String),
     );
   }
@@ -21,6 +24,7 @@ class BookableShift {
     return {
       'id': id,
       'shiftId': shiftId,
+      'courseId': courseId,
       'date': date.toIso8601String(),
     };
   }
