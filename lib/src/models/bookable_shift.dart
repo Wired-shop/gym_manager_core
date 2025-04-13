@@ -1,5 +1,3 @@
-import 'package:gym_manager_core/src/models/time_of_day.dart';
-
 class BookableShift {
   int? id;
   int shiftId;

@@ -45,6 +45,21 @@ class BookableShiftRepository {
     }
   }
 
+  static Future generate() async {
+    String url =
+        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookableShifts/generate';
+    Response response = await ApiService.getInstance().dio.delete(
+          url,
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
+          }),
+        );
+    if (response.data["responseType"] == "error") {
+      throw response.data;
+    }
+  }
+
   static Future delete(int id) async {
     String url =
         'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookableShifts/$id';
