@@ -23,7 +23,8 @@ class Booking {
       shiftId: json['shiftId'] as int,
       courseId: json['courseId'] as int,
       userId: json['userId'] as int,
-      status: BookingStatus.fromString(json['status'] as String),
+      status: BookingStatus.fromString(json['status'] as String) ??
+          BookingStatus.notUsed,
       date:
           json['date'] == null ? null : DateTime.parse(json['date'] as String),
     );
