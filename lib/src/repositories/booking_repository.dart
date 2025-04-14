@@ -1,12 +1,18 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:gym_manager_core/core.dart';
+import 'package:gym_manager_core/src/enums/booking_status.dart';
 
 class BookingRepository {
-  static Future<List<Booking>> list(
-      {int? shiftId, int? courseId, int? userId, DateTime? date}) async {
+  static Future<List<Booking>> list({
+    int? shiftId,
+    int? courseId,
+    int? userId,
+    DateTime? date,
+    BookingStatus? status,
+  }) async {
     String url =
-        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookings?courseId=$courseId&shiftId=$shiftId&userId=$userId&date=${date?.toIso8601String()}';
+        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookings?courseId=$courseId&shiftId=$shiftId&userId=$userId&status=${status?.name}&date=${date?.toIso8601String()}';
     Response response = await ApiService.getInstance().dio.get(
           url,
           options: Options(headers: {
