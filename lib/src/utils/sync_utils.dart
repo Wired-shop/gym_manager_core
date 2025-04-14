@@ -14,16 +14,16 @@ class SyncUtils {
     ApiService.getInstance().setIP(ip);
     //Reset all table
     await UserRepository.truncate();
-    await SubscriptionRepository.truncate();
+    //await SubscriptionRepository.truncate();
     await CourseRepository.truncate();
-    await ShiftRepository.truncate();
-    await BookableShiftRepository.truncate();
+    //await ShiftRepository.truncate();
+    //await BookableShiftRepository.truncate();
     //Insert new Info
     await UserRepository.insert(users);
-    await SubscriptionRepository.insert(subscriptions);
-    await CourseRepository.insert(courses);
-    await ShiftRepository.insert(shifts);
-    await BookableShiftRepository.insert(bookableShifts);
+    //await SubscriptionRepository.insert(subscriptions);
+    //await CourseRepository.insert(courses);
+    //await ShiftRepository.insert(shifts);
+    //await BookableShiftRepository.insert(bookableShifts);
 
     //Reset old Ip
     ApiService.getInstance().setIP(oldIp);
