@@ -25,21 +25,25 @@ class BookableShiftRepository {
     }
   }
 
-  static Future<BookableShift> insert(BookableShift bookableShift) async {
+  static Future<List<BookableShift>> insert(List<Shift> shifts) async {
     String url =
         'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookableShifts';
+    List<Map<String, dynamic>> shiftsMapped =
+        shifts.map((shift) => shift.toJson()).toList();
     Response response = await ApiService.getInstance().dio.post(
           url,
-          data: bookableShift.toJson(),
+          data: shiftsMapped,
           options: Options(headers: {
             'Authorization':
                 'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
           }),
         );
     if (response.data["responseType"] == "ok") {
-      BookableShift newBookableShifts =
-          BookableShift.fromJson(response.data["body"]);
-      return newBookableShifts;
+      List<BookableShift> insertedShifts =
+          (response.data["body"] as List<dynamic>)
+              .map((e) => BookableShift.fromJson(e))
+              .toList();
+      return insertedShifts;
     } else {
       throw response.data;
     }
@@ -71,6 +75,21 @@ class BookableShiftRepository {
           }),
         );
     if (response.data["responseType"] == "error") {
+      throw response.data;
+    }
+  }
+
+  static Future<void> truncate() async {
+    String url =
+        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookableShifts/truncate";
+    Response response = await ApiService.getInstance().dio.post(
+          url,
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
+          }),
+        );
+    if (response.data["responseType"] != "ok") {
       throw response.data;
     }
   }

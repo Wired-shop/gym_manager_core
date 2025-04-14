@@ -19,7 +19,7 @@ class ShiftRepository {
   }
 
   static Future<List<Shift>> list({
-    required int courseId,
+    int? courseId,
     bool? publishable,
   }) async {
     String url =

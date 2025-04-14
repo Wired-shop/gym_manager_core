@@ -7,6 +7,7 @@ class SyncUtils {
     required List<Subscription> subscriptions,
     required List<Course> courses,
     required List<Shift> shifts,
+    required List<Shift> bookableShifts,
   }) async {
     //Save old infos
     String oldIp = ApiService.getInstance().getIP();
@@ -16,11 +17,14 @@ class SyncUtils {
     await SubscriptionRepository.truncate();
     await CourseRepository.truncate();
     await ShiftRepository.truncate();
+    await BookableShiftRepository.truncate();
     //Insert new Info
     await UserRepository.insert(users);
     await SubscriptionRepository.insert(subscriptions);
     await CourseRepository.insert(courses);
     await ShiftRepository.insert(shifts);
+    await BookableShiftRepository.insert(bookableShifts);
+
     //Reset old Ip
     ApiService.getInstance().setIP(oldIp);
   }
