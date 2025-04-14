@@ -7,7 +7,7 @@ class SyncUtils {
     required List<Subscription> subscriptions,
     required List<Course> courses,
     required List<Shift> shifts,
-    required List<Shift> bookableShifts,
+    required List<BookableShift> bookableShifts,
   }) async {
     //Save old infos
     String oldIp = ApiService.getInstance().getIP();

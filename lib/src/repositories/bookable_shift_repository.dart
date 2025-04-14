@@ -25,7 +25,7 @@ class BookableShiftRepository {
     }
   }
 
-  static Future<List<BookableShift>> insert(List<Shift> shifts) async {
+  static Future<List<BookableShift>> insert(List<BookableShift> shifts) async {
     String url =
         'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookableShifts';
     List<Map<String, dynamic>> shiftsMapped =
