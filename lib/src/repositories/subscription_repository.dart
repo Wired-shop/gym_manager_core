@@ -8,7 +8,7 @@ class SubscriptionRepository {
   static Future<void> truncate() async {
     String url =
         "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/subscriptions/truncate";
-    Response response = await ApiService.getInstance().dio.post(
+    Response response = await ApiService.getInstance().dio.get(
           url,
           options: Options(headers: {
             'Authorization':
