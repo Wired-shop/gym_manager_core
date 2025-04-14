@@ -11,6 +11,6 @@ void main(List<String> arguments) async {
   ApiService.getInstance().setEmail(email);
   ApiService.getInstance().setPassword(password);
 
-  List<BookableShift> bookableShifts = await BookableShiftRepository.list();
-  print(bookableShifts);
+  await BookingRepository.insert(Booking(
+      shiftId: 1, courseId: 1, userId: 1, status: BookingStatus.notUsed));
 }

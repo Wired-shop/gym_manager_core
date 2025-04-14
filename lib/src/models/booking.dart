@@ -36,7 +36,7 @@ class Booking {
       'shiftId': shiftId,
       'courseId': courseId,
       'userId': userId,
-      'status': status.name,
+      'status': "notUsed",
       'date': date?.toIso8601String(),
     };
   }

@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:gym_manager_core/core.dart';
-import 'package:gym_manager_core/src/enums/booking_status.dart';
 
 class BookingRepository {
   static Future<List<Booking>> list({
@@ -44,6 +43,25 @@ class BookingRepository {
     if (response.data["responseType"] == "ok") {
       Booking newBooking = Booking.fromJson(response.data["body"]);
       return newBooking;
+    } else {
+      throw response.data;
+    }
+  }
+
+  static Future<Booking> update(Booking booking) async {
+    String url =
+        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookings/";
+    Response response = await ApiService.getInstance().dio.put(
+          url,
+          data: booking.toJson(),
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
+          }),
+        );
+    if (response.data["responseType"] == "ok") {
+      Booking updatedBooking = Booking.fromJson(response.data["body"]);
+      return updatedBooking;
     } else {
       throw response.data;
     }
