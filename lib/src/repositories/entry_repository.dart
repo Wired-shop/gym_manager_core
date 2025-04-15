@@ -8,7 +8,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 class EntryRepository {
   static Future<Entry> insert(Entry entry) async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/entries/";
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/entries/";
     Response response = await ApiService.getInstance().dio.post(
           url,
           data: entry.toJson(),
@@ -28,7 +28,7 @@ class EntryRepository {
   static Future<List<Entry>> list(
       {DateTime? startDate, DateTime? endDate, int? userId}) async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/entries?startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}&userId=$userId";
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/entries?startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}&userId=$userId";
     Response response = await ApiService.getInstance().dio.get(
           url,
           options: Options(headers: {

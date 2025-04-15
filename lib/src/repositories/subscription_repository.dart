@@ -7,7 +7,7 @@ import '../services/api_service.dart';
 class SubscriptionRepository {
   static Future<void> truncate() async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/subscriptions/truncate";
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/subscriptions/truncate";
     Response response = await ApiService.getInstance().dio.get(
           url,
           options: Options(headers: {
@@ -23,7 +23,7 @@ class SubscriptionRepository {
   static Future<Subscription?> get(
       {int? id, String? badgeCode, int? userId}) async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/subscriptions?badgeCode=$badgeCode&id=$id&userId=$userId";
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/subscriptions?badgeCode=$badgeCode&id=$id&userId=$userId";
     Response response = await ApiService.getInstance().dio.get(
           url,
           options: Options(headers: {
@@ -42,7 +42,7 @@ class SubscriptionRepository {
 
   static Future<List<Subscription>> list() async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/subscriptions/all";
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/subscriptions/all";
     Response response = await ApiService.getInstance().dio.get(
           url,
           options: Options(headers: {
@@ -63,7 +63,7 @@ class SubscriptionRepository {
 
   static Future update(Subscription subscription) async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/subscriptions";
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/subscriptions";
     Response response = await ApiService.getInstance().dio.put(
           url,
           data: subscription.toJson(),
@@ -80,7 +80,7 @@ class SubscriptionRepository {
   static Future<List<Subscription>> insert(
       List<Subscription> subscriptions) async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/subscriptions";
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/subscriptions";
     List<Map<String, dynamic>> subscriptionsMapped =
         subscriptions.map((subscription) => subscription.toJson()).toList();
     Response response = await ApiService.getInstance().dio.post(
@@ -104,7 +104,7 @@ class SubscriptionRepository {
 
   static Future delete(int id) async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/subscriptions/$id";
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/subscriptions/$id";
     Response response = await ApiService.getInstance().dio.delete(
           url,
           options: Options(headers: {

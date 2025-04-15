@@ -13,7 +13,7 @@ class BookingRepository {
   }) async {
     IP = IP ?? ApiService.getInstance().getIP();
     String url =
-        'http://$IP:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookings?courseId=$courseId&shiftId=$shiftId&userId=$userId&status=${status?.name}&date=${date?.toIso8601String()}';
+        'https://$IP:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookings?courseId=$courseId&shiftId=$shiftId&userId=$userId&status=${status?.name}&date=${date?.toIso8601String()}';
     Response response = await ApiService.getInstance().dio.get(
           url,
           options: Options(headers: {
@@ -33,7 +33,7 @@ class BookingRepository {
 
   static Future<Booking> insert(Booking booking) async {
     String url =
-        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookings';
+        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookings';
     Response response = await ApiService.getInstance().dio.post(
           url,
           data: booking.toJson(),
@@ -52,7 +52,7 @@ class BookingRepository {
 
   static Future<Booking> update(Booking booking) async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookings/";
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookings/";
     Response response = await ApiService.getInstance().dio.put(
           url,
           data: booking.toJson(),
@@ -71,7 +71,7 @@ class BookingRepository {
 
   static Future delete(int id) async {
     String url =
-        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookings/$id';
+        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookings/$id';
     Response response = await ApiService.getInstance().dio.delete(
           url,
           options: Options(headers: {

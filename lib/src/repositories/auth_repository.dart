@@ -6,7 +6,7 @@ import 'package:gym_manager_core/core.dart';
 class AuthRepository {
   static Future<String> signup(Account account) async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/auth";
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/auth";
     Map<String, dynamic> requestBody = account.toJson();
     requestBody['gymId'] = ApiService.getInstance().getGymId();
     Response response = await ApiService.getInstance().dio.post(
@@ -23,7 +23,7 @@ class AuthRepository {
 
   static Future<List<Account>> gyms() async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/auth/gyms";
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/auth/gyms";
     Response response = await ApiService.getInstance().dio.get(url);
     if (response.data["responseType"] == "ok") {
       List<dynamic> accountsData = response.data["body"];
@@ -35,7 +35,7 @@ class AuthRepository {
 
   static Future delete({required String gymId, required String email}) async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/auth?email=$email&gymId=$gymId";
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/auth?email=$email&gymId=$gymId";
     Response response = await ApiService.getInstance().dio.delete(
           url,
           options: Options(headers: {

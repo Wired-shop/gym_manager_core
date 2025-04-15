@@ -7,7 +7,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 class UserRepository {
   static Future<void> truncate() async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/users/truncate";
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/users/truncate";
     Response response = await ApiService.getInstance().dio.get(
           url,
           options: Options(headers: {
@@ -40,7 +40,7 @@ class UserRepository {
 
   static Future<List<User>> list({String? q, UsersFilter? filter}) async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/users?q=$q";
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/users?q=$q";
     if (filter != null) {
       url += "&${filter.toQueryParameters()}";
     }
@@ -63,7 +63,7 @@ class UserRepository {
 
   static Future<List<User>> insert(List<User> users) async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/users";
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/users";
     List<Map<String, dynamic>> usersMapped =
         users.map((user) => user.toJson()).toList();
     Response response = await ApiService.getInstance().dio.post(
@@ -86,7 +86,7 @@ class UserRepository {
 
   static Future update(User user) async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/users";
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/users";
     Response response = await ApiService.getInstance().dio.put(
           url,
           data: user.toJson(),
@@ -105,7 +105,7 @@ class UserRepository {
 
   static Future<User?> get(int id) async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/users/$id";
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/users/$id";
     Response response = await ApiService.getInstance().dio.get(
           url,
           options: Options(headers: {
@@ -124,7 +124,7 @@ class UserRepository {
 
   static Future<User?> getUserByEmail(String email) async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/users/emails/$email";
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/users/emails/$email";
     Response response = await ApiService.getInstance().dio.get(
           url,
           options: Options(headers: {
@@ -143,7 +143,7 @@ class UserRepository {
 
   static Future delete(int id) async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/users/$id";
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/users/$id";
     Response response = await ApiService.getInstance().dio.delete(
           url,
           options: Options(headers: {

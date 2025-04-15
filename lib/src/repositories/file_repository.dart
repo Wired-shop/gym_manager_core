@@ -18,7 +18,7 @@ class FileRepository {
       required String extension,
       required DocumentType documentType}) async {
     String url =
-        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/files';
+        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/files';
     Response response = await ApiService.getInstance().dio.post(
           url,
           data: {
@@ -40,7 +40,7 @@ class FileRepository {
 
   static Future<List<int>> get(String path) async {
     Response response = await ApiService.getInstance().dio.get(
-          'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/files?path=$path',
+          'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/files?path=$path',
           options: Options(headers: {
             'Authorization':
                 'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
@@ -55,7 +55,7 @@ class FileRepository {
 
   static Future delete(String path) async {
     String url =
-        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/files?path=$path';
+        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/files?path=$path';
     Response response = await ApiService.getInstance().dio.delete(
           url,
           options: Options(headers: {

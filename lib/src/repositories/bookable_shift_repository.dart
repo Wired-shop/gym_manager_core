@@ -7,7 +7,7 @@ class BookableShiftRepository {
       {int? shiftId, int? courseId, DateTime? date, String? IP}) async {
     IP = IP ?? ApiService.getInstance().getIP();
     String url =
-        'http://$IP:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookableShifts?shiftId=$shiftId&courseId=$courseId&date=${date?.toIso8601String()}';
+        'https://$IP:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookableShifts?shiftId=$shiftId&courseId=$courseId&date=${date?.toIso8601String()}';
     Response response = await ApiService.getInstance().dio.get(
           url,
           options: Options(headers: {
@@ -28,7 +28,7 @@ class BookableShiftRepository {
 
   static Future<List<BookableShift>> insert(List<BookableShift> shifts) async {
     String url =
-        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookableShifts';
+        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookableShifts';
     List<Map<String, dynamic>> shiftsMapped =
         shifts.map((shift) => shift.toJson()).toList();
     Response response = await ApiService.getInstance().dio.post(
@@ -52,7 +52,7 @@ class BookableShiftRepository {
 
   static Future generate() async {
     String url =
-        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookableShifts/generate';
+        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookableShifts/generate';
     Response response = await ApiService.getInstance().dio.delete(
           url,
           options: Options(headers: {
@@ -67,7 +67,7 @@ class BookableShiftRepository {
 
   static Future delete(int id) async {
     String url =
-        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookableShifts/$id';
+        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookableShifts/$id';
     Response response = await ApiService.getInstance().dio.delete(
           url,
           options: Options(headers: {
@@ -82,7 +82,7 @@ class BookableShiftRepository {
 
   static Future<void> truncate() async {
     String url =
-        "http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookableShifts/truncate";
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookableShifts/truncate";
     Response response = await ApiService.getInstance().dio.get(
           url,
           options: Options(headers: {
