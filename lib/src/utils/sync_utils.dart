@@ -8,24 +8,33 @@ class SyncUtils {
     required List<Course> courses,
     required List<Shift> shifts,
     required List<BookableShift> bookableShifts,
+    bool includeUsers = true,
+    bool includeSubscriptions = true,
+    bool includeCourses = true,
+    bool includeShifts = true,
+    bool includeBookableShifts = true,
   }) async {
-    //Save old infos
     String oldIp = ApiService.getInstance().getIP();
     ApiService.getInstance().setIP(ip);
-    //Reset all table
-    await UserRepository.truncate();
-    await SubscriptionRepository.truncate();
-    await CourseRepository.truncate();
-    await ShiftRepository.truncate();
-    await BookableShiftRepository.truncate();
-    //Insert new Info
-    await UserRepository.insert(users);
-    await SubscriptionRepository.insert(subscriptions);
-    await CourseRepository.insert(courses);
-    await ShiftRepository.insert(shifts);
-    await BookableShiftRepository.insert(bookableShifts);
+    includeUsers == false ? null : await UserRepository.truncate();
+    includeSubscriptions == false
+        ? null
+        : await SubscriptionRepository.truncate();
+    includeCourses == false ? null : await CourseRepository.truncate();
+    includeShifts == false ? null : await ShiftRepository.truncate();
+    includeBookableShifts == false
+        ? null
+        : await BookableShiftRepository.truncate();
+    includeUsers == false ? null : await UserRepository.insert(users);
+    includeSubscriptions == false
+        ? null
+        : await SubscriptionRepository.insert(subscriptions);
+    includeCourses == false ? null : await CourseRepository.insert(courses);
+    includeShifts == false ? null : await ShiftRepository.insert(shifts);
+    includeBookableShifts == false
+        ? null
+        : await BookableShiftRepository.insert(bookableShifts);
 
-    //Reset old Ip
     ApiService.getInstance().setIP(oldIp);
   }
 }
