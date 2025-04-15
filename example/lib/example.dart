@@ -13,13 +13,5 @@ void main(List<String> arguments) async {
   var password = "ciao1234";
   ApiService.getInstance().setEmail(email);
   ApiService.getInstance().setPassword(password);
-
-  await SyncUtils.syncTo(
-    ip: localhost,
-    users: await UserRepository.list(),
-    subscriptions: await SubscriptionRepository.list(),
-    courses: await CourseRepository.list(),
-    shifts: await ShiftRepository.list(),
-    bookableShifts: await BookableShiftRepository.list(),
-  );
+  print(await UserRepository.list());
 }

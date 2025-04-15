@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 
 class ApiService {
   String _IP = "127.0.0.1";
@@ -8,7 +9,11 @@ class ApiService {
   String? _email;
   String? _password;
 
-  Dio dio = Dio();
+  Dio dio = Dio(BaseOptions())
+    ..httpClientAdapter = IOHttpClientAdapter(onHttpClientCreate: (client) {
+      client.badCertificateCallback = (cert, host, port) => true;
+      return client;
+    });
 
   ApiService._privateConstructor();
 
