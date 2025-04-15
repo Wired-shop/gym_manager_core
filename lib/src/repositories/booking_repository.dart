@@ -9,9 +9,11 @@ class BookingRepository {
     int? userId,
     DateTime? date,
     BookingStatus? status,
+    String? IP,
   }) async {
+    IP = IP ?? ApiService.getInstance().getIP();
     String url =
-        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookings?courseId=$courseId&shiftId=$shiftId&userId=$userId&status=${status?.name}&date=${date?.toIso8601String()}';
+        'http://$IP:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookings?courseId=$courseId&shiftId=$shiftId&userId=$userId&status=${status?.name}&date=${date?.toIso8601String()}';
     Response response = await ApiService.getInstance().dio.get(
           url,
           options: Options(headers: {

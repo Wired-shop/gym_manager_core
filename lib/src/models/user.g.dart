@@ -7,6 +7,7 @@ part of 'user.dart';
 // **************************************************************************
 
 User _$UserFromJson(Map<String, dynamic> json) => User(
+      id: json['id'] as int?,
       name: json['name'] as String?,
       surname: json['surname'] as String?,
       address: json['address'] as String?,
@@ -38,7 +39,6 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       flagged: json['flagged'] as int?,
       archived: json['archived'] as int?,
       tpPro: json['tpPro'] as int?,
-      id: json['id'] as int?,
       forceBlock: json['forceBlock'] as int?,
       birthdayCity: json['birthdayCity'] as String?,
       birthday: json['birthday'] == null
