@@ -4,9 +4,9 @@ import 'package:gym_manager_core/core.dart';
 
 class BookableShiftRepository {
   static Future<List<BookableShift>> list(
-      {int? shiftId, DateTime? date}) async {
+      {int? shiftId, int? courseId, DateTime? date}) async {
     String url =
-        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookableShifts?shiftId=$shiftId&date=${date?.toIso8601String()}';
+        'http://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookableShifts?shiftId=$shiftId&courseId=$courseId&date=${date?.toIso8601String()}';
     Response response = await ApiService.getInstance().dio.get(
           url,
           options: Options(headers: {

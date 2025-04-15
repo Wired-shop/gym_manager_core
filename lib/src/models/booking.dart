@@ -14,7 +14,7 @@ class Booking {
     required this.courseId,
     required this.userId,
     required this.status,
-    this.date,
+    required this.date,
   });
 
   factory Booking.fromJson(Map<String, dynamic> json) {
