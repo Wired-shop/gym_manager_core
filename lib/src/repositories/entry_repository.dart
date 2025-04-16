@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:web_socket_channel/io.dart';
 import '../models/entry.dart';
@@ -53,6 +54,9 @@ class EntryRepository {
         'wss://localhost:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/stream/entries?startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}';
     WebSocketChannel channel = IOWebSocketChannel.connect(
       Uri.parse(wsUrl),
+      customClient: HttpClient()
+        ..badCertificateCallback =
+            (X509Certificate cert, String host, int port) => true,
       headers: {
         'Authorization': basicAuth,
       },

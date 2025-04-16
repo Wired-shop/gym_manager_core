@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:gym_manager_core/core.dart';
 import 'package:web_socket_channel/io.dart';
@@ -27,6 +28,9 @@ class UserRepository {
         'wss://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/stream/users?q=$q&${filter?.toQueryParameters()}';
     WebSocketChannel channel = IOWebSocketChannel.connect(
       Uri.parse(wsUrl),
+      customClient: HttpClient()
+        ..badCertificateCallback =
+            (X509Certificate cert, String host, int port) => true,
       headers: {
         'Authorization': basicAuth,
       },

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:gym_manager_core/core.dart';
 import 'package:web_socket_channel/io.dart';
@@ -8,7 +10,12 @@ class CourseRepository {
   static Stream<List<Course>> stream() {
     String wsUrl =
         'wss://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/stream/courses';
-    WebSocketChannel channel = IOWebSocketChannel.connect(Uri.parse(wsUrl));
+    WebSocketChannel channel = IOWebSocketChannel.connect(
+      Uri.parse(wsUrl),
+      customClient: HttpClient()
+        ..badCertificateCallback =
+            (X509Certificate cert, String host, int port) => true,
+    );
     return channel.stream.asyncMap((response) {
       return List<Map<String, dynamic>>.from(json.decode(response.toString()))
           .map((e) => Course.fromJson(e))
