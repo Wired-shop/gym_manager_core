@@ -12,7 +12,7 @@ enum BookingStatus {
   }
 
   static String toPrettyString(BookingStatus status) {
-    if (status.name == BookingStatus.notUsed.name) return "Usata";
+    if (status.name == BookingStatus.used.name) return "Usata";
     return "Non usata";
   }
 }
