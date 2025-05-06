@@ -1,0 +1,22 @@
+enum PreferencesKeys {
+  brightness,
+  localIP,
+  localPORT,
+  remoteIP,
+  remotePORT,
+  email,
+  password,
+  gymId,
+  tpProUsername,
+  tpProPassword,
+  usersFilters,
+  backgroundImagePath,
+  showAlert,
+  alertTitle,
+  alertSubtitle,
+  logoImagePath,
+  genderSoundAlerts,
+  soundAlertsVolume,
+  enableSoundAlerts,
+  showWatch;
+}
