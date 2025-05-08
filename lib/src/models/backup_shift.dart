@@ -22,4 +22,11 @@ class BackupShift {
       'start': start.format24Hour(),
     };
   }
+
+  String toCronExpression() {
+    final minutes = start.minute;
+    final hours = start.hour;
+    final dow = dayOfWeek;
+    return '$minutes $hours * * $dow';
+  }
 }
