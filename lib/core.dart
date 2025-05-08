@@ -16,6 +16,7 @@ export 'src/models/booking.dart';
 export 'src/models/configs.dart';
 export 'src/models/account.dart';
 export 'src/models/time_of_day.dart';
+export 'src/models/backup_shift.dart';
 
 export 'src/enums/document_type.dart';
 export 'src/enums/validation_response.dart';
