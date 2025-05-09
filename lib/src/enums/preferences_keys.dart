@@ -19,5 +19,6 @@ enum PreferencesKeys {
   soundAlertsVolume,
   enableSoundAlerts,
   showWatch,
-  backupShifts;
+  backupShifts,
+  backupPath;
 }
