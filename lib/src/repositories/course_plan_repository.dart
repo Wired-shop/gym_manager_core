@@ -1,0 +1,78 @@
+import 'dart:convert';
+import 'package:dio/dio.dart';
+import 'package:gym_manager_core/core.dart';
+
+class CoursePlanRepository {
+  static Future<List<CoursePlan>> list(int courseId) async {
+    String url =
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/coursePlans?courseId=$courseId";
+    Response response = await ApiService.getInstance().dio.get(
+          url,
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
+          }),
+        );
+    if (response.data["responseType"] == "ok") {
+      List<CoursePlan> coursePlans = (response.data["body"] as List<dynamic>)
+          .map((e) => CoursePlan.fromJson(e))
+          .toList();
+      return coursePlans;
+    } else {
+      throw response.data;
+    }
+  }
+
+  static Future<CoursePlan> insert(CoursePlan coursePlan) async {
+    String url =
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/coursePlans";
+    Response response = await ApiService.getInstance().dio.post(
+          url,
+          data: coursePlan.toJson(),
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
+          }),
+        );
+    if (response.data["responseType"] == "ok") {
+      CoursePlan newCoursePlan = CoursePlan.fromJson(response.data["body"]);
+      return newCoursePlan;
+    } else {
+      throw response.data;
+    }
+  }
+
+  static Future<CoursePlan> update(CoursePlan coursePlan) async {
+    String url =
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/coursePlans/";
+    Response response = await ApiService.getInstance().dio.put(
+          url,
+          data: coursePlan.toJson(),
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
+          }),
+        );
+    if (response.data["responseType"] == "ok") {
+      CoursePlan updatedCoursePlan = CoursePlan.fromJson(response.data["body"]);
+      return updatedCoursePlan;
+    } else {
+      throw response.data;
+    }
+  }
+
+  static Future delete(int id) async {
+    String url =
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/coursePlans/$id";
+    Response response = await ApiService.getInstance().dio.delete(
+          url,
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
+          }),
+        );
+    if (response.data["responseType"] == "error") {
+      throw response.data;
+    }
+  }
+}
