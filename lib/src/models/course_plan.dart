@@ -1,4 +1,5 @@
 class CoursePlan {
+  final int? id;
   final String name;
   final String description;
   final double price;
@@ -6,6 +7,7 @@ class CoursePlan {
   final int courseId;
 
   CoursePlan({
+    this.id,
     required this.courseId,
     required this.name,
     required this.description,
@@ -15,6 +17,7 @@ class CoursePlan {
 
   factory CoursePlan.fromJson(Map<String, dynamic> json) {
     return CoursePlan(
+      id: json['id'] as int?,
       courseId: json['courseId'] as int,
       name: json['name'] as String,
       description: json['description'] as String,
@@ -25,6 +28,7 @@ class CoursePlan {
 
   Map<String, dynamic> toJson() {
     return {
+      if (id != null) 'id': id,
       'courseId': courseId,
       'name': name,
       'description': description,
@@ -38,6 +42,7 @@ class CoursePlan {
       identical(this, other) ||
       other is CoursePlan &&
           runtimeType == other.runtimeType &&
+          id == other.id &&
           courseId == other.courseId &&
           name == other.name &&
           description == other.description &&
@@ -46,6 +51,7 @@ class CoursePlan {
 
   @override
   int get hashCode =>
+      id.hashCode ^
       courseId.hashCode ^
       name.hashCode ^
       description.hashCode ^
