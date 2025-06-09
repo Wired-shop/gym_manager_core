@@ -14,14 +14,15 @@ class CoursePlan {
     required this.price,
     required this.validityDays,
   });
-
   factory CoursePlan.fromJson(Map<String, dynamic> json) {
     return CoursePlan(
       id: json['id'] as int?,
       courseId: json['courseId'] as int,
       name: json['name'] as String,
       description: json['description'] as String,
-      price: (json['price'] as num).toDouble(),
+      price: json['price'] is String
+          ? double.parse(json['price'])
+          : (json['price'] as num).toDouble(),
       validityDays: json['validityDays'] as int,
     );
   }

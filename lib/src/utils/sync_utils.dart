@@ -26,10 +26,10 @@ class SyncUtils {
         ? null
         : await BookableShiftRepository.truncate();
     includeUsers == false ? null : await UserRepository.insert(users);
+    includeCourses == false ? null : await CourseRepository.insert(courses);
     includeSubscriptions == false
         ? null
         : await SubscriptionRepository.insert(subscriptions);
-    includeCourses == false ? null : await CourseRepository.insert(courses);
     includeShifts == false ? null : await ShiftRepository.insert(shifts);
     includeBookableShifts == false
         ? null
