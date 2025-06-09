@@ -13,16 +13,12 @@ void main(List<String> arguments) async {
   ApiService.getInstance().setEmail(email);
   ApiService.getInstance().setPassword(password);
 
-  List<Course> courses = await CourseRepository.list();
+  List<CoursePlan> courses = await CoursePlanRepository.list(3);
 
-  Course course = courses[0];
+  print(courses);
+  print(await CoursePlanRepository.delete(4));
 
-  print(await CoursePlanRepository.insert(CoursePlan(
-      courseId: course.id!,
-      name: "Trimestrale",
-      description: "Scade ogni 3 mesi",
-      price: 12.09,
-      validityDays: 30)));
+  courses = await CoursePlanRepository.list(3);
 
-  print(await CoursePlanRepository.list(course.id!));
+  print(courses);
 }

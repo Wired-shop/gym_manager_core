@@ -1,10 +1,10 @@
 class CoursePlan {
   final int? id;
-  final String name;
-  final String description;
-  final double price;
-  final int validityDays;
-  final int courseId;
+  String name;
+  String description;
+  double price;
+  int validityDays;
+  int courseId;
 
   CoursePlan({
     this.id,
@@ -58,4 +58,9 @@ class CoursePlan {
       description.hashCode ^
       price.hashCode ^
       validityDays.hashCode;
+
+  @override
+  String toString() {
+    return toJson().toString();
+  }
 }
