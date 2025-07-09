@@ -6,6 +6,7 @@ class Subscription {
   int? id;
   int userId;
   int? courseId;
+  int? coursePlanId;
 
   DateTime? creation;
   DateTime expiration;
@@ -16,6 +17,7 @@ class Subscription {
     this.id,
     required this.userId,
     required this.expiration,
+    this.coursePlanId,
     this.courseId,
     this.badgeCode,
     this.accessesAvaiable,
