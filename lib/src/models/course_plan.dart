@@ -1,7 +1,7 @@
 class CoursePlan {
   final int? id;
-  String name;
-  String description;
+  String? name;
+  String? description;
   double price;
   int validityDays;
   int courseId;
@@ -9,8 +9,8 @@ class CoursePlan {
   CoursePlan({
     this.id,
     required this.courseId,
-    required this.name,
-    required this.description,
+    this.name,
+    this.description,
     required this.price,
     required this.validityDays,
   });
