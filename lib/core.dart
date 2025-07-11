@@ -32,6 +32,7 @@ export 'src/repositories/entry_repository.dart';
 export 'src/repositories/file_repository.dart';
 export 'src/repositories/subscription_repository.dart';
 export 'src/repositories/user_repository.dart';
+export 'src/repositories/product_repository.dart';
 export 'src/repositories/course_repository.dart';
 export 'src/repositories/shift_repository.dart';
 export 'src/repositories/booking_repository.dart';

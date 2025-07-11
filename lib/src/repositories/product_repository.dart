@@ -3,25 +3,8 @@ import 'package:dio/dio.dart';
 import 'package:gym_manager_core/core.dart';
 import 'package:web_socket_channel/io.dart';
 import 'dart:convert';
-import 'package:web_socket_channel/web_socket_channel.dart';
 
 class ProductRepository {
-  static Stream<List<Product>> stream() {
-    String wsUrl =
-        'wss://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/stream/products';
-    WebSocketChannel channel = IOWebSocketChannel.connect(
-      Uri.parse(wsUrl),
-      customClient: HttpClient()
-        ..badCertificateCallback =
-            (X509Certificate cert, String host, int port) => true,
-    );
-    return channel.stream.asyncMap((response) {
-      return List<Map<String, dynamic>>.from(json.decode(response.toString()))
-          .map((e) => Product.fromJson(e))
-          .toList();
-    });
-  }
-
   static Future<List<Product>> insert(List<Product> products) async {
     String url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/products";
