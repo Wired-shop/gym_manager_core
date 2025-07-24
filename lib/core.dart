@@ -38,5 +38,6 @@ export 'src/repositories/shift_repository.dart';
 export 'src/repositories/booking_repository.dart';
 export 'src/repositories/bookable_shift_repository.dart';
 export 'src/repositories/course_plan_repository.dart';
+export 'src/repositories/sale_repository.dart';
 
 export 'src/utils/sync_utils.dart';
