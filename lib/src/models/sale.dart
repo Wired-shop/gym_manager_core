@@ -2,7 +2,7 @@ import 'package:gym_manager_core/core.dart';
 
 class Sale {
   final int? id;
-  final DateTime saleDate;
+  final DateTime date;
   final int userId;
   final List<Product> products;
   final CoursePlan? coursePlan;
@@ -11,7 +11,7 @@ class Sale {
 
   Sale({
     this.id,
-    required this.saleDate,
+    required this.date,
     required this.userId,
     required this.products,
     this.coursePlan,
@@ -22,7 +22,7 @@ class Sale {
   factory Sale.fromJson(Map<String, dynamic> json) {
     return Sale(
       id: json['id'] as int?,
-      saleDate: DateTime.parse(json['saleDate'] as String),
+      date: DateTime.parse(json['date'] as String),
       userId: json['userId'] as int,
       products: (json['products'] as List)
           .map((e) => Product.fromJson(e as Map<String, dynamic>))
@@ -43,7 +43,7 @@ class Sale {
 
   Map<String, dynamic> toJson() => {
         if (id != null) 'id': id,
-        'saleDate': saleDate.toIso8601String(),
+        'date': date.toIso8601String(),
         'userId': userId,
         'products': products.map((e) => e.toJson()).toList(),
         if (coursePlan != null) 'coursePlan': coursePlan!.toJson(),
@@ -57,7 +57,7 @@ class Sale {
       other is Sale &&
           runtimeType == other.runtimeType &&
           id == other.id &&
-          saleDate == other.saleDate &&
+          date == other.date &&
           userId == other.userId &&
           products == other.products &&
           coursePlan == other.coursePlan &&
@@ -67,7 +67,7 @@ class Sale {
   @override
   int get hashCode =>
       id.hashCode ^
-      saleDate.hashCode ^
+      date.hashCode ^
       userId.hashCode ^
       products.hashCode ^
       coursePlan.hashCode ^
