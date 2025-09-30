@@ -1,7 +1,5 @@
-import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:gym_manager_core/core.dart';
-import 'package:web_socket_channel/io.dart';
 import 'dart:convert';
 
 class ProductRepository {

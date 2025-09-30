@@ -8,6 +8,7 @@ enum ValidationResponseWarnings {
   abbonamentoAssente,
   abbonamentoScaduto,
   accessiTerminati,
+  accessiGiornalieriTerminati,
   iscrizioneInScadenza,
   abbonamentoInScadenza,
   affiliazioneInScadenza,
@@ -47,6 +48,8 @@ enum ValidationResponseWarnings {
         return "Abbonamento scaduto";
       case ValidationResponseWarnings.accessiTerminati:
         return "Accessi terminati";
+      case ValidationResponseWarnings.accessiGiornalieriTerminati:
+        return "Accessi giornalieri terminati";
       case ValidationResponseWarnings.bloccato:
         return "Bloccato";
       case ValidationResponseWarnings.abbonamentoInScadenza:

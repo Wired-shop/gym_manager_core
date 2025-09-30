@@ -11,6 +11,7 @@ class Subscription {
   DateTime? creation;
   DateTime expiration;
   String? badgeCode;
+
   int? accessesAvaiable;
 
   Subscription({
