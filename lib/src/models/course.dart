@@ -7,7 +7,7 @@ class Course {
   String? trainer;
   int? kcal;
   int? meanDuration;
-  int? dealyAccesses;
+  int? dailyAccesses;
 
   Course(
       {this.id,
@@ -18,7 +18,7 @@ class Course {
       this.trainer,
       this.meanDuration,
       this.kcal,
-      this.dealyAccesses});
+      this.dailyAccesses});
 
   factory Course.fromJson(Map<String, dynamic> json) {
     return Course(
@@ -30,7 +30,7 @@ class Course {
       trainer: json['trainer'] as String?,
       kcal: json['kcal'] as int?,
       meanDuration: json['meanDuration'] as int?,
-      dealyAccesses: json['dealyAccesses'] as int?,
+      dailyAccesses: json['dailyAccesses'] as int?,
     );
   }
 
@@ -44,7 +44,7 @@ class Course {
       'trainer': trainer,
       'kcal': kcal,
       'meanDuration': meanDuration,
-      'dealyAccesses': dealyAccesses,
+      'dailyAccesses': dailyAccesses,
     };
   }
 
