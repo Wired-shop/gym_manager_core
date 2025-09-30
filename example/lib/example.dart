@@ -9,16 +9,16 @@ void main(List<String> arguments) async {
   ApiService.getInstance().setGymId("pleiadi");
 
   var email = "pleiadisem@gmail.com";
-  var password = "027ox%PWRAi!";
+  var password = "TAljKNWf8xYiG5AN";
   ApiService.getInstance().setEmail(email);
   ApiService.getInstance().setPassword(password);
 
-  List<CoursePlan> courses = await CoursePlanRepository.list(3);
-
-  print(courses);
-  print(await CoursePlanRepository.delete(4));
-
-  courses = await CoursePlanRepository.list(3);
-
-  print(courses);
+  SyncUtils.syncTo(
+    ip: "app1.wired-shop.com",
+    users: await UserRepository.list(),
+    subscriptions: await SubscriptionRepository.list(),
+    courses: await CourseRepository.list(),
+    shifts: await ShiftRepository.list(),
+    bookableShifts: await BookableShiftRepository.list(),
+  );
 }
