@@ -13,12 +13,19 @@ void main(List<String> arguments) async {
   ApiService.getInstance().setEmail(email);
   ApiService.getInstance().setPassword(password);
 
-  SyncUtils.syncTo(
-    ip: "app1.wired-shop.com",
-    users: await UserRepository.list(),
-    subscriptions: await SubscriptionRepository.list(),
-    courses: await CourseRepository.list(),
-    shifts: await ShiftRepository.list(),
-    bookableShifts: await BookableShiftRepository.list(),
+  await EntryRepository.insert(
+    Entry(
+      userId: 943,
+      subscriptionId: 960,
+      date: DateTime.now(),
+      response: EntryResponse.notValid,
+    ),
   );
+
+  print(Entry(
+    userId: 943,
+    subscriptionId: 960,
+    date: DateTime.now(),
+    response: EntryResponse.notValid,
+  ).toJson());
 }

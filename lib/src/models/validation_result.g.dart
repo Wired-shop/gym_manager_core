@@ -45,7 +45,5 @@ const _$ValidationResponseWarningsEnumMap = {
       'certificatoMedicoInScadenza',
   ValidationResponseWarnings.abbonamentoScaduto: 'abbonamentoScaduto',
   ValidationResponseWarnings.accessiTerminati: 'accessiTerminati',
-  ValidationResponseWarnings.accessiGiornalieriTerminati:
-      'accessiGiornalieriTerminati',
   ValidationResponseWarnings.sconosciuto: 'sconosciuto',
 };

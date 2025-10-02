@@ -25,7 +25,6 @@ class ValidationResult {
       return [
         ValidationResponseWarnings.affiliazioneAssente,
         ValidationResponseWarnings.iscrizioneAssente,
-        ValidationResponseWarnings.accessiGiornalieriTerminati,
         ValidationResponseWarnings.certificatoMedicoAssente,
         ValidationResponseWarnings.abbonamentoInScadenza,
         ValidationResponseWarnings.affiliazioneInScadenza,
