@@ -23,5 +23,7 @@ enum PreferencesKeys {
   backupOnClose,
   backupShifts,
   backupPath,
-  showWatch;
+  showWatch,
+  syncInTpPro,
+  syncInApp;
 }
