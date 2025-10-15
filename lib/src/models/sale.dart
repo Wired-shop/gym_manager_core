@@ -3,18 +3,20 @@ import 'package:gym_manager_core/core.dart';
 class Sale {
   final int? id;
   final DateTime date;
-  final int userId;
-  final List<Product> products;
-  final CoursePlan? coursePlan;
-  final double total;
-  final PaymentMethod paymentMethod;
+  int userId;
+  List<Product> products;
+  CoursePlan? coursePlan;
+  double total;
+  PaymentMethod paymentMethod;
+  bool completed;
 
   Sale({
     this.id,
+    this.coursePlan,
+    required this.completed,
     required this.date,
     required this.userId,
     required this.products,
-    this.coursePlan,
     required this.total,
     required this.paymentMethod,
   });
@@ -33,6 +35,7 @@ class Sale {
       total: json['total'] is String
           ? double.parse(json['total'])
           : (json['total'] as num).toDouble(),
+      completed: (json['completed'] as int) == 1 ? true : false,
       paymentMethod: PaymentMethod.values.firstWhere(
         (e) =>
             e.toString().split('.').last == (json['paymentMethod'] as String),
