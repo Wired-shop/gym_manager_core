@@ -10,7 +10,7 @@ class Shift {
   int occupiedSeats;
   String? name;
   String? trainer;
-  bool bookable;
+  int bookable;
   String? gymId;
 
   Shift({
@@ -38,7 +38,7 @@ class Shift {
       occupiedSeats: json['occupiedSeats'] as int? ?? 0,
       trainer: json['trainer'] as String?,
       name: json['name'] as String?,
-      bookable: (json['bookable'] as int) == 1 ? true : false,
+      bookable: (json['bookable'] as int),
       gymId: json['gymId'] as String?,
     );
   }
@@ -54,7 +54,7 @@ class Shift {
       'occupiedSeats': occupiedSeats,
       'trainer': trainer,
       'name': name,
-      'bookable': bookable == true ? 1 : 0,
+      'bookable': bookable,
       'gymId': gymId,
     };
   }

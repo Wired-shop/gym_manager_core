@@ -8,7 +8,7 @@ class Sale {
   CoursePlan? coursePlan;
   double total;
   PaymentMethod paymentMethod;
-  bool completed;
+  int completed;
 
   Sale({
     this.id,
@@ -35,7 +35,7 @@ class Sale {
       total: json['total'] is String
           ? double.parse(json['total'])
           : (json['total'] as num).toDouble(),
-      completed: (json['completed'] as int) == 1 ? true : false,
+      completed: (json['completed'] as int),
       paymentMethod: PaymentMethod.values.firstWhere(
         (e) =>
             e.toString().split('.').last == (json['paymentMethod'] as String),
@@ -47,6 +47,7 @@ class Sale {
   Map<String, dynamic> toJson() => {
         if (id != null) 'id': id,
         'date': date.toIso8601String(),
+        'completed': completed,
         'userId': userId,
         'products': products.map((e) => e.toJson()).toList(),
         if (coursePlan != null) 'coursePlan': coursePlan!.toJson(),
