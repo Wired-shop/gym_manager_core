@@ -9,10 +9,12 @@ class Sale {
   double total;
   PaymentMethod paymentMethod;
   int completed;
+  String? note;
 
   Sale({
     this.id,
     this.coursePlan,
+    this.note,
     required this.completed,
     required this.date,
     required this.userId,
@@ -36,6 +38,7 @@ class Sale {
           ? double.parse(json['total'])
           : (json['total'] as num).toDouble(),
       completed: (json['completed'] as int),
+      note: (json['note'] as String?),
       paymentMethod: PaymentMethod.values.firstWhere(
         (e) =>
             e.toString().split('.').last == (json['paymentMethod'] as String),
@@ -49,6 +52,7 @@ class Sale {
         'date': date.toIso8601String(),
         'completed': completed,
         'userId': userId,
+        'note': note,
         'products': products.map((e) => e.toJson()).toList(),
         if (coursePlan != null) 'coursePlan': coursePlan!.toJson(),
         'total': total,
