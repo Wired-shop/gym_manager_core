@@ -28,9 +28,11 @@ class Sale {
       id: json['id'] as int?,
       date: DateTime.parse(json['date'] as String),
       userId: json['userId'] as int,
-      products: (json['products'] as List)
-          .map((e) => Product.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      products: json['products'] != null
+          ? (json['products'] as List)
+              .map((e) => Product.fromJson(e as Map<String, dynamic>))
+              .toList()
+          : [],
       coursePlan: json['coursePlan'] != null
           ? CoursePlan.fromJson(json['coursePlan'] as Map<String, dynamic>)
           : null,

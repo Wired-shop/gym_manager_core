@@ -1,21 +1,21 @@
 class Product {
   final int? id;
   String name;
-  String description;
+  String? description;
   double price;
 
   Product({
     this.id,
     required this.name,
-    required this.description,
     required this.price,
+    this.description,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
       id: json['id'] as int?,
       name: json['name'] as String,
-      description: json['description'] as String,
+      description: json['description'] as String?,
       price: json['price'] is String
           ? double.parse(json['price'])
           : (json['price'] as num).toDouble(),
