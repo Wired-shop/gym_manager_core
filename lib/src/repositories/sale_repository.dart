@@ -59,9 +59,9 @@ class SaleRepository {
     }
   }
 
-  static Future<List<Sale>> list() async {
+  static Future<List<Sale>> list({String? q}) async {
     String url =
-        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/sales';
+        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/sales?q=$q';
     Response response = await ApiService.getInstance().dio.get(
           url,
           options: Options(headers: {
