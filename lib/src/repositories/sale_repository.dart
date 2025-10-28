@@ -41,6 +41,24 @@ class SaleRepository {
     }
   }
 
+  static Future<Sale> update(Sale sale) async {
+    String url =
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/sales/${sale.id}";
+    Response response = await ApiService.getInstance().dio.put(
+          url,
+          data: sale.toJson(),
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
+          }),
+        );
+    if (response.data["responseType"] == "ok") {
+      return Sale.fromJson(response.data["body"]);
+    } else {
+      throw response.data;
+    }
+  }
+
   static Future<List<Sale>> list() async {
     String url =
         'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/sales';
