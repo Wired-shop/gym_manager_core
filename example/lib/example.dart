@@ -26,7 +26,7 @@ Future<void> main(List<String> arguments) async {
     date: DateTime.now(),
     userId: 940, // ID utente registrato nel DB
     products: [p1.first, p1.first, p1.first],
-    coursePlan: null, // Nessun piano corso collegato
+    coursePlanId: null, // Nessun piano corso collegato
     total: p1.first.price * 4,
     paymentMethod: PaymentMethod.cash,
     completed: 1,

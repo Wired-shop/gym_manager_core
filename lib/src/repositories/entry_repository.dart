@@ -27,9 +27,9 @@ class EntryRepository {
   }
 
   static Future<List<Entry>> list(
-      {DateTime? startDate, DateTime? endDate, int? userId}) async {
+      {DateTime? startDate, DateTime? endDate, int? userId, int? limit}) async {
     String url =
-        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/entries?startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}&userId=$userId";
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/entries?startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}&userId=$userId&limit=$limit";
     Response response = await ApiService.getInstance().dio.get(
           url,
           options: Options(headers: {
