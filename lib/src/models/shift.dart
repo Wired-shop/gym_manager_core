@@ -1,8 +1,9 @@
+import 'package:gym_manager_core/core.dart';
 import 'package:gym_manager_core/src/models/time_of_day.dart';
 
 class Shift {
   int? id;
-  int courseId;
+  Course course;
   int dayOfWeek;
   TimeOfDay start;
   TimeOfDay end;
@@ -15,7 +16,7 @@ class Shift {
 
   Shift({
     this.id,
-    required this.courseId,
+    required this.course,
     required this.dayOfWeek,
     required this.start,
     required this.end,
@@ -30,7 +31,7 @@ class Shift {
   factory Shift.fromJson(Map<String, dynamic> json) {
     return Shift(
       id: json['id'] as int?,
-      courseId: json['courseId'] as int,
+      course: Course.fromJson(json['course'] as Map<String, dynamic>),
       dayOfWeek: json['dayOfWeek'] as int,
       start: TimeOfDay.fromString(json['start']),
       end: TimeOfDay.fromString(json['end']),
@@ -46,7 +47,7 @@ class Shift {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'courseId': courseId,
+      'course': course.toJson(),
       'dayOfWeek': dayOfWeek,
       'start': start.format24Hour(),
       'end': end.format24Hour(),

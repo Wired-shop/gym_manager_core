@@ -1,21 +1,23 @@
+import 'package:gym_manager_core/core.dart';
+
 class BookableShift {
   int? id;
-  int shiftId;
-  int courseId;
+  Shift shift;
+  Course course;
   DateTime date;
 
   BookableShift({
     this.id,
-    required this.shiftId,
-    required this.courseId,
+    required this.shift,
+    required this.course,
     required this.date,
   });
 
   factory BookableShift.fromJson(Map<String, dynamic> json) {
     return BookableShift(
       id: json['id'] as int?,
-      shiftId: json['shiftId'] as int,
-      courseId: json['courseId'] as int,
+      shift: Shift.fromJson(json['shift'] as Map<String, dynamic>),
+      course: Course.fromJson(json['course'] as Map<String, dynamic>),
       date: DateTime.parse(json['date'] as String),
     );
   }
@@ -23,8 +25,8 @@ class BookableShift {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'shiftId': shiftId,
-      'courseId': courseId,
+      'shift': shift.toJson(),
+      'course': course.toJson(),
       'date': date.toIso8601String(),
     };
   }

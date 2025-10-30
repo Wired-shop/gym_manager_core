@@ -1,14 +1,16 @@
+import 'package:gym_manager_core/core.dart';
+
 class CoursePlan {
   final int? id;
   String? name;
   String? description;
   double price;
   int validityDays;
-  int courseId;
+  Course course;
 
   CoursePlan({
     this.id,
-    required this.courseId,
+    required this.course,
     this.name,
     this.description,
     required this.price,
@@ -17,7 +19,7 @@ class CoursePlan {
   factory CoursePlan.fromJson(Map<String, dynamic> json) {
     return CoursePlan(
       id: json['id'] as int?,
-      courseId: json['courseId'] as int,
+      course: Course.fromJson(json['course'] as Map<String, dynamic>),
       name: json['name'] as String,
       description: json['description'] as String,
       price: json['price'] is String
@@ -30,7 +32,7 @@ class CoursePlan {
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
-      'courseId': courseId,
+      'course': course.toJson(),
       'name': name,
       'description': description,
       'price': price,
@@ -44,7 +46,7 @@ class CoursePlan {
       other is CoursePlan &&
           runtimeType == other.runtimeType &&
           id == other.id &&
-          courseId == other.courseId &&
+          course.toJson() == other.course.toJson() &&
           name == other.name &&
           description == other.description &&
           price == other.price &&
@@ -53,7 +55,7 @@ class CoursePlan {
   @override
   int get hashCode =>
       id.hashCode ^
-      courseId.hashCode ^
+      course.hashCode ^
       name.hashCode ^
       description.hashCode ^
       price.hashCode ^
