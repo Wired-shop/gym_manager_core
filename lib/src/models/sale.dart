@@ -5,7 +5,7 @@ class Sale {
   final DateTime date;
   int userId;
   List<Product> products;
-  CoursePlan? coursePlan;
+  int? coursePlanId;
   double total;
   PaymentMethod paymentMethod;
   int completed;
@@ -13,7 +13,7 @@ class Sale {
 
   Sale({
     this.id,
-    this.coursePlan,
+    this.coursePlanId,
     this.note,
     required this.completed,
     required this.date,
@@ -33,9 +33,7 @@ class Sale {
               .map((e) => Product.fromJson(e as Map<String, dynamic>))
               .toList()
           : [],
-      coursePlan: json['coursePlan'] != null
-          ? CoursePlan.fromJson(json['coursePlan'] as Map<String, dynamic>)
-          : null,
+      coursePlanId: json['coursePlanId'] as int?,
       total: json['total'] is String
           ? double.parse(json['total'])
           : (json['total'] as num).toDouble(),
@@ -56,7 +54,7 @@ class Sale {
         'userId': userId,
         'note': note,
         'products': products.map((e) => e.toJson()).toList(),
-        if (coursePlan != null) 'coursePlan': coursePlan!.toJson(),
+        'coursePlanId': coursePlanId,
         'total': total,
         'paymentMethod': paymentMethod.toString().split('.').last,
       };
@@ -70,7 +68,7 @@ class Sale {
           date == other.date &&
           userId == other.userId &&
           products == other.products &&
-          coursePlan == other.coursePlan &&
+          coursePlanId == other.coursePlanId &&
           total == other.total &&
           paymentMethod == other.paymentMethod;
 
@@ -80,7 +78,7 @@ class Sale {
       date.hashCode ^
       userId.hashCode ^
       products.hashCode ^
-      coursePlan.hashCode ^
+      coursePlanId.hashCode ^
       total.hashCode ^
       paymentMethod.hashCode;
 
