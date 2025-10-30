@@ -8,7 +8,7 @@ part of 'subscription.dart';
 
 Subscription _$SubscriptionFromJson(Map<String, dynamic> json) => Subscription(
       id: json['id'] as int?,
-      user: User.fromJson(json['user'] as Map<String, dynamic>),
+      userId: json['userId'] as int,
       courseId: json['courseId'] as int?,
       coursePlanId: json['coursePlanId'] as int?,
       badgeCode: json['badgeCode'] as String?,
@@ -22,7 +22,7 @@ Subscription _$SubscriptionFromJson(Map<String, dynamic> json) => Subscription(
 Map<String, dynamic> _$SubscriptionToJson(Subscription instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'user': instance.user.toJson(),
+      'userId': instance.userId,
       'courseId': instance.courseId,
       'coursePlanId': instance.coursePlanId,
       'creation': instance.creation?.toIso8601String(),

@@ -3,7 +3,7 @@ import 'package:gym_manager_core/core.dart';
 class Sale {
   final int? id;
   final DateTime date;
-  User user;
+  int userId;
   List<Product> products;
   CoursePlan? coursePlan;
   double total;
@@ -17,7 +17,7 @@ class Sale {
     this.note,
     required this.completed,
     required this.date,
-    required this.user,
+    required this.userId,
     required this.products,
     required this.total,
     required this.paymentMethod,
@@ -27,7 +27,7 @@ class Sale {
     return Sale(
       id: json['id'] as int?,
       date: DateTime.parse(json['date'] as String),
-      user: User.fromJson(json['user'] as Map<String, dynamic>),
+      userId: json['userId'] as int,
       products: json['products'] != null
           ? (json['products'] as List)
               .map((e) => Product.fromJson(e as Map<String, dynamic>))
@@ -53,7 +53,7 @@ class Sale {
         if (id != null) 'id': id,
         'date': date.toIso8601String(),
         'completed': completed,
-        'user': user.toJson(),
+        'userId': userId,
         'note': note,
         'products': products.map((e) => e.toJson()).toList(),
         if (coursePlan != null) 'coursePlan': coursePlan!.toJson(),
@@ -68,7 +68,7 @@ class Sale {
           runtimeType == other.runtimeType &&
           id == other.id &&
           date == other.date &&
-          user.toJson() == other.user.toJson() &&
+          userId == other.userId &&
           products == other.products &&
           coursePlan == other.coursePlan &&
           total == other.total &&
@@ -78,7 +78,7 @@ class Sale {
   int get hashCode =>
       id.hashCode ^
       date.hashCode ^
-      user.hashCode ^
+      userId.hashCode ^
       products.hashCode ^
       coursePlan.hashCode ^
       total.hashCode ^

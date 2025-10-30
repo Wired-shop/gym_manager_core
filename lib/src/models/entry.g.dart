@@ -9,9 +9,8 @@ part of 'entry.dart';
 Entry _$EntryFromJson(Map<String, dynamic> json) {
   return Entry(
     id: json['id'] as int?,
-    user: User.fromJson(json['user'] as Map<String, dynamic>),
-    subscription:
-        Subscription.fromJson(json['subscription'] as Map<String, dynamic>),
+    userId: json['userId'] as int,
+    subscriptionId: json['subscriptionId'] as int,
     date: DateTime.parse(json['date'] as String),
     response: $enumDecode(_$EntryResponseEnumMap, json['response']),
   );
@@ -20,8 +19,8 @@ Entry _$EntryFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$EntryToJson(Entry instance) {
   return <String, dynamic>{
     'id': instance.id,
-    'user': instance.user.toJson(),
-    'subscription': instance.subscription.toJson(),
+    'userId': instance.userId,
+    'subscriptionId': instance.subscriptionId,
     'date': instance.date.toIso8601String(),
     'response': _$EntryResponseEnumMap[instance.response]!,
   };

@@ -1,11 +1,10 @@
-import 'package:gym_manager_core/core.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'subscription.g.dart';
 
 @JsonSerializable()
 class Subscription {
   int? id;
-  User user;
+  int userId;
   int? courseId;
   int? coursePlanId;
 
@@ -17,7 +16,7 @@ class Subscription {
 
   Subscription({
     this.id,
-    required this.user,
+    required this.userId,
     required this.expiration,
     this.coursePlanId,
     this.courseId,

@@ -1,19 +1,18 @@
-import 'package:gym_manager_core/core.dart';
 import 'package:gym_manager_core/src/enums/booking_status.dart';
 
 class Booking {
   int? id;
-  Shift shift;
-  Course course;
-  User user;
+  int shiftId;
+  int courseId;
+  int userId;
   BookingStatus status;
   DateTime? date;
 
   Booking({
     this.id,
-    required this.shift,
-    required this.course,
-    required this.user,
+    required this.shiftId,
+    required this.courseId,
+    required this.userId,
     required this.status,
     required this.date,
   });
@@ -21,9 +20,9 @@ class Booking {
   factory Booking.fromJson(Map<String, dynamic> json) {
     return Booking(
       id: json['id'] as int?,
-      shift: Shift.fromJson(json['shift'] as Map<String, dynamic>),
-      course: Course.fromJson(json['course'] as Map<String, dynamic>),
-      user: User.fromJson(json['user'] as Map<String, dynamic>),
+      shiftId: json['shiftId'] as int,
+      courseId: json['courseId'] as int,
+      userId: json['userId'] as int,
       status: BookingStatus.fromString(json['status'] as String) ??
           BookingStatus.notUsed,
       date:
@@ -34,9 +33,9 @@ class Booking {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'shift': shift.toJson(),
-      'course': course.toJson(),
-      'user': user.toJson(),
+      'shiftId': shiftId,
+      'courseId': courseId,
+      'userId': userId,
       'status': "notUsed",
       'date': date?.toIso8601String(),
     };
