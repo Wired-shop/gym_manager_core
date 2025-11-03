@@ -42,10 +42,9 @@ class UserRepository {
     });
   }
 
-  static Future<List<User>> list(
-      {String? q, int inExpiringFiltersDays = 10, UsersFilter? filter}) async {
+  static Future<List<User>> list({String? q, UsersFilter? filter}) async {
     String url =
-        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/users?q=$q&inExpiringFiltersDays=$inExpiringFiltersDays";
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/users?q=$q";
     if (filter != null) {
       url += "&${filter.toQueryParameters()}";
     }
@@ -108,9 +107,9 @@ class UserRepository {
     }
   }
 
-  static Future<User?> get(int id, {int inExpiringFiltersDays = 10}) async {
+  static Future<User?> get(int id) async {
     String url =
-        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/users/$id&inExpiringFiltersDays=$inExpiringFiltersDays";
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/users/$id";
     Response response = await ApiService.getInstance().dio.get(
           url,
           options: Options(headers: {
