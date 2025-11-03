@@ -1,5 +1,4 @@
 enum PreferencesKeys {
-  inExpiringFiltersDays,
   brightness,
   localIP,
   localPORT,
