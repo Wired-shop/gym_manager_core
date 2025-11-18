@@ -59,9 +59,14 @@ class SaleRepository {
     }
   }
 
-  static Future<List<Sale>> list({String? q, bool? completed}) async {
+  static Future<List<Sale>> list({
+    String? q,
+    bool? completed,
+    DateTime? startDate,
+    DateTime? endDate,
+  }) async {
     String url =
-        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/sales?q=$q&completed=$completed';
+        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/sales?q=$q&completed=$completed&startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}';
     Response response = await ApiService.getInstance().dio.get(
           url,
           options: Options(headers: {
