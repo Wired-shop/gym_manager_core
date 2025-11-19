@@ -47,6 +47,29 @@ class EntryRepository {
     }
   }
 
+  static Future<List<Entry>> listToday({int? userId}) async {
+    String url =
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}"
+        "/gyms/${ApiService.getInstance().getGymId()}/entries/recent"
+        "?userId=$userId";
+
+    Response response = await ApiService.getInstance().dio.get(
+          url,
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
+          }),
+        );
+
+    if (response.data["responseType"] == "ok") {
+      return (response.data["body"] as List<dynamic>)
+          .map((e) => Entry.fromJson(e))
+          .toList();
+    } else {
+      throw response.data;
+    }
+  }
+
   static Stream<List<Entry>> stream({DateTime? startDate, DateTime? endDate}) {
     String basicAuth =
         'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}';
