@@ -62,10 +62,12 @@ class SaleRepository {
   static Future<List<Sale>> list({
     String? q,
     bool? completed,
-    DateTime? date,
+    DateTime? startDate,
+    DateTime? endDate,
   }) async {
     String url =
-        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/sales?q=$q&completed=$completed&date=${date?.toIso8601String()}';
+        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/sales?q=$q&completed=$completed&startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}';
+
     Response response = await ApiService.getInstance().dio.get(
           url,
           options: Options(headers: {
@@ -73,6 +75,7 @@ class SaleRepository {
                 'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
           }),
         );
+
     if (response.data["responseType"] == "ok") {
       List<Sale> sales = (response.data["body"] as List<dynamic>)
           .map((e) => Sale.fromJson(e))
