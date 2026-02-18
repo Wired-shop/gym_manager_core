@@ -50,7 +50,7 @@ class EntryRepository {
   static Future<List<Entry>> listToday({int? userId}) async {
     String url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}"
-        "/gyms/${ApiService.getInstance().getGymId()}/entries/recent"
+        "/gyms/${ApiService.getInstance().getGymId()}/entries/today"
         "?userId=$userId";
 
     Response response = await ApiService.getInstance().dio.get(
