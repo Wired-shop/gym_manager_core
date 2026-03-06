@@ -26,6 +26,27 @@ class EntryRepository {
     }
   }
 
+  static Future<int> countValidToday(int userId) async {
+    String url =
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}"
+        "/gyms/${ApiService.getInstance().getGymId()}/entries/countValidToday"
+        "?userId=$userId";
+
+    Response response = await ApiService.getInstance().dio.get(
+          url,
+          options: Options(headers: {
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
+          }),
+        );
+
+    if (response.data["responseType"] == "ok") {
+      return (response.data["body"] as num).toInt();
+    } else {
+      throw response.data;
+    }
+  }
+
   static Future<List<Entry>> list(
       {DateTime? startDate, DateTime? endDate, int? userId, int? limit}) async {
     String url =
