@@ -25,5 +25,6 @@ enum PreferencesKeys {
   backupPath,
   showWatch,
   syncInTpPro,
-  syncInApp;
+  syncInApp,
+  skipSecondAccess;
 }
