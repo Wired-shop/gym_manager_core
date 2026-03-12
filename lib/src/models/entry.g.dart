@@ -13,6 +13,7 @@ Entry _$EntryFromJson(Map<String, dynamic> json) {
     subscriptionId: json['subscriptionId'] as int,
     date: DateTime.parse(json['date'] as String),
     response: $enumDecode(_$EntryResponseEnumMap, json['response']),
+    notEntryReason: json['notEntryReason'] as String?,
   );
 }
 
@@ -23,6 +24,7 @@ Map<String, dynamic> _$EntryToJson(Entry instance) {
     'subscriptionId': instance.subscriptionId,
     'date': instance.date.toIso8601String(),
     'response': _$EntryResponseEnumMap[instance.response]!,
+    'notEntryReason': instance.notEntryReason,
   };
 }
 
