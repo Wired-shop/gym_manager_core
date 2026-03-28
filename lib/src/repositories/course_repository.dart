@@ -9,7 +9,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 class CourseRepository {
   static Stream<List<Course>> stream() {
     String wsUrl =
-        'wss://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/stream/courses';
+        'wss://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/stream/courses';
     WebSocketChannel channel = IOWebSocketChannel.connect(
       Uri.parse(wsUrl),
       customClient: HttpClient()
@@ -25,14 +25,8 @@ class CourseRepository {
 
   static Future<void> truncate() async {
     String url =
-        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/courses/truncate";
-    Response response = await ApiService.getInstance().dio.get(
-          url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
-        );
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/courses/truncate";
+    Response response = await ApiService.getInstance().dio.get(url);
     if (response.data["responseType"] != "ok") {
       throw response.data;
     }
@@ -40,17 +34,11 @@ class CourseRepository {
 
   static Future<List<Course>> insert(List<Course> courses) async {
     String url =
-        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/courses";
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/courses";
     List<Map<String, dynamic>> coursesMapped =
         courses.map((course) => course.toJson()).toList();
-    Response response = await ApiService.getInstance().dio.post(
-          url,
-          data: coursesMapped,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
-        );
+    Response response =
+        await ApiService.getInstance().dio.post(url, data: coursesMapped);
     if (response.data["responseType"] == "ok") {
       List<Course> insertedCourses = (response.data["body"] as List<dynamic>)
           .map((e) => Course.fromJson(e))
@@ -63,14 +51,8 @@ class CourseRepository {
 
   static Future<List<Course>> list() async {
     String url =
-        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/courses';
-    Response response = await ApiService.getInstance().dio.get(
-          url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
-        );
+        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/courses';
+    Response response = await ApiService.getInstance().dio.get(url);
     if (response.data["responseType"] == "ok") {
       List<Course> courses = (response.data["body"] as List<dynamic>)
           .map((e) => Course.fromJson(e))
@@ -83,15 +65,9 @@ class CourseRepository {
 
   static Future<Course> update(Course course) async {
     String url =
-        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/courses/";
-    Response response = await ApiService.getInstance().dio.put(
-          url,
-          data: course.toJson(),
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
-        );
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/courses/";
+    Response response =
+        await ApiService.getInstance().dio.put(url, data: course.toJson());
     if (response.data["responseType"] == "ok") {
       Course updatedCourse = Course.fromJson(response.data["body"]);
       return updatedCourse;
@@ -102,14 +78,8 @@ class CourseRepository {
 
   static Future<Course?> get(int id) async {
     String url =
-        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/courses/$id";
-    Response response = await ApiService.getInstance().dio.get(
-          url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
-        );
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/courses/$id";
+    Response response = await ApiService.getInstance().dio.get(url);
     if (response.data["responseType"] == "ok" &&
         response.data["body"] != null) {
       Course course = Course.fromJson(response.data["body"]);
@@ -121,14 +91,8 @@ class CourseRepository {
 
   static Future delete(int id) async {
     String url =
-        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/courses/$id";
-    Response response = await ApiService.getInstance().dio.delete(
-          url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
-        );
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/courses/$id";
+    Response response = await ApiService.getInstance().dio.delete(url);
     if (response.data["responseType"] == "error") {
       throw response.data;
     }

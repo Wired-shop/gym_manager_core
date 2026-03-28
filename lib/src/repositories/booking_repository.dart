@@ -13,14 +13,8 @@ class BookingRepository {
   }) async {
     IP = IP ?? ApiService.getInstance().getIP();
     String url =
-        'https://$IP:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookings?courseId=$courseId&shiftId=$shiftId&userId=$userId&status=${status?.name}&date=${date?.toIso8601String()}';
-    Response response = await ApiService.getInstance().dio.get(
-          url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
-        );
+        'https://$IP:${ApiService.getInstance().getPORT()}/bookings?courseId=$courseId&shiftId=$shiftId&userId=$userId&status=${status?.name}&date=${date?.toIso8601String()}';
+    Response response = await ApiService.getInstance().dio.get(url);
     if (response.data["responseType"] == "ok") {
       List<Booking> bookings = (response.data["body"] as List<dynamic>)
           .map((e) => Booking.fromJson(e))
@@ -33,14 +27,10 @@ class BookingRepository {
 
   static Future<Booking> insert(Booking booking) async {
     String url =
-        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookings';
+        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/bookings';
     Response response = await ApiService.getInstance().dio.post(
           url,
           data: booking.toJson(),
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
         );
     if (response.data["responseType"] == "ok") {
       Booking newBooking = Booking.fromJson(response.data["body"]);
@@ -52,14 +42,10 @@ class BookingRepository {
 
   static Future<Booking> update(Booking booking) async {
     String url =
-        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookings/";
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/bookings/";
     Response response = await ApiService.getInstance().dio.put(
           url,
           data: booking.toJson(),
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
         );
     if (response.data["responseType"] == "ok") {
       Booking updatedBooking = Booking.fromJson(response.data["body"]);
@@ -71,14 +57,8 @@ class BookingRepository {
 
   static Future delete(int id) async {
     String url =
-        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookings/$id';
-    Response response = await ApiService.getInstance().dio.delete(
-          url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
-        );
+        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/bookings/$id';
+    Response response = await ApiService.getInstance().dio.delete(url);
     if (response.data["responseType"] == "error") {
       throw response.data;
     }

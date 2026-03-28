@@ -7,14 +7,8 @@ class BookableShiftRepository {
       {int? shiftId, int? courseId, DateTime? date, String? IP}) async {
     IP = IP ?? ApiService.getInstance().getIP();
     String url =
-        'https://$IP:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookableShifts?shiftId=$shiftId&courseId=$courseId&date=${date?.toIso8601String()}';
-    Response response = await ApiService.getInstance().dio.get(
-          url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
-        );
+        'https://$IP:${ApiService.getInstance().getPORT()}/bookableShifts?shiftId=$shiftId&courseId=$courseId&date=${date?.toIso8601String()}';
+    Response response = await ApiService.getInstance().dio.get(url);
     if (response.data["responseType"] == "ok") {
       List<BookableShift> bookableShifts =
           (response.data["body"] as List<dynamic>)
@@ -28,16 +22,12 @@ class BookableShiftRepository {
 
   static Future<List<BookableShift>> insert(List<BookableShift> shifts) async {
     String url =
-        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookableShifts';
+        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/bookableShifts';
     List<Map<String, dynamic>> shiftsMapped =
         shifts.map((shift) => shift.toJson()).toList();
     Response response = await ApiService.getInstance().dio.post(
           url,
           data: shiftsMapped,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
         );
     if (response.data["responseType"] == "ok") {
       List<BookableShift> insertedShifts =
@@ -52,14 +42,8 @@ class BookableShiftRepository {
 
   static Future generate() async {
     String url =
-        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookableShifts/generate';
-    Response response = await ApiService.getInstance().dio.delete(
-          url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
-        );
+        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/bookableShifts/generate';
+    Response response = await ApiService.getInstance().dio.delete(url);
     if (response.data["responseType"] == "error") {
       throw response.data;
     }
@@ -67,14 +51,8 @@ class BookableShiftRepository {
 
   static Future delete(int id) async {
     String url =
-        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookableShifts/$id';
-    Response response = await ApiService.getInstance().dio.delete(
-          url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
-        );
+        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/bookableShifts/$id';
+    Response response = await ApiService.getInstance().dio.delete(url);
     if (response.data["responseType"] == "error") {
       throw response.data;
     }
@@ -82,14 +60,8 @@ class BookableShiftRepository {
 
   static Future<void> truncate() async {
     String url =
-        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/bookableShifts/truncate";
-    Response response = await ApiService.getInstance().dio.get(
-          url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
-        );
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/bookableShifts/truncate";
+    Response response = await ApiService.getInstance().dio.get(url);
     if (response.data["responseType"] != "ok") {
       throw response.data;
     }

@@ -1,6 +1,5 @@
 class Account {
   String email;
-  String password;
   String? gymId;
   String? name;
   String? encodedImage;
@@ -8,7 +7,6 @@ class Account {
 
   Account({
     required this.email,
-    required this.password,
     this.gymId,
     this.name,
     this.encodedImage,
@@ -18,7 +16,6 @@ class Account {
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'email': email,
-      'password': password,
       'gymId': gymId,
       'name': name,
       'encodedImage': encodedImage,
@@ -29,7 +26,6 @@ class Account {
   factory Account.fromJson(Map<String, dynamic> map) {
     return Account(
       email: map['email'] as String,
-      password: map['password'] as String,
       gymId: map['gymId'] as String?,
       name: map['name'] as String?,
       encodedImage: map['encodedImage'] as String?,

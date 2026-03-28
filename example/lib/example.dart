@@ -5,12 +5,9 @@ Future<void> main(List<String> arguments) async {
 
   ApiService.getInstance().setIP(localhost);
   ApiService.getInstance().setPORT(3000);
-  ApiService.getInstance().setGymId("pleiadi");
 
   var email = "pleiadisem@gmail.com";
-  var password = "TAljKNWf8xYiG5AN";
   ApiService.getInstance().setEmail(email);
-  ApiService.getInstance().setPassword(password);
 
   // 🔹 1. Recuperiamo due prodotti esistenti dal database
   List<Product>? p1 =

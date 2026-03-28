@@ -4,10 +4,8 @@ import 'package:dio/io.dart';
 class ApiService {
   String _IP = "127.0.0.1";
   int _PORT = 3000;
-  String? _gymId;
 
   String? _email;
-  String? _password;
 
   Dio dio = Dio(BaseOptions())
     ..httpClientAdapter = IOHttpClientAdapter(onHttpClientCreate: (client) {
@@ -23,10 +21,6 @@ class ApiService {
     return _instance;
   }
 
-  void setGymId(String id) {
-    _gymId = id;
-  }
-
   void setIP(String IP) {
     _IP = IP;
   }
@@ -39,20 +33,8 @@ class ApiService {
     _email = email;
   }
 
-  void setPassword(String? password) {
-    _password = password;
-  }
-
   String? getEmail() {
     return _email;
-  }
-
-  String? getPassword() {
-    return _password;
-  }
-
-  String? getGymId() {
-    return _gymId;
   }
 
   String getIP() {

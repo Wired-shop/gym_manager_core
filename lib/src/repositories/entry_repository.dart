@@ -9,15 +9,9 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 class EntryRepository {
   static Future<Entry> insert(Entry entry) async {
     String url =
-        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/entries/";
-    Response response = await ApiService.getInstance().dio.post(
-          url,
-          data: entry.toJson(),
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
-        );
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/entries/";
+    Response response =
+        await ApiService.getInstance().dio.post(url, data: entry.toJson());
     if (response.data["responseType"] == "ok") {
       Entry newEntry = Entry.fromJson(response.data["body"]);
       return newEntry;
@@ -29,14 +23,8 @@ class EntryRepository {
   static Future<List<Entry>> list(
       {DateTime? startDate, DateTime? endDate, int? userId, int? limit}) async {
     String url =
-        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/entries?startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}&userId=$userId&limit=$limit";
-    Response response = await ApiService.getInstance().dio.get(
-          url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
-        );
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/entries?startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}&userId=$userId&limit=$limit";
+    Response response = await ApiService.getInstance().dio.get(url);
     if (response.data["responseType"] == "ok") {
       List<Entry> entries = (response.data["body"] as List<dynamic>)
           .map((e) => Entry.fromJson(e))
@@ -50,16 +38,10 @@ class EntryRepository {
   static Future<List<Entry>> listToday({int? userId}) async {
     String url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}"
-        "/gyms/${ApiService.getInstance().getGymId()}/entries/today"
+        "/entries/today"
         "?userId=$userId";
 
-    Response response = await ApiService.getInstance().dio.get(
-          url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
-        );
+    Response response = await ApiService.getInstance().dio.get(url);
 
     if (response.data["responseType"] == "ok") {
       return (response.data["body"] as List<dynamic>)
@@ -71,18 +53,13 @@ class EntryRepository {
   }
 
   static Stream<List<Entry>> stream({DateTime? startDate, DateTime? endDate}) {
-    String basicAuth =
-        'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}';
     String wsUrl =
-        'wss://localhost:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/stream/entries?startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}';
+        'wss://localhost:${ApiService.getInstance().getPORT()}/stream/entries?startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}';
     WebSocketChannel channel = IOWebSocketChannel.connect(
       Uri.parse(wsUrl),
       customClient: HttpClient()
         ..badCertificateCallback =
             (X509Certificate cert, String host, int port) => true,
-      headers: {
-        'Authorization': basicAuth,
-      },
     );
     return channel.stream.asyncMap((response) {
       return List<Map<String, dynamic>>.from(json.decode(response.toString()))

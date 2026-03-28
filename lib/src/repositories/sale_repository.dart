@@ -8,7 +8,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 class SaleRepository {
   static Stream<List<Sale>> stream() {
     String wsUrl =
-        'wss://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/stream/sales';
+        'wss://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/stream/sales';
     WebSocketChannel channel = IOWebSocketChannel.connect(
       Uri.parse(wsUrl),
       customClient: HttpClient()
@@ -24,15 +24,9 @@ class SaleRepository {
 
   static Future<Sale> insert(Sale sale) async {
     String url =
-        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/sales";
-    Response response = await ApiService.getInstance().dio.post(
-          url,
-          data: sale.toJson(),
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
-        );
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/sales";
+    Response response =
+        await ApiService.getInstance().dio.post(url, data: sale.toJson());
     if (response.data["responseType"] == "ok") {
       Sale insertedSale = Sale.fromJson(response.data["body"]);
       return insertedSale;
@@ -43,15 +37,9 @@ class SaleRepository {
 
   static Future<Sale> update(Sale sale) async {
     String url =
-        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/sales/${sale.id}";
-    Response response = await ApiService.getInstance().dio.put(
-          url,
-          data: sale.toJson(),
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
-        );
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/sales/${sale.id}";
+    Response response =
+        await ApiService.getInstance().dio.put(url, data: sale.toJson());
     if (response.data["responseType"] == "ok") {
       return Sale.fromJson(response.data["body"]);
     } else {
@@ -66,15 +54,9 @@ class SaleRepository {
     DateTime? endDate,
   }) async {
     String url =
-        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/sales?q=$q&completed=$completed&startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}';
+        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/sales?q=$q&completed=$completed&startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}';
 
-    Response response = await ApiService.getInstance().dio.get(
-          url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
-        );
+    Response response = await ApiService.getInstance().dio.get(url);
 
     if (response.data["responseType"] == "ok") {
       List<Sale> sales = (response.data["body"] as List<dynamic>)
@@ -88,14 +70,8 @@ class SaleRepository {
 
   static Future<Sale?> get(int id) async {
     String url =
-        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/sales/$id";
-    Response response = await ApiService.getInstance().dio.get(
-          url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
-        );
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/sales/$id";
+    Response response = await ApiService.getInstance().dio.get(url);
     if (response.data["responseType"] == "ok" &&
         response.data["body"] != null) {
       Sale sale = Sale.fromJson(response.data["body"]);
@@ -107,14 +83,8 @@ class SaleRepository {
 
   static Future delete(int id) async {
     String url =
-        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/sales/$id";
-    Response response = await ApiService.getInstance().dio.delete(
-          url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
-        );
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/sales/$id";
+    Response response = await ApiService.getInstance().dio.delete(url);
     if (response.data["responseType"] == "error") {
       throw response.data;
     }

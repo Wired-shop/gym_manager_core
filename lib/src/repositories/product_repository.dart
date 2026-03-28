@@ -5,17 +5,11 @@ import 'dart:convert';
 class ProductRepository {
   static Future<List<Product>> insert(List<Product> products) async {
     String url =
-        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/products";
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/products";
     List<Map<String, dynamic>> productsMapped =
         products.map((product) => product.toJson()).toList();
-    Response response = await ApiService.getInstance().dio.post(
-          url,
-          data: productsMapped,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
-        );
+    Response response =
+        await ApiService.getInstance().dio.post(url, data: productsMapped);
     if (response.data["responseType"] == "ok") {
       List<Product> insertedProducts = (response.data["body"] as List<dynamic>)
           .map((e) => Product.fromJson(e))
@@ -28,14 +22,8 @@ class ProductRepository {
 
   static Future<List<Product>> list() async {
     String url =
-        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/products';
-    Response response = await ApiService.getInstance().dio.get(
-          url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
-        );
+        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/products';
+    Response response = await ApiService.getInstance().dio.get(url);
     if (response.data["responseType"] == "ok") {
       List<Product> products = (response.data["body"] as List<dynamic>)
           .map((e) => Product.fromJson(e))
@@ -48,15 +36,9 @@ class ProductRepository {
 
   static Future<Product> update(Product product) async {
     String url =
-        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/products/";
-    Response response = await ApiService.getInstance().dio.put(
-          url,
-          data: product.toJson(),
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
-        );
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/products/";
+    Response response =
+        await ApiService.getInstance().dio.put(url, data: product.toJson());
     if (response.data["responseType"] == "ok") {
       Product updatedProduct = Product.fromJson(response.data["body"]);
       return updatedProduct;
@@ -67,14 +49,8 @@ class ProductRepository {
 
   static Future<Product?> get(int id) async {
     String url =
-        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/products/$id";
-    Response response = await ApiService.getInstance().dio.get(
-          url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
-        );
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/products/$id";
+    Response response = await ApiService.getInstance().dio.get(url);
     if (response.data["responseType"] == "ok" &&
         response.data["body"] != null) {
       Product product = Product.fromJson(response.data["body"]);
@@ -86,14 +62,8 @@ class ProductRepository {
 
   static Future delete(int id) async {
     String url =
-        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/gyms/${ApiService.getInstance().getGymId()}/products/$id";
-    Response response = await ApiService.getInstance().dio.delete(
-          url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
-        );
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/products/$id";
+    Response response = await ApiService.getInstance().dio.delete(url);
     if (response.data["responseType"] == "error") {
       throw response.data;
     }
