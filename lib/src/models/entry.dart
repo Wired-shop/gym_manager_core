@@ -11,8 +11,11 @@ class Entry {
   DateTime date;
   EntryResponse response;
 
+  String? notEntryReason;
+
   Entry({
     this.id,
+    this.notEntryReason,
     required this.userId,
     required this.subscriptionId,
     required this.date,
