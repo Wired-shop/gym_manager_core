@@ -23,16 +23,10 @@ class EntryRepository {
   static Future<int> countValidToday(int userId) async {
     String url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}"
-        "/gyms/${ApiService.getInstance().getGymId()}/entries/countValidToday"
+        "/entries/countValidToday"
         "?userId=$userId";
 
-    Response response = await ApiService.getInstance().dio.get(
-          url,
-          options: Options(headers: {
-            'Authorization':
-                'Basic ${base64Encode(utf8.encode('${ApiService.getInstance().getEmail()}:${ApiService.getInstance().getPassword()}'))}'
-          }),
-        );
+    Response response = await ApiService.getInstance().dio.get(url);
 
     if (response.data["responseType"] == "ok") {
       return (response.data["body"] as num).toInt();

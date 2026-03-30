@@ -13,7 +13,6 @@ export 'src/models/course.dart';
 export 'src/models/shift.dart';
 export 'src/models/bookable_shift.dart';
 export 'src/models/booking.dart';
-export 'src/models/account.dart';
 export 'src/models/time_of_day.dart';
 export 'src/models/course_plan.dart';
 export 'src/models/product.dart';
@@ -27,7 +26,6 @@ export 'src/enums/booking_status.dart';
 export 'src/enums/preferences_keys.dart';
 export 'src/enums/payment_method.dart';
 
-export 'src/repositories/auth_repository.dart';
 export 'src/repositories/entry_repository.dart';
 export 'src/repositories/file_repository.dart';
 export 'src/repositories/subscription_repository.dart';
@@ -39,5 +37,3 @@ export 'src/repositories/booking_repository.dart';
 export 'src/repositories/bookable_shift_repository.dart';
 export 'src/repositories/course_plan_repository.dart';
 export 'src/repositories/sale_repository.dart';
-
-export 'src/utils/sync_utils.dart';
