@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:gym_manager_core/core.dart';
-import 'dart:convert';
 
 class ProductRepository {
   static Future<List<Product>> insert(List<Product> products) async {
