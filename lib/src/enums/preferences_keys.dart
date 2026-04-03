@@ -3,8 +3,6 @@ enum PreferencesKeys {
   brightness,
   localIP,
   localPORT,
-  remoteIP,
-  remotePORT,
   tpProUsername,
   tpProPassword,
   usersFilters,
