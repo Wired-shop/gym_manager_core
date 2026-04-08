@@ -22,6 +22,7 @@ export 'src/enums/document_type.dart';
 export 'src/enums/validation_response.dart';
 export 'src/enums/validation_response_warnings.dart';
 export 'src/enums/entry_response.dart';
+export 'src/enums/entry_rejection_reasons.dart';
 export 'src/enums/booking_status.dart';
 export 'src/enums/preferences_keys.dart';
 export 'src/enums/payment_method.dart';

@@ -1,4 +1,5 @@
 import 'package:gym_manager_core/core.dart';
+import 'package:gym_manager_core/src/enums/entry_rejection_reasons.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'entry.g.dart';
 
@@ -11,7 +12,7 @@ class Entry {
   DateTime date;
   EntryResponse response;
 
-  String? notEntryReason;
+  EntryRejectionReasons? notEntryReason;
 
   Entry({
     this.id,
