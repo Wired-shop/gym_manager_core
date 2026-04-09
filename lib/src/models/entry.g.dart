@@ -7,8 +7,9 @@ Entry _$EntryFromJson(Map<String, dynamic> json) {
     subscriptionId: json['subscriptionId'] as int,
     date: DateTime.parse(json['date'] as String),
     response: $enumDecode(_$EntryResponseEnumMap, json['response']),
-    notEntryReason: $enumDecodeNullable(
-        _$EntryRejectionReasonEnumMap, json['notEntryReason']),
+    notEntryReasons: (json['notEntryReasons'] as List<dynamic>?)
+        ?.map((e) => $enumDecode(_$EntryRejectionReasonEnumMap, e))
+        .toList(),
   );
 }
 
@@ -19,7 +20,9 @@ Map<String, dynamic> _$EntryToJson(Entry instance) {
     'subscriptionId': instance.subscriptionId,
     'date': instance.date.toIso8601String(),
     'response': _$EntryResponseEnumMap[instance.response]!,
-    'notEntryReason': _$EntryRejectionReasonEnumMap[instance.notEntryReason],
+    'notEntryReasons': instance.notEntryReasons
+        ?.map((e) => _$EntryRejectionReasonEnumMap[e]!)
+        .toList(),
   };
 }
 

@@ -12,11 +12,11 @@ class Entry {
   DateTime date;
   EntryResponse response;
 
-  EntryRejectionReason? notEntryReason;
+  List<EntryRejectionReason>? notEntryReasons;
 
   Entry({
     this.id,
-    this.notEntryReason,
+    this.notEntryReasons,
     required this.userId,
     required this.subscriptionId,
     required this.date,
