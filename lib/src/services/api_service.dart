@@ -13,35 +13,41 @@ class ApiService {
       return client;
     });
 
-  ApiService._privateConstructor();
+  ApiService._privateConstructor() {
+    dio.interceptors.add(InterceptorsWrapper(
+      onResponse: (response, handler) {
+        if (response.data["responseType"] != "ok") {
+          handler.reject(DioException(
+            requestOptions: response.requestOptions,
+            response: response,
+            message: response.data["body"].toString(),
+          ));
+        } else {
+          response.data = response.data["body"];
+          handler.next(response);
+        }
+      },
+      onError: (error, handler) {
+        final message = error.response?.data?["body"]?.toString() ??
+            error.message ??
+            "Errore sconosciuto";
+        handler.reject(DioException(
+          requestOptions: error.requestOptions,
+          message: message,
+        ));
+      },
+    ));
+  }
 
   static final ApiService _instance = ApiService._privateConstructor();
 
-  static ApiService getInstance() {
-    return _instance;
-  }
+  static ApiService getInstance() => _instance;
 
-  void setIP(String IP) {
-    _IP = IP;
-  }
+  void setIP(String IP) => _IP = IP;
+  void setPORT(int PORT) => _PORT = PORT;
+  void setEmail(String? email) => _email = email;
 
-  void setPORT(int PORT) {
-    _PORT = PORT;
-  }
-
-  void setEmail(String? email) {
-    _email = email;
-  }
-
-  String? getEmail() {
-    return _email;
-  }
-
-  String getIP() {
-    return _IP;
-  }
-
-  int getPORT() {
-    return _PORT;
-  }
+  String? getEmail() => _email;
+  String getIP() => _IP;
+  int getPORT() => _PORT;
 }

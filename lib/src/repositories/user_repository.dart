@@ -1,24 +1,19 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:dio/dio.dart';
 import 'package:gym_manager_core/core.dart';
 import 'package:web_socket_channel/io.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 
 class UserRepository {
   static Future<void> truncate() async {
-    String url =
+    final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/users/truncate";
-    Response response = await ApiService.getInstance().dio.get(url);
-    if (response.data["responseType"] != "ok") {
-      throw response.data;
-    }
+    await ApiService.getInstance().dio.get(url);
   }
 
   static Stream<List<User>> stream({String? q, UsersFilter? filter}) {
-    String wsUrl =
+    final wsUrl =
         'wss://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/stream/users?q=$q&${filter?.toQueryParameters()}';
-    WebSocketChannel channel = IOWebSocketChannel.connect(
+    final channel = IOWebSocketChannel.connect(
       Uri.parse(wsUrl),
       customClient: HttpClient()
         ..badCertificateCallback =
@@ -34,82 +29,45 @@ class UserRepository {
   static Future<List<User>> list({String? q, UsersFilter? filter}) async {
     String url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/users?q=$q";
-    if (filter != null) {
-      url += "&${filter.toQueryParameters()}";
-    }
-    Response response = await ApiService.getInstance().dio.get(url);
-    if (response.data["responseType"].contains("ok")) {
-      List<User> users = (response.data["body"] as List<dynamic>)
-          .map((e) => User.fromJson(e))
-          .toList();
-      return users;
-    } else {
-      throw response.data;
-    }
+    if (filter != null) url += "&${filter.toQueryParameters()}";
+    final response = await ApiService.getInstance().dio.get(url);
+    return (response.data as List).map((e) => User.fromJson(e)).toList();
   }
 
   static Future<List<User>> insert(List<User> users) async {
-    String url =
+    final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/users";
-    List<Map<String, dynamic>> usersMapped =
-        users.map((user) => user.toJson()).toList();
-    Response response =
-        await ApiService.getInstance().dio.post(url, data: usersMapped);
-    if (response.data["responseType"] == "ok") {
-      List<User> insertedUsers = (response.data["body"] as List<dynamic>)
-          .map((e) => User.fromJson(e))
-          .toList();
-      return insertedUsers;
-    } else {
-      throw response.data;
-    }
+    final response = await ApiService.getInstance()
+        .dio
+        .post(url, data: users.map((e) => e.toJson()).toList());
+    return (response.data as List).map((e) => User.fromJson(e)).toList();
   }
 
-  static Future update(User user) async {
-    String url =
+  static Future<User> update(User user) async {
+    final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/users";
-    Response response =
+    final response =
         await ApiService.getInstance().dio.put(url, data: user.toJson());
-    if (response.data["responseType"] == "ok") {
-      User updatedUser = User.fromJson(response.data["body"]);
-      return updatedUser;
-    } else {
-      throw response.data;
-    }
+    return User.fromJson(response.data);
   }
 
   static Future<User?> get(int id) async {
-    String url =
+    final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/users/$id";
-    Response response = await ApiService.getInstance().dio.get(url);
-    if (response.data["responseType"] == "ok" &&
-        response.data["body"] != null) {
-      User user = User.fromJson(response.data["body"]);
-      return user;
-    } else {
-      return null;
-    }
+    final response = await ApiService.getInstance().dio.get(url);
+    return response.data != null ? User.fromJson(response.data) : null;
   }
 
   static Future<User?> getUserByEmail(String email) async {
-    String url =
+    final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/users/emails/$email";
-    Response response = await ApiService.getInstance().dio.get(url);
-    if (response.data["responseType"] == "ok" &&
-        response.data["body"] != null) {
-      User user = User.fromJson(response.data["body"]);
-      return user;
-    } else {
-      return null;
-    }
+    final response = await ApiService.getInstance().dio.get(url);
+    return response.data != null ? User.fromJson(response.data) : null;
   }
 
-  static Future delete(int id) async {
-    String url =
+  static Future<void> delete(int id) async {
+    final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/users/$id";
-    Response response = await ApiService.getInstance().dio.delete(url);
-    if (response.data["responseType"] == "error") {
-      throw response.data;
-    }
+    await ApiService.getInstance().dio.delete(url);
   }
 }

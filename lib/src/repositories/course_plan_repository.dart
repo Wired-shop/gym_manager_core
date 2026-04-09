@@ -1,66 +1,39 @@
-import 'package:dio/dio.dart';
 import 'package:gym_manager_core/core.dart';
 
 class CoursePlanRepository {
   static Future<CoursePlan?> get(int id) async {
-    String url =
+    final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/coursePlans/$id";
-    Response response = await ApiService.getInstance().dio.get(url);
-    if (response.data["responseType"] == "ok" &&
-        response.data["body"] != null) {
-      CoursePlan coursePlan = CoursePlan.fromJson(response.data["body"]);
-      return coursePlan;
-    } else {
-      return null;
-    }
+    final response = await ApiService.getInstance().dio.get(url);
+    return response.data != null ? CoursePlan.fromJson(response.data) : null;
   }
 
   static Future<List<CoursePlan>> list(int courseId) async {
-    String url =
+    final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/coursePlans?courseId=$courseId";
-    Response response = await ApiService.getInstance().dio.get(url);
-    if (response.data["responseType"] == "ok") {
-      List<CoursePlan> coursePlans = (response.data["body"] as List<dynamic>)
-          .map((e) => CoursePlan.fromJson(e))
-          .toList();
-      return coursePlans;
-    } else {
-      throw response.data;
-    }
+    final response = await ApiService.getInstance().dio.get(url);
+    return (response.data as List).map((e) => CoursePlan.fromJson(e)).toList();
   }
 
   static Future<CoursePlan> insert(CoursePlan coursePlan) async {
-    String url =
+    final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/coursePlans";
-    Response response =
+    final response =
         await ApiService.getInstance().dio.post(url, data: coursePlan.toJson());
-    if (response.data["responseType"] == "ok") {
-      CoursePlan newCoursePlan = CoursePlan.fromJson(response.data["body"]);
-      return newCoursePlan;
-    } else {
-      throw response.data;
-    }
+    return CoursePlan.fromJson(response.data);
   }
 
   static Future<CoursePlan> update(CoursePlan coursePlan) async {
-    String url =
+    final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/coursePlans/";
-    Response response =
+    final response =
         await ApiService.getInstance().dio.put(url, data: coursePlan.toJson());
-    if (response.data["responseType"] == "ok") {
-      CoursePlan updatedCoursePlan = CoursePlan.fromJson(response.data["body"]);
-      return updatedCoursePlan;
-    } else {
-      throw response.data;
-    }
+    return CoursePlan.fromJson(response.data);
   }
 
-  static Future delete(int id) async {
-    String url =
+  static Future<void> delete(int id) async {
+    final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/coursePlans/$id";
-    Response response = await ApiService.getInstance().dio.delete(url);
-    if (response.data["responseType"] == "error") {
-      throw response.data;
-    }
+    await ApiService.getInstance().dio.delete(url);
   }
 }

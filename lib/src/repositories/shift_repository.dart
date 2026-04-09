@@ -1,82 +1,46 @@
-import 'package:dio/dio.dart';
 import 'package:gym_manager_core/core.dart';
 
 class ShiftRepository {
   static Future<void> truncate() async {
-    String url =
+    final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/shifts/truncate";
-    Response response = await ApiService.getInstance().dio.get(url);
-    if (response.data["responseType"] != "ok") {
-      throw response.data;
-    }
+    await ApiService.getInstance().dio.get(url);
   }
 
-  static Future<List<Shift>> list({
-    int? courseId,
-    bool? publishable,
-  }) async {
-    String url =
-        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/shifts?courseId=$courseId&publishable=$publishable';
-    Response response = await ApiService.getInstance().dio.get(url);
-    if (response.data["responseType"] == "ok") {
-      List<Shift> shifts = (response.data["body"] as List<dynamic>)
-          .map((e) => Shift.fromJson(e))
-          .toList();
-      return shifts;
-    } else {
-      throw response.data;
-    }
+  static Future<List<Shift>> list({int? courseId, bool? publishable}) async {
+    final url =
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/shifts?courseId=$courseId&publishable=$publishable";
+    final response = await ApiService.getInstance().dio.get(url);
+    return (response.data as List).map((e) => Shift.fromJson(e)).toList();
   }
 
   static Future<List<Shift>> insert(List<Shift> shifts) async {
-    String url =
-        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/shifts';
-    List<Map<String, dynamic>> shiftsMapped =
-        shifts.map((shift) => shift.toJson()).toList();
-    Response response =
-        await ApiService.getInstance().dio.post(url, data: shiftsMapped);
-    if (response.data["responseType"] == "ok") {
-      List<Shift> insertedShifts = (response.data["body"] as List<dynamic>)
-          .map((e) => Shift.fromJson(e))
-          .toList();
-      return insertedShifts;
-    } else {
-      throw response.data;
-    }
+    final url =
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/shifts";
+    final response = await ApiService.getInstance()
+        .dio
+        .post(url, data: shifts.map((e) => e.toJson()).toList());
+    return (response.data as List).map((e) => Shift.fromJson(e)).toList();
   }
 
   static Future<Shift> update(Shift shift) async {
-    String url =
-        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/shifts';
-    Response response =
+    final url =
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/shifts";
+    final response =
         await ApiService.getInstance().dio.put(url, data: shift.toJson());
-    if (response.data["responseType"] == "ok") {
-      Shift updatedShift = Shift.fromJson(response.data["body"]);
-      return updatedShift;
-    } else {
-      throw response.data;
-    }
+    return Shift.fromJson(response.data);
   }
 
   static Future<Shift?> get(int id) async {
-    String url =
-        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/shifts/$id';
-    Response response = await ApiService.getInstance().dio.get(url);
-    if (response.data["responseType"] == "ok" &&
-        response.data["body"] != null) {
-      Shift shift = Shift.fromJson(response.data["body"]);
-      return shift;
-    } else {
-      return null;
-    }
+    final url =
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/shifts/$id";
+    final response = await ApiService.getInstance().dio.get(url);
+    return response.data != null ? Shift.fromJson(response.data) : null;
   }
 
-  static Future delete(int id) async {
-    String url =
-        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/shifts/$id';
-    Response response = await ApiService.getInstance().dio.delete(url);
-    if (response.data["responseType"] == "error") {
-      throw response.data;
-    }
+  static Future<void> delete(int id) async {
+    final url =
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/shifts/$id";
+    await ApiService.getInstance().dio.delete(url);
   }
 }

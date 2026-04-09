@@ -1,62 +1,37 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:dio/dio.dart';
 import 'package:web_socket_channel/io.dart';
 import '../models/entry.dart';
 import '../services/api_service.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 
 class EntryRepository {
   static Future<Entry> insert(Entry entry) async {
-    String url =
+    final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/entries/";
-    Response response =
+    final response =
         await ApiService.getInstance().dio.post(url, data: entry.toJson());
-    if (response.data["responseType"] == "ok") {
-      Entry newEntry = Entry.fromJson(response.data["body"]);
-      return newEntry;
-    } else {
-      throw response.data;
-    }
+    return Entry.fromJson(response.data);
   }
 
-  
   static Future<List<Entry>> list(
       {DateTime? startDate, DateTime? endDate, int? userId, int? limit}) async {
-    String url =
+    final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/entries?startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}&userId=$userId&limit=$limit";
-    Response response = await ApiService.getInstance().dio.get(url);
-    if (response.data["responseType"] == "ok") {
-      List<Entry> entries = (response.data["body"] as List<dynamic>)
-          .map((e) => Entry.fromJson(e))
-          .toList();
-      return entries;
-    } else {
-      throw response.data;
-    }
+    final response = await ApiService.getInstance().dio.get(url);
+    return (response.data as List).map((e) => Entry.fromJson(e)).toList();
   }
 
   static Future<List<Entry>> listToday({int? userId}) async {
-    String url =
-        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}"
-        "/entries/today"
-        "?userId=$userId";
-
-    Response response = await ApiService.getInstance().dio.get(url);
-
-    if (response.data["responseType"] == "ok") {
-      return (response.data["body"] as List<dynamic>)
-          .map((e) => Entry.fromJson(e))
-          .toList();
-    } else {
-      throw response.data;
-    }
+    final url =
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/entries/today?userId=$userId";
+    final response = await ApiService.getInstance().dio.get(url);
+    return (response.data as List).map((e) => Entry.fromJson(e)).toList();
   }
 
   static Stream<List<Entry>> stream({DateTime? startDate, DateTime? endDate}) {
-    String wsUrl =
-        'wss://localhost:${ApiService.getInstance().getPORT()}/stream/entries?startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}';
-    WebSocketChannel channel = IOWebSocketChannel.connect(
+    final wsUrl =
+        "wss://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/stream/entries?startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}";
+    final channel = IOWebSocketChannel.connect(
       Uri.parse(wsUrl),
       customClient: HttpClient()
         ..badCertificateCallback =

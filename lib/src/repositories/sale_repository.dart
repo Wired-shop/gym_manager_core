@@ -1,15 +1,13 @@
 import 'dart:io';
-import 'package:dio/dio.dart';
+import 'dart:convert';
 import 'package:gym_manager_core/core.dart';
 import 'package:web_socket_channel/io.dart';
-import 'dart:convert';
-import 'package:web_socket_channel/web_socket_channel.dart';
 
 class SaleRepository {
   static Stream<List<Sale>> stream() {
-    String wsUrl =
+    final wsUrl =
         'wss://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/stream/sales';
-    WebSocketChannel channel = IOWebSocketChannel.connect(
+    final channel = IOWebSocketChannel.connect(
       Uri.parse(wsUrl),
       customClient: HttpClient()
         ..badCertificateCallback =
@@ -23,70 +21,42 @@ class SaleRepository {
   }
 
   static Future<Sale> insert(Sale sale) async {
-    String url =
+    final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/sales";
-    Response response =
+    final response =
         await ApiService.getInstance().dio.post(url, data: sale.toJson());
-    if (response.data["responseType"] == "ok") {
-      Sale insertedSale = Sale.fromJson(response.data["body"]);
-      return insertedSale;
-    } else {
-      throw response.data;
-    }
+    return Sale.fromJson(response.data);
   }
 
   static Future<Sale> update(Sale sale) async {
-    String url =
+    final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/sales/${sale.id}";
-    Response response =
+    final response =
         await ApiService.getInstance().dio.put(url, data: sale.toJson());
-    if (response.data["responseType"] == "ok") {
-      return Sale.fromJson(response.data["body"]);
-    } else {
-      throw response.data;
-    }
+    return Sale.fromJson(response.data);
   }
 
-  static Future<List<Sale>> list({
-    String? q,
-    bool? completed,
-    DateTime? startDate,
-    DateTime? endDate,
-  }) async {
-    String url =
-        'https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/sales?q=$q&completed=$completed&startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}';
-
-    Response response = await ApiService.getInstance().dio.get(url);
-
-    if (response.data["responseType"] == "ok") {
-      List<Sale> sales = (response.data["body"] as List<dynamic>)
-          .map((e) => Sale.fromJson(e))
-          .toList();
-      return sales;
-    } else {
-      throw response.data;
-    }
+  static Future<List<Sale>> list(
+      {String? q,
+      bool? completed,
+      DateTime? startDate,
+      DateTime? endDate}) async {
+    final url =
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/sales?q=$q&completed=$completed&startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}";
+    final response = await ApiService.getInstance().dio.get(url);
+    return (response.data as List).map((e) => Sale.fromJson(e)).toList();
   }
 
   static Future<Sale?> get(int id) async {
-    String url =
+    final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/sales/$id";
-    Response response = await ApiService.getInstance().dio.get(url);
-    if (response.data["responseType"] == "ok" &&
-        response.data["body"] != null) {
-      Sale sale = Sale.fromJson(response.data["body"]);
-      return sale;
-    } else {
-      return null;
-    }
+    final response = await ApiService.getInstance().dio.get(url);
+    return response.data != null ? Sale.fromJson(response.data) : null;
   }
 
-  static Future delete(int id) async {
-    String url =
+  static Future<void> delete(int id) async {
+    final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/sales/$id";
-    Response response = await ApiService.getInstance().dio.delete(url);
-    if (response.data["responseType"] == "error") {
-      throw response.data;
-    }
+    await ApiService.getInstance().dio.delete(url);
   }
 }

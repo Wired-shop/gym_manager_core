@@ -1,82 +1,54 @@
 import '../models/subscription.dart';
-import 'package:dio/dio.dart';
 import '../services/api_service.dart';
 
 class SubscriptionRepository {
   static Future<void> truncate() async {
-    String url =
+    final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/subscriptions/truncate";
-    Response response = await ApiService.getInstance().dio.get(url);
-    if (response.data["responseType"] != "ok") {
-      throw response.data;
-    }
+    await ApiService.getInstance().dio.get(url);
   }
 
   static Future<Subscription?> get(
       {int? id, String? badgeCode, int? userId}) async {
-    String url =
+    final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/subscriptions?badgeCode=$badgeCode&id=$id&userId=$userId";
-    Response response = await ApiService.getInstance().dio.get(url);
-    if (response.data["responseType"] == "ok" &&
-        response.data["body"] != null) {
-      Subscription subscription = Subscription.fromJson(response.data["body"]);
-      return subscription;
-    } else {
-      return null;
-    }
+    final response = await ApiService.getInstance().dio.get(url);
+    return response.data != null ? Subscription.fromJson(response.data) : null;
   }
 
   static Future<List<Subscription>> list() async {
-    String url =
+    final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/subscriptions/all";
-    Response response = await ApiService.getInstance().dio.get(url);
-    if (response.data["responseType"] == "ok") {
-      List<Subscription> subscriptions =
-          (response.data["body"] as List<dynamic>)
-              .map((e) => Subscription.fromJson(e))
-              .toList();
-      return subscriptions;
-    } else {
-      throw response.data;
-    }
+    final response = await ApiService.getInstance().dio.get(url);
+    return (response.data as List)
+        .map((e) => Subscription.fromJson(e))
+        .toList();
   }
 
-  static Future update(Subscription subscription) async {
-    String url =
+  static Future<Subscription> update(Subscription subscription) async {
+    final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/subscriptions";
-    Response response = await ApiService.getInstance()
+    final response = await ApiService.getInstance()
         .dio
         .put(url, data: subscription.toJson());
-    if (response.data["responseType"] == "error") {
-      throw response.data;
-    }
+    return Subscription.fromJson(response.data);
   }
 
   static Future<List<Subscription>> insert(
       List<Subscription> subscriptions) async {
-    String url =
+    final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/subscriptions";
-    List<Map<String, dynamic>> subscriptionsMapped =
-        subscriptions.map((subscription) => subscription.toJson()).toList();
-    Response response =
-        await ApiService.getInstance().dio.post(url, data: subscriptionsMapped);
-    if (response.data["responseType"] == "ok") {
-      List<Subscription> insertedSubscriptions =
-          (response.data["body"] as List<dynamic>)
-              .map((e) => Subscription.fromJson(e))
-              .toList();
-      return insertedSubscriptions;
-    } else {
-      throw response.data;
-    }
+    final response = await ApiService.getInstance()
+        .dio
+        .post(url, data: subscriptions.map((e) => e.toJson()).toList());
+    return (response.data as List)
+        .map((e) => Subscription.fromJson(e))
+        .toList();
   }
 
-  static Future delete(int id) async {
-    String url =
+  static Future<void> delete(int id) async {
+    final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/subscriptions/$id";
-    Response response = await ApiService.getInstance().dio.delete(url);
-    if (response.data["responseType"] == "error") {
-      throw response.data;
-    }
+    await ApiService.getInstance().dio.delete(url);
   }
 }
