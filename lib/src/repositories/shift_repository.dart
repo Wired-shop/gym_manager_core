@@ -26,9 +26,8 @@ class ShiftRepository {
   static Future<Shift> update(Shift shift) async {
     final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/shifts";
-    final response =
-        await ApiService.getInstance().dio.put(url, data: shift.toJson());
-    return Shift.fromJson(response.data);
+    await ApiService.getInstance().dio.put(url, data: shift.toJson());
+    return shift;
   }
 
   static Future<Shift?> get(int id) async {

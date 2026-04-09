@@ -45,9 +45,8 @@ class CourseRepository {
   static Future<Course> update(Course course) async {
     final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/courses/";
-    final response =
-        await ApiService.getInstance().dio.put(url, data: course.toJson());
-    return Course.fromJson(response.data);
+    await ApiService.getInstance().dio.put(url, data: course.toJson());
+    return course;
   }
 
   static Future<Course?> get(int id) async {

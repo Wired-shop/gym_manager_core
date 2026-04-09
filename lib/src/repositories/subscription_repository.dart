@@ -28,10 +28,8 @@ class SubscriptionRepository {
   static Future<Subscription> update(Subscription subscription) async {
     final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/subscriptions";
-    final response = await ApiService.getInstance()
-        .dio
-        .put(url, data: subscription.toJson());
-    return Subscription.fromJson(response.data);
+    await ApiService.getInstance().dio.put(url, data: subscription.toJson());
+    return subscription;
   }
 
   static Future<List<Subscription>> insert(

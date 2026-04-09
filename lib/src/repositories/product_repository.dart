@@ -20,9 +20,8 @@ class ProductRepository {
   static Future<Product> update(Product product) async {
     final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/products/";
-    final response =
-        await ApiService.getInstance().dio.put(url, data: product.toJson());
-    return Product.fromJson(response.data);
+    await ApiService.getInstance().dio.put(url, data: product.toJson());
+    return product;
   }
 
   static Future<Product?> get(int id) async {
