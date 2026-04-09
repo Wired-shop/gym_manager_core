@@ -7,7 +7,7 @@ enum ValidationResponseWarnings {
   certificatoMedicoAssente,
   abbonamentoAssente,
   abbonamentoScaduto,
-  accessiTerminati,
+  accessiDisponibiliEsauriti,
   iscrizioneInScadenza,
   abbonamentoInScadenza,
   affiliazioneInScadenza,
@@ -45,8 +45,8 @@ enum ValidationResponseWarnings {
         return "Abbonamento assente";
       case ValidationResponseWarnings.abbonamentoScaduto:
         return "Abbonamento scaduto";
-      case ValidationResponseWarnings.accessiTerminati:
-        return "Accessi terminati";
+      case ValidationResponseWarnings.accessiDisponibiliEsauriti:
+        return "Accessi disponibili esauriti";
       case ValidationResponseWarnings.bloccato:
         return "Bloccato";
       case ValidationResponseWarnings.abbonamentoInScadenza:

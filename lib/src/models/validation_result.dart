@@ -18,7 +18,7 @@ class ValidationResult {
         ValidationResponseWarnings.affiliazioneScaduta,
         ValidationResponseWarnings.iscrizioneScaduta,
         ValidationResponseWarnings.certificatoMedicoScaduto,
-        ValidationResponseWarnings.accessiTerminati,
+        ValidationResponseWarnings.accessiDisponibiliEsauriti,
         ValidationResponseWarnings.abbonamentoAssente,
       ];
     } else if (response == ValidationResponse.warnings) {
@@ -39,7 +39,8 @@ class ValidationResult {
 
   static ValidationResponse fromAssociatedWarnings(
       List<ValidationResponseWarnings> warnings) {
-    if (warnings.contains(ValidationResponseWarnings.accessiTerminati) ||
+    if (warnings
+            .contains(ValidationResponseWarnings.accessiDisponibiliEsauriti) ||
         (warnings.contains(ValidationResponseWarnings.abbonamentoScaduto)) ||
         (warnings.contains(ValidationResponseWarnings.affiliazioneScaduta)) ||
         (warnings

@@ -44,6 +44,7 @@ const _$ValidationResponseWarningsEnumMap = {
   ValidationResponseWarnings.certificatoMedicoInScadenza:
       'certificatoMedicoInScadenza',
   ValidationResponseWarnings.abbonamentoScaduto: 'abbonamentoScaduto',
-  ValidationResponseWarnings.accessiTerminati: 'accessiTerminati',
+  ValidationResponseWarnings.accessiDisponibiliEsauriti:
+      'accessiDisponibiliEsauriti',
   ValidationResponseWarnings.sconosciuto: 'sconosciuto',
 };
