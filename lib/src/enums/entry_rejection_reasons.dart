@@ -1,27 +1,78 @@
-enum EntryRejectionReasons {
+import 'package:gym_manager_core/core.dart';
+
+enum EntryRejectionReason {
+  // Operativi
   accessiGiornalieriEsauriti,
   accessiDisponibiliEsauriti,
   fuoriFasciaOraria,
+  bloccato,
+
+  // Validazione
+  iscrizioneScaduta,
+  affiliazioneScaduta,
+  certificatoMedicoScaduto,
+  iscrizioneAssente,
+  affiliazioneAssente,
+  certificatoMedicoAssente,
+  abbonamentoAssente,
+  abbonamentoScaduto,
+  accessiTerminati,
+  iscrizioneInScadenza,
+  abbonamentoInScadenza,
+  affiliazioneInScadenza,
+  certificatoMedicoInScadenza,
+
   sconosciuto;
 
-  static EntryRejectionReasons fromString(String? value) {
-    for (int i = 0; i < EntryRejectionReasons.values.length; i++) {
-      if (EntryRejectionReasons.values[i].name == value) {
-        return EntryRejectionReasons.values[i];
-      }
-    }
-    return EntryRejectionReasons.sconosciuto;
+  static EntryRejectionReason fromString(String? value) {
+    return EntryRejectionReason.values.firstWhere(
+      (e) => e.name == value,
+      orElse: () => EntryRejectionReason.sconosciuto,
+    );
   }
 
-  static String toPrettyString(EntryRejectionReasons entryRejectionReasons) {
-    switch (entryRejectionReasons) {
-      case EntryRejectionReasons.accessiGiornalieriEsauriti:
+  static EntryRejectionReason fromValidationWarning(
+      ValidationResponseWarnings w) {
+    return fromString(w.name);
+  }
+
+  String toPrettyString() {
+    switch (this) {
+      case EntryRejectionReason.accessiGiornalieriEsauriti:
         return "Accessi giornalieri esauriti";
-      case EntryRejectionReasons.accessiDisponibiliEsauriti:
+      case EntryRejectionReason.accessiDisponibiliEsauriti:
         return "Accessi disponibili esauriti";
-      case EntryRejectionReasons.fuoriFasciaOraria:
+      case EntryRejectionReason.fuoriFasciaOraria:
         return "Fuori fascia oraria";
-      case EntryRejectionReasons.sconosciuto:
+      case EntryRejectionReason.bloccato:
+        return "Bloccato";
+      case EntryRejectionReason.iscrizioneScaduta:
+        return "Iscrizione scaduta";
+      case EntryRejectionReason.affiliazioneScaduta:
+        return "Affiliazione scaduta";
+      case EntryRejectionReason.certificatoMedicoScaduto:
+        return "Certificato medico scaduto";
+      case EntryRejectionReason.iscrizioneAssente:
+        return "Iscrizione assente";
+      case EntryRejectionReason.affiliazioneAssente:
+        return "Affiliazione assente";
+      case EntryRejectionReason.certificatoMedicoAssente:
+        return "Certificato medico assente";
+      case EntryRejectionReason.abbonamentoAssente:
+        return "Abbonamento assente";
+      case EntryRejectionReason.abbonamentoScaduto:
+        return "Abbonamento scaduto";
+      case EntryRejectionReason.accessiTerminati:
+        return "Accessi terminati";
+      case EntryRejectionReason.iscrizioneInScadenza:
+        return "Iscrizione in scadenza";
+      case EntryRejectionReason.abbonamentoInScadenza:
+        return "Abbonamento in scadenza";
+      case EntryRejectionReason.affiliazioneInScadenza:
+        return "Affiliazione in scadenza";
+      case EntryRejectionReason.certificatoMedicoInScadenza:
+        return "Certificato medico in scadenza";
+      case EntryRejectionReason.sconosciuto:
         return "Sconosciuto";
     }
   }

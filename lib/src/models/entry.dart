@@ -12,7 +12,7 @@ class Entry {
   DateTime date;
   EntryResponse response;
 
-  EntryRejectionReasons? notEntryReason;
+  EntryRejectionReason? notEntryReason;
 
   Entry({
     this.id,
