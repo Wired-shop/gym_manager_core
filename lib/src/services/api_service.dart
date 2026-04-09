@@ -16,19 +16,21 @@ class ApiService {
   ApiService._privateConstructor() {
     dio.interceptors.add(InterceptorsWrapper(
       onResponse: (response, handler) {
-        if (response.data["responseType"] != "ok") {
+        final data = response.data;
+        if (data is! Map || data["responseType"] != "ok") {
           handler.reject(DioException(
             requestOptions: response.requestOptions,
             response: response,
-            message: response.data["body"].toString(),
+            message: data is Map ? data["body"]?.toString() : data.toString(),
           ));
         } else {
-          response.data = response.data["body"];
+          response.data = data["body"];
           handler.next(response);
         }
       },
       onError: (error, handler) {
-        final message = error.response?.data?["body"]?.toString() ??
+        final data = error.response?.data;
+        final message = (data is Map ? data["body"]?.toString() : null) ??
             error.message ??
             "Errore sconosciuto";
         handler.reject(DioException(
