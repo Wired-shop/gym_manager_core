@@ -11,7 +11,6 @@ enum PreferencesKeys {
   alertTitle,
   alertSubtitle,
   logoImagePath,
-  genderSoundAlerts,
   soundAlertsVolume,
   enableSoundAlerts,
   backupOnStart,
