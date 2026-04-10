@@ -3,8 +3,8 @@ import '../services/api_service.dart';
 class SyncRepository {
   static Future<Map<String, dynamic>> sync({
     required String gymId,
-    required String supabaseUrl,
-    required String supabaseKey,
+    required String email,
+    required String password,
   }) async {
     final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/sync";
@@ -13,8 +13,8 @@ class SyncRepository {
       url,
       data: {
         'gymId': gymId,
-        'supabaseUrl': supabaseUrl,
-        'supabaseKey': supabaseKey,
+        'email': email,
+        'password': password,
       },
     );
 
