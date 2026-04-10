@@ -5,6 +5,8 @@ enum PreferencesKeys {
   localPORT,
   tpProUsername,
   tpProPassword,
+  emailSyncInApp,
+  passwordSyncInApp,
   usersFilters,
   backgroundImagePath,
   showAlert,
