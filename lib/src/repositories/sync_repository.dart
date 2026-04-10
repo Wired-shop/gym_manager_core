@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import '../services/api_service.dart';
 
 class SyncRepository {
@@ -7,19 +6,18 @@ class SyncRepository {
     required String supabaseUrl,
     required String supabaseKey,
   }) async {
-    String url =
+    final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/sync";
 
-    Response response = await ApiService.getInstance().dio.post(url, data: {
-      'gymId': gymId,
-      'supabaseUrl': supabaseUrl,
-      'supabaseKey': supabaseKey,
-    });
+    final response = await ApiService.getInstance().dio.post(
+      url,
+      data: {
+        'gymId': gymId,
+        'supabaseUrl': supabaseUrl,
+        'supabaseKey': supabaseKey,
+      },
+    );
 
-    if (response.data["responseType"] == "ok") {
-      return response.data["body"] as Map<String, dynamic>;
-    } else {
-      throw response.data;
-    }
+    return Map<String, dynamic>.from(response.data);
   }
 }

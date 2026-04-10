@@ -1,4 +1,4 @@
-class CoursePlan {
+class Plan {
   final int? id;
   String? name;
   String? description;
@@ -6,7 +6,7 @@ class CoursePlan {
   int validityDays;
   int courseId;
 
-  CoursePlan({
+  Plan({
     this.id,
     required this.courseId,
     this.name,
@@ -14,8 +14,8 @@ class CoursePlan {
     required this.price,
     required this.validityDays,
   });
-  factory CoursePlan.fromJson(Map<String, dynamic> json) {
-    return CoursePlan(
+  factory Plan.fromJson(Map<String, dynamic> json) {
+    return Plan(
       id: json['id'] as int?,
       courseId: json['courseId'] as int,
       name: json['name'] as String,
@@ -41,7 +41,7 @@ class CoursePlan {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is CoursePlan &&
+      other is Plan &&
           runtimeType == other.runtimeType &&
           id == other.id &&
           courseId == other.courseId &&

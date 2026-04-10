@@ -14,7 +14,7 @@ export 'src/models/shift.dart';
 export 'src/models/bookable_shift.dart';
 export 'src/models/booking.dart';
 export 'src/models/time_of_day.dart';
-export 'src/models/course_plan.dart';
+export 'src/models/plan.dart';
 export 'src/models/product.dart';
 export 'src/models/sale.dart';
 
@@ -34,6 +34,6 @@ export 'src/repositories/user_repository.dart';
 export 'src/repositories/product_repository.dart';
 export 'src/repositories/course_repository.dart';
 export 'src/repositories/shift_repository.dart';
-export 'src/repositories/course_plan_repository.dart';
+export 'src/repositories/plan_repository.dart';
 export 'src/repositories/sale_repository.dart';
 export 'src/repositories/sync_repository.dart';
