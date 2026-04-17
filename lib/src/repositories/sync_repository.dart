@@ -32,4 +32,21 @@ class SyncRepository {
       },
     );
   }
+
+  static Future<void> resetPassword({
+    required String supabaseUrl,
+    required String supabaseAnonKey,
+    required String email,
+  }) async {
+    final url =
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/sync/sendPasswordResetEmail";
+    await ApiService.getInstance().dio.post(
+      url,
+      data: {
+        'supabaseUrl': supabaseUrl,
+        'supabaseAnonKey': supabaseAnonKey,
+        'email': email,
+      },
+    );
+  }
 }
