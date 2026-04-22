@@ -49,10 +49,6 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       creation: json['creation'] == null
           ? null
           : DateTime.parse(json['creation'] as String),
-      validationResult: json['validationResult'] == null
-          ? null
-          : ValidationResult.fromJson(
-              json['validationResult'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
@@ -91,5 +87,4 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'tpPro': instance.tpPro,
       'forceBlock': instance.forceBlock,
       'creation': instance.creation?.toIso8601String(),
-      'validationResult': instance.validationResult?.toJson(),
     };

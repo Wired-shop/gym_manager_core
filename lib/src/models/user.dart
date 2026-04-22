@@ -51,9 +51,6 @@ class User {
   int? tpPro;
   int? forceBlock;
 
-  //Validaition
-  ValidationResult? validationResult;
-
   DateTime? creation;
 
   User({
@@ -89,7 +86,6 @@ class User {
     this.gender,
     this.job,
     this.creation,
-    this.validationResult,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
