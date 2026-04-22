@@ -11,8 +11,6 @@ export 'src/models/users_filter.dart';
 export 'src/models/int_filter_range.dart';
 export 'src/models/course.dart';
 export 'src/models/shift.dart';
-export 'src/models/bookable_shift.dart';
-export 'src/models/booking.dart';
 export 'src/models/time_of_day.dart';
 export 'src/models/plan.dart';
 export 'src/models/product.dart';
