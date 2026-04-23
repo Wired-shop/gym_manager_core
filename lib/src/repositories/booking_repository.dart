@@ -6,23 +6,18 @@ import 'package:supabase/supabase.dart';
 class BookingRepository {
   static SupabaseClient? _client;
 
-  void init({
+  static void init({
     required String supabaseUrl,
     required String supabaseAnonKey,
   }) {
     _client = SupabaseClient(supabaseUrl, supabaseAnonKey);
   }
 
-  static SupabaseClient get _db {
-    assert(_client != null, 'BookingRepository().init() non chiamato');
-    return _client!;
-  }
-
-  Future<List<Booking>> fetchUserBookings({
+  static Future<List<Booking>> fetchUserBookings({
     required String email,
     required String gymId,
   }) async {
-    final userResponse = await _db
+    final userResponse = await _client!
         .from('users')
         .select('id')
         .eq('email', email)
@@ -35,7 +30,7 @@ class BookingRepository {
 
     final userId = userResponse['id'] as int;
 
-    final response = await _db
+    final response = await _client!
         .from('bookings')
         .select()
         .eq('userId', userId)
@@ -48,12 +43,12 @@ class BookingRepository {
         .toList();
   }
 
-  Future<BookingResult> bookShift({
+  static Future<BookingResult> bookShift({
     required String gymId,
     required int shiftId,
     required DateTime shiftDate,
   }) async {
-    final String result = await _db.rpc(
+    final String result = await _client!.rpc(
       'bookShift',
       params: {
         'gymId': gymId,
@@ -71,10 +66,10 @@ class BookingRepository {
     };
   }
 
-  Future<BookingResult> cancelBooking({
+  static Future<BookingResult> cancelBooking({
     required int bookingId,
   }) async {
-    final String result = await _db.rpc(
+    final String result = await _client!.rpc(
       'cancelBooking',
       params: {
         'bookingId': bookingId,
@@ -92,7 +87,7 @@ class BookingRepository {
     required int courseId,
     int? shiftId,
   }) async {
-    final shiftIds = await _db
+    final shiftIds = await _client!
         .from('shifts')
         .select('id')
         .eq('gymId', gymId)
@@ -102,7 +97,7 @@ class BookingRepository {
 
     if (ids.isEmpty) return [];
 
-    final response = await _db
+    final response = await _client!
         .from('bookings')
         .select('*, users(id, firstName, lastName, email)')
         .eq('gymId', gymId)
@@ -115,13 +110,13 @@ class BookingRepository {
   }
 
   static Future<void> markAsUsed({required int bookingId}) async {
-    await _db
+    await _client!
         .from('bookings')
         .update({'status': BookingStatus.used.toJson()}).eq('id', bookingId);
   }
 
   static Future<void> cancel({required int bookingId}) async {
-    await _db.from('bookings').update(
+    await _client!.from('bookings').update(
         {'status': BookingStatus.cancelled.toJson()}).eq('id', bookingId);
   }
 }
