@@ -1,10 +1,11 @@
-import 'package:gym_manager_core/core.dart';
+import '../../core.dart';
 
 class Validator {
-  static ValidationResult validate(
-      {required User user,
-      required Subscription? subscription,
-      int inExpiringFiltersDays = 10}) {
+  static ValidationResult validate({
+    required User user,
+    required Subscription? subscription,
+    int inExpiringFiltersDays = 10,
+  }) {
     List<ValidationResponseWarnings> warnings = [];
 
     if (subscription == null) {
@@ -15,7 +16,8 @@ class Validator {
       if (subscription.expiration.isBefore(DateTime.now())) {
         warnings.add(ValidationResponseWarnings.abbonamentoScaduto);
       } else if (subscription.expiration.isBefore(
-          DateTime.now().add(Duration(days: inExpiringFiltersDays)))) {
+        DateTime.now().add(Duration(days: inExpiringFiltersDays)),
+      )) {
         warnings.add(ValidationResponseWarnings.abbonamentoInScadenza);
       }
 
@@ -31,7 +33,8 @@ class Validator {
       if (user.medicalCertificateExpiration!.isBefore(DateTime.now())) {
         warnings.add(ValidationResponseWarnings.certificatoMedicoScaduto);
       } else if (user.medicalCertificateExpiration!.isBefore(
-          DateTime.now().add(Duration(days: inExpiringFiltersDays)))) {
+        DateTime.now().add(Duration(days: inExpiringFiltersDays)),
+      )) {
         warnings.add(ValidationResponseWarnings.certificatoMedicoInScadenza);
       }
     } else {
@@ -43,7 +46,8 @@ class Validator {
       if (user.affiliationExpiration!.isBefore(DateTime.now())) {
         warnings.add(ValidationResponseWarnings.affiliazioneScaduta);
       } else if (user.affiliationExpiration!.isBefore(
-          DateTime.now().add(Duration(days: inExpiringFiltersDays)))) {
+        DateTime.now().add(Duration(days: inExpiringFiltersDays)),
+      )) {
         warnings.add(ValidationResponseWarnings.affiliazioneInScadenza);
       }
     } else {
@@ -54,7 +58,8 @@ class Validator {
       if (user.subscriptionExpiration!.isBefore(DateTime.now())) {
         warnings.add(ValidationResponseWarnings.iscrizioneScaduta);
       } else if (user.subscriptionExpiration!.isBefore(
-          DateTime.now().add(Duration(days: inExpiringFiltersDays)))) {
+        DateTime.now().add(Duration(days: inExpiringFiltersDays)),
+      )) {
         warnings.add(ValidationResponseWarnings.iscrizioneInScadenza);
       }
     } else {
@@ -62,6 +67,8 @@ class Validator {
     }
 
     return ValidationResult(
-        ValidationResult.fromAssociatedWarnings(warnings), warnings);
+      ValidationResult.fromAssociatedWarnings(warnings),
+      warnings,
+    );
   }
 }

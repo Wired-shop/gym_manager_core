@@ -1,18 +1,18 @@
 enum BookingStatus {
-  notUsed,
+  confirmed,
+  cancelled,
   used;
 
-  static BookingStatus? fromString(String value) {
-    if (value == used.name) {
-      return BookingStatus.used;
-    } else if (value == notUsed.name) {
-      return BookingStatus.notUsed;
-    }
-    return null;
-  }
+  static BookingStatus fromString(String value) => switch (value) {
+    'confirmed' => BookingStatus.confirmed,
+    'cancelled' => BookingStatus.cancelled,
+    'used' => BookingStatus.used,
+    _ => throw Exception('BookingStatus sconosciuto: $value'),
+  };
 
-  static String toPrettyString(BookingStatus status) {
-    if (status.name == BookingStatus.used.name) return "Usata";
-    return "Non usata";
-  }
+  String toJson() => switch (this) {
+    BookingStatus.confirmed => 'confirmed',
+    BookingStatus.cancelled => 'cancelled',
+    BookingStatus.used => 'used',
+  };
 }

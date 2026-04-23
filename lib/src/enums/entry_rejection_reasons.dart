@@ -1,4 +1,4 @@
-import 'package:gym_manager_core/core.dart';
+import '../../core.dart';
 
 enum EntryRejectionReason {
   // Operativi
@@ -32,7 +32,8 @@ enum EntryRejectionReason {
   }
 
   static EntryRejectionReason fromValidationWarning(
-      ValidationResponseWarnings w) {
+    ValidationResponseWarnings w,
+  ) {
     return fromString(w.name);
   }
 
