@@ -4,15 +4,25 @@ import 'package:gym_manager_core/src/models/booking.dart';
 import 'package:supabase/supabase.dart';
 
 class BookingRepository {
-  final SupabaseClient _supabase;
+  static SupabaseClient? _client;
 
-  BookingRepository({required SupabaseClient client}) : _supabase = client;
+  void init({
+    required String supabaseUrl,
+    required String supabaseAnonKey,
+  }) {
+    _client = SupabaseClient(supabaseUrl, supabaseAnonKey);
+  }
+
+  static SupabaseClient get _db {
+    assert(_client != null, 'BookingRepository().init() non chiamato');
+    return _client!;
+  }
 
   Future<List<Booking>> fetchUserBookings({
     required String email,
     required String gymId,
   }) async {
-    final userResponse = await _supabase
+    final userResponse = await _db
         .from('users')
         .select('id')
         .eq('email', email)
@@ -25,7 +35,7 @@ class BookingRepository {
 
     final userId = userResponse['id'] as int;
 
-    final response = await _supabase
+    final response = await _db
         .from('bookings')
         .select()
         .eq('userId', userId)
@@ -43,7 +53,7 @@ class BookingRepository {
     required int shiftId,
     required DateTime shiftDate,
   }) async {
-    final String result = await _supabase.rpc(
+    final String result = await _db.rpc(
       'bookShift',
       params: {
         'gymId': gymId,
@@ -64,7 +74,7 @@ class BookingRepository {
   Future<BookingResult> cancelBooking({
     required int bookingId,
   }) async {
-    final String result = await _supabase.rpc(
+    final String result = await _db.rpc(
       'cancelBooking',
       params: {
         'bookingId': bookingId,
@@ -75,5 +85,43 @@ class BookingRepository {
       'ok' => BookingResult.ok,
       _ => BookingResult.userNotFound,
     };
+  }
+
+  static Future<List<Booking>> list({
+    required String gymId,
+    required int courseId,
+    int? shiftId,
+  }) async {
+    final shiftIds = await _db
+        .from('shifts')
+        .select('id')
+        .eq('gymId', gymId)
+        .eq('courseId', courseId);
+
+    final ids = (shiftIds as List).map((s) => s['id'] as int).toList();
+
+    if (ids.isEmpty) return [];
+
+    final response = await _db
+        .from('bookings')
+        .select('*, users(id, firstName, lastName, email)')
+        .eq('gymId', gymId)
+        .inFilter('shiftId', shiftId != null ? [shiftId] : ids)
+        .order('shiftDate', ascending: false);
+
+    return (response as List)
+        .map((e) => Booking.fromJson(Map<String, dynamic>.from(e)))
+        .toList();
+  }
+
+  static Future<void> markAsUsed({required int bookingId}) async {
+    await _db
+        .from('bookings')
+        .update({'status': BookingStatus.used.toJson()}).eq('id', bookingId);
+  }
+
+  static Future<void> cancel({required int bookingId}) async {
+    await _db.from('bookings').update(
+        {'status': BookingStatus.cancelled.toJson()}).eq('id', bookingId);
   }
 }
