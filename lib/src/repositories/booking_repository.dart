@@ -1,6 +1,6 @@
 import 'package:gym_manager_core/src/enums/booking_result.dart';
 import 'package:gym_manager_core/src/enums/booking_status.dart';
-import 'package:gym_manager_core/src/models/bookigs.dart';
+import 'package:gym_manager_core/src/models/booking.dart';
 import 'package:supabase/supabase.dart';
 
 class BookingRepository {
