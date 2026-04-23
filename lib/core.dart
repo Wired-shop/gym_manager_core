@@ -24,6 +24,7 @@ export 'src/enums/entry_rejection_reasons.dart';
 export 'src/enums/booking_status.dart';
 export 'src/enums/preferences_keys.dart';
 export 'src/enums/payment_method.dart';
+export 'src/enums/booking_result.dart';
 
 export 'src/repositories/entry_repository.dart';
 export 'src/repositories/file_repository.dart';
@@ -35,5 +36,6 @@ export 'src/repositories/shift_repository.dart';
 export 'src/repositories/plan_repository.dart';
 export 'src/repositories/sale_repository.dart';
 export 'src/repositories/sync_repository.dart';
+export 'src/repositories/booking_repository.dart';
 
 export 'src/helpers/validator.dart';
