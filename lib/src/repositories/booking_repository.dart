@@ -51,9 +51,9 @@ class BookingRepository {
     final String result = await _client!.rpc(
       'bookShift',
       params: {
-        'gymId': gymId,
-        'shiftId': shiftId,
-        'shiftDate': shiftDate.toIso8601String().split('T').first,
+        'pGymId': gymId,
+        'pShiftId': shiftId,
+        'pShiftDate': shiftDate.toIso8601String().split('T').first,
       },
     );
 
