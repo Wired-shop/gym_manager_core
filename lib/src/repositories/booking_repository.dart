@@ -7,10 +7,9 @@ class BookingRepository {
   static SupabaseClient? _client;
 
   static void init({
-    required String supabaseUrl,
-    required String supabaseAnonKey,
+    required SupabaseClient client,
   }) {
-    _client = SupabaseClient(supabaseUrl, supabaseAnonKey);
+    _client = client;
   }
 
   static Future<List<Booking>> fetchUserBookings({
