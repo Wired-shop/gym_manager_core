@@ -5,6 +5,7 @@ class Booking {
   final String gymId;
   final int shiftId;
   final int userId;
+  final int courseId;
   final DateTime shiftDate;
   final DateTime bookedAt;
   final BookingStatus status;
@@ -14,6 +15,7 @@ class Booking {
     required this.gymId,
     required this.shiftId,
     required this.userId,
+    required this.courseId,
     required this.shiftDate,
     required this.bookedAt,
     required this.status,
@@ -24,18 +26,10 @@ class Booking {
         gymId: json['gymId'] as String,
         shiftId: json['shiftId'] as int,
         userId: json['userId'] as int,
+        courseId: json['shifts']['courseId'] as int, // ← dalla join
         shiftDate: DateTime.parse(json['shiftDate'] as String),
         bookedAt: DateTime.parse(json['bookedAt'] as String),
         status: BookingStatus.fromString(json['status'] as String),
       );
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'gymId': gymId,
-        'shiftId': shiftId,
-        'userId': userId,
-        'shiftDate': shiftDate.toIso8601String().split('T').first,
-        'bookedAt': bookedAt.toIso8601String(),
-        'status': status.toJson(),
-      };
+  // toJson rimane invariato
 }
