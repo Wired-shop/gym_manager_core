@@ -7,7 +7,6 @@ class Shift {
   TimeOfDay start;
   TimeOfDay end;
   int? maxSeats;
-  int occupiedSeats;
   String? name;
   String? trainer;
   int bookable;
@@ -21,7 +20,6 @@ class Shift {
     required this.end,
     this.maxSeats,
     this.name,
-    this.occupiedSeats = 0,
     this.trainer,
     required this.bookable,
     this.gymId,
@@ -35,7 +33,6 @@ class Shift {
       start: TimeOfDay.fromString(json['start']),
       end: TimeOfDay.fromString(json['end']),
       maxSeats: json['maxSeats'] as int?,
-      occupiedSeats: json['occupiedSeats'] as int? ?? 0,
       trainer: json['trainer'] as String?,
       name: json['name'] as String?,
       bookable: (json['bookable'] as int),
@@ -51,7 +48,6 @@ class Shift {
       'start': start.format24Hour(),
       'end': end.format24Hour(),
       'maxSeats': maxSeats,
-      'occupiedSeats': occupiedSeats,
       'trainer': trainer,
       'name': name,
       'bookable': bookable,

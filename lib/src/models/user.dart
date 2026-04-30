@@ -39,10 +39,10 @@ class User {
   DateTime? medicalCertificateExpiration;
 
   //Files
-  String? image;
-  String? medicalDocument;
-  String? affiliationDocument;
-  String? subscriptionDocument;
+  String? imagePath;
+  String? medicalDocumentPath;
+  String? affiliationDocumentPath;
+  String? subscriptionDocumentPath;
 
   //Flags
   int? flagged;
@@ -72,10 +72,10 @@ class User {
     this.subscriptionExpiration,
     this.affiliationExpiration,
     this.medicalCertificateExpiration,
-    this.image,
-    this.medicalDocument,
-    this.affiliationDocument,
-    this.subscriptionDocument,
+    this.imagePath,
+    this.medicalDocumentPath,
+    this.affiliationDocumentPath,
+    this.subscriptionDocumentPath,
     this.flagged,
     this.forceBlock,
     this.tpPro,

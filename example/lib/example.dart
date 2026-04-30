@@ -10,9 +10,7 @@ Future<void> main(List<String> arguments) async {
   await supabaseClient.auth.signInWithPassword(
       password: "PATRIC-DYXQ-WWVK", email: "patrickgym@gmail.com");
 
-  BookingRepository bookingRepository =
-      BookingRepository(client: supabaseClient);
-  bookingRepository
-      .list(gymId: "patrickgym", courseId: 3)
+  BookingRepository.init(supabaseClient);
+  BookingRepository.list(gymId: "patrickgym", courseId: 3)
       .then((value) => print(value.map((b) => b.toJson())));
 }

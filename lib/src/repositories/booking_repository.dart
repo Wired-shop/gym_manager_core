@@ -4,11 +4,13 @@ import 'package:gym_manager_core/src/models/booking.dart';
 import 'package:supabase/supabase.dart';
 
 class BookingRepository {
-  final SupabaseClient _supabase;
+  static late SupabaseClient _supabase;
 
-  BookingRepository({required SupabaseClient client}) : _supabase = client;
+  static init(SupabaseClient client) {
+    _supabase = client;
+  }
 
-  Future<List<Booking>> fetchUserBookings({
+  static Future<List<Booking>> fetchUserBookings({
     required String email,
     required String gymId,
   }) async {
@@ -34,7 +36,7 @@ class BookingRepository {
         .toList();
   }
 
-  Future<BookingResult> bookShift({
+  static Future<BookingResult> bookShift({
     required String gymId,
     required int shiftId,
     required DateTime shiftDate,
@@ -56,7 +58,7 @@ class BookingRepository {
     };
   }
 
-  Future<BookingResult> cancelBooking({required int bookingId}) async {
+  static Future<BookingResult> cancelBooking({required int bookingId}) async {
     final String result = await _supabase.rpc(
       'cancelBooking',
       params: {'bookingId': bookingId},
@@ -67,7 +69,7 @@ class BookingRepository {
     };
   }
 
-  Future<List<Booking>> list({
+  static Future<List<Booking>> list({
     required String gymId,
     required int courseId,
     int? shiftId,
@@ -91,13 +93,13 @@ class BookingRepository {
         .toList();
   }
 
-  Future<void> markAsUsed({required int bookingId}) async {
+  static Future<void> markAsUsed({required int bookingId}) async {
     await _supabase
         .from('bookings')
         .update({'status': BookingStatus.used.toJson()}).eq('id', bookingId);
   }
 
-  Future<void> cancel({required int bookingId}) async {
+  static Future<void> cancel({required int bookingId}) async {
     await _supabase.from('bookings').update(
         {'status': BookingStatus.cancelled.toJson()}).eq('id', bookingId);
   }
