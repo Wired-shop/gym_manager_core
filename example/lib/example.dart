@@ -1,49 +1,18 @@
 import 'package:gym_manager_core/core.dart';
+import 'package:supabase/supabase.dart';
 
 Future<void> main(List<String> arguments) async {
-  var localhost = "127.0.0.1";
+  const String supabaseUrl = "https://vmtsftgetmujafzznzdr.supabase.co";
+  const String supabaseAnonKey =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZtdHNmdGdldG11amFmenpuemRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2MDAxMjgsImV4cCI6MjA4NzE3NjEyOH0.vJN4z48Y4qTuDCJ9BQWUYJxvtMOQwOZ9ODju9vhIhcA";
 
-  ApiService.getInstance().setIP(localhost);
-  ApiService.getInstance().setPORT(3000);
+  SupabaseClient supabaseClient = SupabaseClient(supabaseUrl, supabaseAnonKey);
+  await supabaseClient.auth.signInWithPassword(
+      password: "PATRIC-DYXQ-WWVK", email: "patrickgym@gmail.com");
 
-  var email = "pleiadisem@gmail.com";
-  ApiService.getInstance().setEmail(email);
-
-  // 🔹 1. Recuperiamo due prodotti esistenti dal database
-  List<Product>? p1 =
-      await ProductRepository.insert([Product(name: "c", price: 12)]);
-
-  if (p1.isEmpty) {
-    print("❌ Uno dei prodotti non esiste, verifica gli ID nel DB.");
-    return;
-  }
-
-  // 🔹 2. Creiamo la vendita con i prodotti
-  Sale newSale = Sale(
-    date: DateTime.now(),
-    userId: 940, // ID utente registrato nel DB
-    products: [p1.first, p1.first, p1.first],
-    coursePlanId: null, // Nessun piano corso collegato
-    total: p1.first.price * 4,
-    paymentMethod: PaymentMethod.cash,
-    completed: 1,
-    note: "Vendita test di due prodotti",
-  );
-
-  // 🔹 3. Inseriamo la vendita nel backend
-  Sale insertedSale = await SaleRepository.insert(newSale);
-
-  // 🔹 4. Mostriamo il risultato
-  print("✅ Vendita inserita con successo!");
-  print("ID vendita: ${insertedSale.id}");
-  print("Totale: €${insertedSale.total}");
-  print("Prodotti associati:");
-  for (var product in insertedSale.products) {
-    print(" - ${product.name} (€${product.price})");
-  }
-
-  // 🔹 5. Recuperiamo la vendita per verificarla
-  Sale? fetchedSale = await SaleRepository.get(insertedSale.id!);
-  print("\n📦 Vendita recuperata dal server:");
-  print(fetchedSale?.toJson());
+  BookingRepository bookingRepository =
+      BookingRepository(client: supabaseClient);
+  bookingRepository
+      .list(gymId: "patrickgym", courseId: 3)
+      .then((value) => print(value.map((b) => b.toJson())));
 }

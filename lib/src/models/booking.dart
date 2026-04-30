@@ -26,10 +26,23 @@ class Booking {
         gymId: json['gymId'] as String,
         shiftId: json['shiftId'] as int,
         userId: json['userId'] as int,
-        courseId: json['shifts']['courseId'] as int, // ← dalla join
+        courseId:
+            (json['shifts'] as Map<String, dynamic>?)?['courseId'] as int? ??
+                (throw ArgumentError(
+                    'Missing shifts.courseId in booking ${json['id']}')),
         shiftDate: DateTime.parse(json['shiftDate'] as String),
         bookedAt: DateTime.parse(json['bookedAt'] as String),
         status: BookingStatus.fromString(json['status'] as String),
       );
-  // toJson rimane invariato
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'gymId': gymId,
+        'shiftId': shiftId,
+        'userId': userId,
+        'courseId': courseId,
+        'shiftDate': shiftDate.toIso8601String(),
+        'bookedAt': bookedAt.toIso8601String(),
+        'status': status.toJson(),
+      };
 }

@@ -81,7 +81,8 @@ class BookingRepository {
     if (ids.isEmpty) return [];
     final response = await _supabase
         .from('bookings')
-        .select('*, users(id, firstName, lastName, email)')
+        .select(
+            '*, shifts(courseId), users(id, name, surname, email)') // ← add shifts(courseId)
         .eq('gymId', gymId)
         .inFilter('shiftId', shiftId != null ? [shiftId] : ids)
         .order('shiftDate', ascending: false);
