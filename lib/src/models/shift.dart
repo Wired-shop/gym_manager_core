@@ -7,7 +7,6 @@ class Shift {
   TimeOfDay start;
   TimeOfDay end;
   int? maxSeats;
-  int? occupedSeats;
   String? name;
   String? trainer;
   int bookable;
@@ -20,7 +19,6 @@ class Shift {
     required this.start,
     required this.end,
     this.maxSeats,
-    this.occupedSeats,
     this.name,
     this.trainer,
     required this.bookable,
@@ -50,7 +48,6 @@ class Shift {
       'start': start.format24Hour(),
       'end': end.format24Hour(),
       'maxSeats': maxSeats,
-      'occupedSeats': occupedSeats,
       'trainer': trainer,
       'name': name,
       'bookable': bookable,
