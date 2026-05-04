@@ -59,4 +59,12 @@ class Shift {
   String toString() {
     return toJson().toString();
   }
+
+  DateTime get nextOccurrence {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final dartDow = dayOfWeek == 0 ? 7 : dayOfWeek;
+    final daysUntil = (dartDow - today.weekday + 7) % 7;
+    return daysUntil == 0 ? today : today.add(Duration(days: daysUntil));
+  }
 }

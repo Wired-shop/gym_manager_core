@@ -1,6 +1,4 @@
-import 'package:gym_manager_core/src/enums/booking_result.dart';
-import 'package:gym_manager_core/src/enums/booking_status.dart';
-import 'package:gym_manager_core/src/models/booking.dart';
+import 'package:gym_manager_core/core.dart';
 import 'package:supabase/supabase.dart';
 
 class BookingRepository {
@@ -10,15 +8,35 @@ class BookingRepository {
     _supabase = client;
   }
 
-  static Future<List<Booking>> fetchUserBookings({
-    required String email,
-    required String gymId,
+  static String get _gymId =>
+      _supabase.auth.currentUser?.userMetadata?['gymId'] as String? ?? '';
+
+  static Future<ShiftWithAvailability> fetchShiftAvailability({
+    required Shift shift,
   }) async {
+    final response = await _supabase
+        .from('bookings')
+        .select('id')
+        .eq('gymId', _gymId)
+        .eq('shiftId', shift.id!)
+        .eq('shiftDate',
+            shift.nextOccurrence.toIso8601String().split('T').first)
+        .eq('status', BookingStatus.confirmed.toJson())
+        .count();
+
+    return ShiftWithAvailability(
+      shift: shift,
+      occupiedSeats: response.count,
+    );
+  }
+
+  static Future<List<Booking>> fetchUserBookings(
+      {required String email}) async {
     final userResponse = await _supabase
         .from('users')
         .select('id')
         .eq('email', email)
-        .eq('gymId', gymId)
+        .eq('gymId', _gymId)
         .maybeSingle();
     if (userResponse == null) {
       throw Exception("Nessun utente trovato. Contatta la struttura.");
@@ -28,7 +46,7 @@ class BookingRepository {
         .from('bookings')
         .select('*, shifts(courseId)')
         .eq('userId', userId)
-        .eq('gymId', gymId)
+        .eq('gymId', _gymId)
         .eq('status', BookingStatus.confirmed.toJson())
         .order('shiftDate', ascending: true);
     return (response as List)
@@ -37,18 +55,16 @@ class BookingRepository {
   }
 
   static Future<BookingResult> bookShift({
-    required String gymId,
     required int shiftId,
     required DateTime shiftDate,
-    int? userId, // ← da required a opzionale
+    int? userId,
   }) async {
     final params = {
-      'pGymId': gymId,
+      'pGymId': _gymId,
       'pShiftId': shiftId,
       'pShiftDate': shiftDate.toIso8601String().split('T').first,
     };
 
-    // aggiunge pUserId solo se passato (app admin)
     if (userId != null) {
       params['pUserId'] = userId;
     }
@@ -80,21 +96,20 @@ class BookingRepository {
   }
 
   static Future<List<Booking>> list({
-    required String gymId,
     required int courseId,
     int? shiftId,
   }) async {
     final shiftIds = await _supabase
         .from('shifts')
         .select('id')
-        .eq('gymId', gymId)
+        .eq('gymId', _gymId)
         .eq('courseId', courseId);
     final ids = (shiftIds as List).map((s) => s['id'] as int).toList();
     if (ids.isEmpty) return [];
     final response = await _supabase
         .from('bookings')
         .select('*, shifts(courseId), users(id, name, surname, email)')
-        .eq('gymId', gymId)
+        .eq('gymId', _gymId)
         .inFilter('shiftId', shiftId != null ? [shiftId] : ids)
         .order('shiftDate', ascending: false);
     return (response as List)

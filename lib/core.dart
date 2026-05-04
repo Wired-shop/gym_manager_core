@@ -16,6 +16,7 @@ export 'src/models/plan.dart';
 export 'src/models/product.dart';
 export 'src/models/sale.dart';
 export 'src/models/booking.dart';
+export 'src/models/shift_with_avaibility.dart';
 
 export 'src/enums/document_type.dart';
 export 'src/enums/validation_response.dart';
