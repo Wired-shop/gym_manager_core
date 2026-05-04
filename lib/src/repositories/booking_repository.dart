@@ -40,20 +40,30 @@ class BookingRepository {
     required String gymId,
     required int shiftId,
     required DateTime shiftDate,
+    int? userId, // ← da required a opzionale
   }) async {
+    final params = {
+      'pGymId': gymId,
+      'pShiftId': shiftId,
+      'pShiftDate': shiftDate.toIso8601String().split('T').first,
+    };
+
+    // aggiunge pUserId solo se passato (app admin)
+    if (userId != null) {
+      params['pUserId'] = userId;
+    }
+
     final String result = await _supabase.rpc(
       'bookShift',
-      params: {
-        'pGymId': gymId,
-        'pShiftId': shiftId,
-        'pShiftDate': shiftDate.toIso8601String().split('T').first,
-      },
+      params: params,
     );
+
     return switch (result) {
       'ok' => BookingResult.ok,
       'full' => BookingResult.full,
       'alreadyBooked' => BookingResult.alreadyBooked,
       'invalidDate' => BookingResult.invalidDate,
+      'unauthorized' => BookingResult.unauthorized, // ← nuovo
       _ => BookingResult.userNotFound,
     };
   }
@@ -83,8 +93,7 @@ class BookingRepository {
     if (ids.isEmpty) return [];
     final response = await _supabase
         .from('bookings')
-        .select(
-            '*, shifts(courseId), users(id, name, surname, email)') // ← add shifts(courseId)
+        .select('*, shifts(courseId), users(id, name, surname, email)')
         .eq('gymId', gymId)
         .inFilter('shiftId', shiftId != null ? [shiftId] : ids)
         .order('shiftDate', ascending: false);

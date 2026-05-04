@@ -1,1 +1,8 @@
-enum BookingResult { ok, full, alreadyBooked, invalidDate, userNotFound }
+enum BookingResult {
+  ok,
+  full,
+  alreadyBooked,
+  invalidDate,
+  userNotFound,
+  unauthorized
+}
