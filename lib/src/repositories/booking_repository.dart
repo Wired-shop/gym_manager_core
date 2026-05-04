@@ -10,6 +10,7 @@ class BookingRepository {
 
   static String get _gymId =>
       _supabase.auth.currentUser?.userMetadata?['gymId'] as String? ?? '';
+  static String get _email => _supabase.auth.currentUser?.email ?? '';
 
   static Future<ShiftWithAvailability> fetchShiftAvailability({
     required Shift shift,
@@ -30,12 +31,11 @@ class BookingRepository {
     );
   }
 
-  static Future<List<Booking>> fetchUserBookings(
-      {required String email}) async {
+  static Future<List<Booking>> fetchUserBookings() async {
     final userResponse = await _supabase
         .from('users')
         .select('id')
-        .eq('email', email)
+        .eq('email', _email)
         .eq('gymId', _gymId)
         .maybeSingle();
     if (userResponse == null) {
