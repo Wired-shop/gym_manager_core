@@ -10,12 +10,10 @@ class Course {
   int? kcal;
   int? meanDuration;
   int? dailyAccesses;
-  List<Shift> shifts;
 
   Course(
       {this.id,
       required this.name,
-      required this.shifts,
       this.description,
       this.encodedImage,
       this.difficulty,
@@ -28,11 +26,6 @@ class Course {
     return Course(
       id: json['id'] as int?,
       name: json['name'] as String,
-      shifts: json['shifts'] != null
-          ? (json['shifts'] as List)
-              .map((e) => Shift.fromJson(e as Map<String, dynamic>))
-              .toList()
-          : [],
       description: json['description'] as String?,
       encodedImage: json['encodedImage'] as String?,
       difficulty: json['difficulty'] as String?,
@@ -46,7 +39,6 @@ class Course {
   Map<String, dynamic> toJson() {
     return {
       'name': name,
-      'shifts': shifts.map((e) => e.toJson()).toList(),
       'id': id,
       'description': description,
       'encodedImage': encodedImage,
