@@ -31,7 +31,8 @@ class BookingRepository {
     );
   }
 
-  static Future<List<Booking>> fetchUserBookings() async {
+  static Future<List<Booking>> fetchUserBookings(
+      {bool onlyFuture = true}) async {
     final userResponse = await _supabase
         .from('users')
         .select('id')
@@ -42,13 +43,19 @@ class BookingRepository {
       throw Exception("Nessun utente trovato. Contatta la struttura.");
     }
     final userId = userResponse['id'] as int;
-    final response = await _supabase
+    var query = _supabase
         .from('bookings')
         .select('*, shifts(courseId)')
         .eq('userId', userId)
         .eq('gymId', _gymId)
-        .eq('status', BookingStatus.confirmed.toJson())
-        .order('shiftDate', ascending: true);
+        .eq('status', BookingStatus.confirmed.toJson());
+
+    if (onlyFuture) {
+      final today = DateTime.now().toIso8601String().split('T').first;
+      query = query.gte('shiftDate', today);
+    }
+
+    final response = await query.order('shiftDate', ascending: true);
     return (response as List)
         .map((e) => Booking.fromJson(Map<String, dynamic>.from(e)))
         .toList();
