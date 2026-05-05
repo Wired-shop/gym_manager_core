@@ -122,9 +122,4 @@ class BookingRepository {
         .from('bookings')
         .update({'status': BookingStatus.used.toJson()}).eq('id', bookingId);
   }
-
-  static Future<void> cancel({required int bookingId}) async {
-    await _supabase.from('bookings').update(
-        {'status': BookingStatus.cancelled.toJson()}).eq('id', bookingId);
-  }
 }
