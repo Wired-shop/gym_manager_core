@@ -17,6 +17,9 @@ export 'src/models/product.dart';
 export 'src/models/sale.dart';
 export 'src/models/booking.dart';
 export 'src/models/gym.dart';
+export 'src/models/license.dart';
+export 'src/models/license_plan.dart';
+export 'src/models/license_validation_result.dart';
 export 'src/models/shift_with_avaibility.dart';
 
 export 'src/enums/document_type.dart';
@@ -28,6 +31,8 @@ export 'src/enums/booking_status.dart';
 export 'src/enums/preferences_keys.dart';
 export 'src/enums/payment_method.dart';
 export 'src/enums/booking_result.dart';
+export 'src/enums/license_plan_validation_result_status.dart';
+export 'src/enums/license_validation_result_status.dart';
 
 export 'src/repositories/entry_repository.dart';
 export 'src/repositories/file_repository.dart';
