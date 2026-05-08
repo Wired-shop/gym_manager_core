@@ -1,46 +1,49 @@
-[2026-02-18 19:27:33] INIZIO BUILD SCRIPT
-[2026-02-18 19:27:33] Directory di lavoro (root): c:\Users\patri\Desktop\Lavoro
-[2026-02-18 19:27:33] Directory installer: c:\Users\patri\Desktop\Lavoro\gym_manager_installer
-[2026-02-18 19:27:33] 
+[2026-05-06 17:08:48] INIZIO BUILD SCRIPT
+[2026-05-06 17:08:48] Directory di lavoro (root): c:\Users\patri\Desktop\Lavoro
+[2026-05-06 17:08:48] Directory installer: c:\Users\patri\Desktop\Lavoro\gym_manager_installer
+[2026-05-06 17:08:48] 
 === COMPILAZIONE DELLE APP FLUTTER ===
-[2026-02-18 19:27:33] Building Flutter app: c:\Users\patri\Desktop\Lavoro\gym_manager
-[2026-02-18 19:27:33] Eliminazione della cartella: c:\Users\patri\Desktop\Lavoro\gym_manager\.dart_tool
-[2026-02-18 19:27:33] Eliminazione della cartella: c:\Users\patri\Desktop\Lavoro\gym_manager\build
-[2026-02-18 19:30:07] Copio i file Flutter da: c:\Users\patri\Desktop\Lavoro\gym_manager\build\windows\x64\runner\Release -> c:\Users\patri\Desktop\Lavoro\gym_manager_installer\gym_manager
-[2026-02-18 19:30:07] Eliminazione del contenuto esistente in: c:\Users\patri\Desktop\Lavoro\gym_manager_installer\gym_manager
-[2026-02-18 19:30:07] Utilizzo di robocopy per copiare i file
-[2026-02-18 19:30:07] Copia con robocopy completata
-[2026-02-18 19:30:07] Verificato: 9 elementi copiati in c:\Users\patri\Desktop\Lavoro\gym_manager_installer\gym_manager
-[2026-02-18 19:30:07] Build Flutter completato con successo: c:\Users\patri\Desktop\Lavoro\gym_manager
-[2026-02-18 19:30:07] Building Flutter app: c:\Users\patri\Desktop\Lavoro\gym_manager_live_monitor
-[2026-02-18 19:30:07] Eliminazione della cartella: c:\Users\patri\Desktop\Lavoro\gym_manager_live_monitor\.dart_tool
-[2026-02-18 19:30:07] Eliminazione della cartella: c:\Users\patri\Desktop\Lavoro\gym_manager_live_monitor\build
-[2026-02-18 19:31:43] Copio i file Flutter da: c:\Users\patri\Desktop\Lavoro\gym_manager_live_monitor\build\windows\x64\runner\Release -> c:\Users\patri\Desktop\Lavoro\gym_manager_installer\live_monitor
-[2026-02-18 19:31:43] Eliminazione del contenuto esistente in: c:\Users\patri\Desktop\Lavoro\gym_manager_installer\live_monitor
-[2026-02-18 19:31:43] Utilizzo di robocopy per copiare i file
-[2026-02-18 19:31:43] Copia con robocopy completata
-[2026-02-18 19:31:43] Verificato: 6 elementi copiati in c:\Users\patri\Desktop\Lavoro\gym_manager_installer\live_monitor
-[2026-02-18 19:31:43] Build Flutter completato con successo: c:\Users\patri\Desktop\Lavoro\gym_manager_live_monitor
-[2026-02-18 19:31:43] 
+[2026-05-06 17:08:48] Building Flutter app: c:\Users\patri\Desktop\Lavoro\gym_manager
+[2026-05-06 17:08:48] Eliminazione della cartella: c:\Users\patri\Desktop\Lavoro\gym_manager\.dart_tool
+[2026-05-06 17:08:48] Eliminazione della cartella: c:\Users\patri\Desktop\Lavoro\gym_manager\build
+[2026-05-06 17:08:49] ERROR: Errore durante l'eliminazione di build: [WinError 5] Accesso negato: 'c:\\Users\\patri\\Desktop\\Lavoro\\gym_manager\\build\\windows\\x64\\runner\\Debug\\app_links_plugin.dll'
+[2026-05-06 17:11:22] Copio i file Flutter da: c:\Users\patri\Desktop\Lavoro\gym_manager\build\windows\x64\runner\Release -> c:\Users\patri\Desktop\Lavoro\gym_manager_installer\gym_manager
+[2026-05-06 17:11:22] Eliminazione del contenuto esistente in: c:\Users\patri\Desktop\Lavoro\gym_manager_installer\gym_manager
+[2026-05-06 17:11:22] Utilizzo di robocopy per copiare i file
+[2026-05-06 17:11:23] Copia con robocopy completata
+[2026-05-06 17:11:23] Verificato: 10 elementi copiati in c:\Users\patri\Desktop\Lavoro\gym_manager_installer\gym_manager
+[2026-05-06 17:11:23] Build Flutter completato con successo: c:\Users\patri\Desktop\Lavoro\gym_manager
+[2026-05-06 17:11:23] Building Flutter app: c:\Users\patri\Desktop\Lavoro\gym_manager_live_monitor
+[2026-05-06 17:11:23] Eliminazione della cartella: c:\Users\patri\Desktop\Lavoro\gym_manager_live_monitor\.dart_tool
+[2026-05-06 17:11:23] Eliminazione della cartella: c:\Users\patri\Desktop\Lavoro\gym_manager_live_monitor\build
+[2026-05-06 17:13:07] Copio i file Flutter da: c:\Users\patri\Desktop\Lavoro\gym_manager_live_monitor\build\windows\x64\runner\Release -> c:\Users\patri\Desktop\Lavoro\gym_manager_installer\live_monitor
+[2026-05-06 17:13:07] Eliminazione del contenuto esistente in: c:\Users\patri\Desktop\Lavoro\gym_manager_installer\live_monitor
+[2026-05-06 17:13:07] Utilizzo di robocopy per copiare i file
+[2026-05-06 17:13:07] Copia con robocopy completata
+[2026-05-06 17:13:07] Verificato: 6 elementi copiati in c:\Users\patri\Desktop\Lavoro\gym_manager_installer\live_monitor
+[2026-05-06 17:13:07] Build Flutter completato con successo: c:\Users\patri\Desktop\Lavoro\gym_manager_live_monitor
+[2026-05-06 17:13:07] 
 === COMPILAZIONE DELLE APP DART ===
-[2026-02-18 19:31:43] Compilazione Dart app: c:\Users\patri\Desktop\Lavoro\gym_manager_backend -> backend.exe
-[2026-02-18 19:31:43] Eliminazione della cartella: c:\Users\patri\Desktop\Lavoro\gym_manager_backend\.dart_tool
-[2026-02-18 19:31:52] Build Dart completato con successo: c:\Users\patri\Desktop\Lavoro\gym_manager_backend -> backend.exe
-[2026-02-18 19:31:52] Compilazione Dart app: c:\Users\patri\Desktop\Lavoro\gym_manager_backup_manager -> backup_manager.exe
-[2026-02-18 19:31:52] Eliminazione della cartella: c:\Users\patri\Desktop\Lavoro\gym_manager_backup_manager\.dart_tool
-[2026-02-18 19:32:00] Build Dart completato con successo: c:\Users\patri\Desktop\Lavoro\gym_manager_backup_manager -> backup_manager.exe
-[2026-02-18 19:32:00] Compilazione Dart app: c:\Users\patri\Desktop\Lavoro\gym_manager_access_control_server -> access_control_server.exe
-[2026-02-18 19:32:00] Eliminazione della cartella: c:\Users\patri\Desktop\Lavoro\gym_manager_access_control_server\.dart_tool
-[2026-02-18 19:32:01] 
+[2026-05-06 17:13:07] Compilazione Dart app: c:\Users\patri\Desktop\Lavoro\gym_manager_backend -> backend.exe
+[2026-05-06 17:13:07] Eliminazione della cartella: c:\Users\patri\Desktop\Lavoro\gym_manager_backend\.dart_tool
+[2026-05-06 17:13:15] Build Dart completato con successo: c:\Users\patri\Desktop\Lavoro\gym_manager_backend -> backend.exe
+[2026-05-06 17:13:15] Compilazione Dart app: c:\Users\patri\Desktop\Lavoro\gym_manager_backup_manager -> backup_manager.exe
+[2026-05-06 17:13:15] Eliminazione della cartella: c:\Users\patri\Desktop\Lavoro\gym_manager_backup_manager\.dart_tool
+[2026-05-06 17:13:23] Build Dart completato con successo: c:\Users\patri\Desktop\Lavoro\gym_manager_backup_manager -> backup_manager.exe
+[2026-05-06 17:13:23] Compilazione Dart app: c:\Users\patri\Desktop\Lavoro\gym_manager_access_control_server -> access_control_server.exe
+[2026-05-06 17:13:23] Eliminazione della cartella: c:\Users\patri\Desktop\Lavoro\gym_manager_access_control_server\.dart_tool
+[2026-05-06 17:13:31] Build Dart completato con successo: c:\Users\patri\Desktop\Lavoro\gym_manager_access_control_server -> access_control_server.exe
+[2026-05-06 17:13:31] 
 === COMPILAZIONE DELL'INSTALLER ===
-[2026-02-18 19:32:01] Versione estratta dal pubspec.yaml: 2.5.2
-[2026-02-18 19:32:01] Versione aggiornata nel file InnoSetup a: 2.5.2
-[2026-02-18 19:32:01] Versione dell'installer aggiornata a: 2.5.2
-[2026-02-18 19:32:01] Compilazione installer InnoSetup: c:\Users\patri\Desktop\Lavoro\gym_manager_installer\gym.iss
-[2026-02-18 19:32:01] Esecuzione di InnoSetup Compiler: C:\Program Files (x86)\Inno Setup 6\ISCC.exe c:\Users\patri\Desktop\Lavoro\gym_manager_installer\gym.iss
-[2026-02-18 19:35:31] Compilazione InnoSetup completata con successo
-[2026-02-18 19:35:31] 
+[2026-05-06 17:13:31] Versione estratta dal pubspec.yaml: 2.5.8
+[2026-05-06 17:13:31] Versione aggiornata nel file InnoSetup a: 2.5.8
+[2026-05-06 17:13:31] Versione dell'installer aggiornata a: 2.5.8
+[2026-05-06 17:13:31] Compilazione installer InnoSetup: c:\Users\patri\Desktop\Lavoro\gym_manager_installer\gym.iss
+[2026-05-06 17:13:31] Esecuzione di InnoSetup Compiler: C:\Program Files (x86)\Inno Setup 6\ISCC.exe c:\Users\patri\Desktop\Lavoro\gym_manager_installer\gym.iss
+[2026-05-06 17:16:48] Compilazione InnoSetup completata con successo
+[2026-05-06 17:16:48] 
 ====================================
-[2026-02-18 19:35:31] ERROR: Build completato con 1 errori (5/6 componenti completati)
-[2026-02-18 19:35:31] ====================================
+[2026-05-06 17:16:48] Build completato con successo (6/6 componenti)
+[2026-05-06 17:16:48] File disponibili in 'installer/'
+[2026-05-06 17:16:48] ====================================
 
