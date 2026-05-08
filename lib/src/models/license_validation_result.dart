@@ -3,7 +3,7 @@ import 'package:gym_manager_core/core.dart';
 class LicenseValidationResult {
   final License? license;
   final DateTime? tokenExpiration;
-  final LicensePlanValidationResultStatus status;
+  final LicenseValidationResultStatus status;
 
   const LicenseValidationResult({
     required this.license,
@@ -11,8 +11,7 @@ class LicenseValidationResult {
     required this.status,
   });
 
-  factory LicenseValidationResult.empty(
-      LicensePlanValidationResultStatus status) {
+  factory LicenseValidationResult.empty(LicenseValidationResultStatus status) {
     return LicenseValidationResult(
       license: null,
       tokenExpiration: null,
@@ -20,12 +19,12 @@ class LicenseValidationResult {
     );
   }
 
-  bool isValid() => status == LicensePlanValidationResultStatus.valid;
+  bool isValid() => status == LicenseValidationResultStatus.valid;
 
   LicenseValidationResult copyWith({
     License? license,
     DateTime? tokenExpiration,
-    LicensePlanValidationResultStatus? status,
+    LicenseValidationResultStatus? status,
   }) {
     return LicenseValidationResult(
       license: license ?? this.license,
