@@ -22,5 +22,8 @@ enum PreferencesKeys {
   showWatch,
   syncInTpPro,
   syncInApp,
-  skipSecondAccess;
+  skipSecondAccess,
+  jwtToken,
+  machineId,
+  timeWatermark;
 }
