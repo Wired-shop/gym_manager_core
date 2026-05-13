@@ -68,12 +68,6 @@ class Shift {
     return DateTime(date.year, date.month, date.day, start.hour, start.minute);
   }
 
-  DateTime get nextOccurrence => DateTime(
-        nextBookableOccurrence.year,
-        nextBookableOccurrence.month,
-        nextBookableOccurrence.day,
-      );
-
   bool get isBookable {
     if (bookable != 1) return false;
     if (bookableOffsetMinutes == null) return true;

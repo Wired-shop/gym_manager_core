@@ -71,8 +71,7 @@ class BookingRepository {
     final params = {
       'pGymId': _gymId,
       'pShiftId': shiftId,
-      'pShiftDateTime':
-          shiftDate.toIso8601String(), // ← era pShiftDate con split
+      'pShiftDateTime': shiftDate.toIso8601String(),
     };
 
     if (userId != null) {
