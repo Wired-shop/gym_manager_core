@@ -10,6 +10,7 @@ class BookingRepository {
 
   static String get _gymId =>
       _supabase.auth.currentUser?.userMetadata?['gymId'] as String? ?? '';
+
   static String get _email => _supabase.auth.currentUser?.email ?? '';
 
   static Future<ShiftWithAvailability> fetchShiftAvailability({
@@ -20,8 +21,7 @@ class BookingRepository {
         .select('id')
         .eq('gymId', _gymId)
         .eq('shiftId', shift.id!)
-        .eq('shiftDate',
-            shift.nextOccurrence.toIso8601String().split('T').first)
+        .eq('shiftDateTime', shift.nextBookableOccurrence.toIso8601String())
         .eq('status', BookingStatus.confirmed.toJson())
         .count();
 
@@ -39,10 +39,13 @@ class BookingRepository {
         .eq('email', _email)
         .eq('gymId', _gymId)
         .maybeSingle();
+
     if (userResponse == null) {
       throw Exception("Nessun utente trovato. Contatta la struttura.");
     }
+
     final userId = userResponse['id'] as int;
+
     var query = _supabase
         .from('bookings')
         .select('*, shifts(courseId)')
@@ -51,11 +54,10 @@ class BookingRepository {
         .eq('status', BookingStatus.confirmed.toJson());
 
     if (onlyFuture) {
-      final today = DateTime.now().toIso8601String().split('T').first;
-      query = query.gte('shiftDate', today);
+      query = query.gte('shiftDateTime', DateTime.now().toIso8601String());
     }
 
-    final response = await query.order('shiftDate', ascending: true);
+    final response = await query.order('shiftDateTime', ascending: true);
     return (response as List)
         .map((e) => Booking.fromJson(Map<String, dynamic>.from(e)))
         .toList();
@@ -69,7 +71,8 @@ class BookingRepository {
     final params = {
       'pGymId': _gymId,
       'pShiftId': shiftId,
-      'pShiftDate': shiftDate.toIso8601String().split('T').first,
+      'pShiftDateTime':
+          shiftDate.toIso8601String(), // ← era pShiftDate con split
     };
 
     if (userId != null) {
@@ -86,7 +89,7 @@ class BookingRepository {
       'full' => BookingResult.full,
       'alreadyBooked' => BookingResult.alreadyBooked,
       'invalidDate' => BookingResult.invalidDate,
-      'unauthorized' => BookingResult.unauthorized, // ← nuovo
+      'unauthorized' => BookingResult.unauthorized,
       _ => BookingResult.userNotFound,
     };
   }
@@ -111,14 +114,17 @@ class BookingRepository {
         .select('id')
         .eq('gymId', _gymId)
         .eq('courseId', courseId);
+
     final ids = (shiftIds as List).map((s) => s['id'] as int).toList();
     if (ids.isEmpty) return [];
+
     final response = await _supabase
         .from('bookings')
         .select('*, shifts(courseId), users(id, name, surname, email)')
         .eq('gymId', _gymId)
         .inFilter('shiftId', shiftId != null ? [shiftId] : ids)
-        .order('shiftDate', ascending: false);
+        .order('shiftDateTime', ascending: false);
+
     return (response as List)
         .map((e) => Booking.fromJson(Map<String, dynamic>.from(e)))
         .toList();
