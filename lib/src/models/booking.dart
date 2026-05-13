@@ -6,7 +6,7 @@ class Booking {
   final int shiftId;
   final int userId;
   final int courseId;
-  final DateTime shiftDate;
+  final DateTime shiftDateTime;
   final DateTime bookedAt;
   final BookingStatus status;
 
@@ -16,7 +16,7 @@ class Booking {
     required this.shiftId,
     required this.userId,
     required this.courseId,
-    required this.shiftDate,
+    required this.shiftDateTime,
     required this.bookedAt,
     required this.status,
   });
@@ -30,7 +30,7 @@ class Booking {
             (json['shifts'] as Map<String, dynamic>?)?['courseId'] as int? ??
                 (throw ArgumentError(
                     'Missing shifts.courseId in booking ${json['id']}')),
-        shiftDate: DateTime.parse(json['shiftDate'] as String),
+        shiftDateTime: DateTime.parse(json['shiftDateTime'] as String),
         bookedAt: DateTime.parse(json['bookedAt'] as String),
         status: BookingStatus.fromString(json['status'] as String),
       );
@@ -41,7 +41,7 @@ class Booking {
         'shiftId': shiftId,
         'userId': userId,
         'courseId': courseId,
-        'shiftDate': shiftDate.toIso8601String(),
+        'shiftDate': shiftDateTime.toIso8601String(),
         'bookedAt': bookedAt.toIso8601String(),
         'status': status.toJson(),
       };
