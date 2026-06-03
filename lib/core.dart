@@ -49,5 +49,6 @@ export 'src/repositories/plan_repository.dart';
 export 'src/repositories/sale_repository.dart';
 export 'src/repositories/sync_repository.dart';
 export 'src/repositories/booking_repository.dart';
+export 'src/repositories/campaign_repository.dart';
 
 export 'src/helpers/validator.dart';
