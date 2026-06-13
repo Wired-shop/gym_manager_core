@@ -11,6 +11,7 @@ class Shift {
   String? trainer;
   int bookable;
   String? gymId;
+  int? bookableOffsetMinutes;
 
   Shift({
     this.id,
@@ -23,6 +24,7 @@ class Shift {
     this.trainer,
     required this.bookable,
     this.gymId,
+    this.bookableOffsetMinutes,
   });
 
   factory Shift.fromJson(Map<String, dynamic> json) {
@@ -35,8 +37,9 @@ class Shift {
       maxSeats: json['maxSeats'] as int?,
       trainer: json['trainer'] as String?,
       name: json['name'] as String?,
-      bookable: (json['bookable'] as int),
+      bookable: json['bookable'] as int,
       gymId: json['gymId'] as String?,
+      bookableOffsetMinutes: json['bookableOffsetMinutes'] as int?,
     );
   }
 
@@ -52,19 +55,36 @@ class Shift {
       'name': name,
       'bookable': bookable,
       'gymId': gymId,
+      'bookableOffsetMinutes': bookableOffsetMinutes,
     };
   }
 
-  @override
-  String toString() {
-    return toJson().toString();
-  }
-
-  DateTime get nextOccurrence {
+  DateTime get nextBookableOccurrence {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     final dartDow = dayOfWeek == 0 ? 7 : dayOfWeek;
     final daysUntil = (dartDow - today.weekday + 7) % 7;
-    return daysUntil == 0 ? today : today.add(Duration(days: daysUntil));
+    final date = daysUntil == 0 ? today : today.add(Duration(days: daysUntil));
+    return DateTime(date.year, date.month, date.day, start.hour, start.minute);
   }
+
+  bool get isBookable {
+    if (bookable != 1) return false;
+    if (bookableOffsetMinutes == null) return true;
+    return !DateTime.now().isBefore(
+      nextBookableOccurrence.subtract(
+        Duration(minutes: bookableOffsetMinutes!),
+      ),
+    );
+  }
+
+  DateTime? get bookableFromDate {
+    if (bookableOffsetMinutes == null) return null;
+    return nextBookableOccurrence.subtract(
+      Duration(minutes: bookableOffsetMinutes!),
+    );
+  }
+
+  @override
+  String toString() => toJson().toString();
 }

@@ -2,26 +2,24 @@ import 'package:gym_manager_core/core.dart';
 import 'package:supabase/supabase.dart';
 
 class BookingRepository {
-  static late SupabaseClient _supabase;
+  final SupabaseClient _client;
 
-  static init(SupabaseClient client) {
-    _supabase = client;
-  }
+  BookingRepository({required SupabaseClient client}) : _client = client;
 
-  static String get _gymId =>
-      _supabase.auth.currentUser?.userMetadata?['gymId'] as String? ?? '';
-  static String get _email => _supabase.auth.currentUser?.email ?? '';
+  String get _gymId =>
+      _client.auth.currentUser?.userMetadata?['gymId'] as String? ?? '';
 
-  static Future<ShiftWithAvailability> fetchShiftAvailability({
+  String get _email => _client.auth.currentUser?.email ?? '';
+
+  Future<ShiftWithAvailability> fetchShiftAvailability({
     required Shift shift,
   }) async {
-    final response = await _supabase
+    final response = await _client
         .from('bookings')
         .select('id')
         .eq('gymId', _gymId)
         .eq('shiftId', shift.id!)
-        .eq('shiftDate',
-            shift.nextOccurrence.toIso8601String().split('T').first)
+        .eq('shiftDateTime', shift.nextBookableOccurrence.toIso8601String())
         .eq('status', BookingStatus.confirmed.toJson())
         .count();
 
@@ -31,19 +29,21 @@ class BookingRepository {
     );
   }
 
-  static Future<List<Booking>> fetchUserBookings(
-      {bool onlyFuture = true}) async {
-    final userResponse = await _supabase
+  Future<List<Booking>> fetchUserBookings({bool onlyFuture = true}) async {
+    final userResponse = await _client
         .from('users')
         .select('id')
         .eq('email', _email)
         .eq('gymId', _gymId)
         .maybeSingle();
+
     if (userResponse == null) {
       throw Exception("Nessun utente trovato. Contatta la struttura.");
     }
+
     final userId = userResponse['id'] as int;
-    var query = _supabase
+
+    var query = _client
         .from('bookings')
         .select('*, shifts(courseId)')
         .eq('userId', userId)
@@ -51,17 +51,17 @@ class BookingRepository {
         .eq('status', BookingStatus.confirmed.toJson());
 
     if (onlyFuture) {
-      final today = DateTime.now().toIso8601String().split('T').first;
-      query = query.gte('shiftDate', today);
+      query = query.gte('shiftDateTime', DateTime.now().toIso8601String());
     }
 
-    final response = await query.order('shiftDate', ascending: true);
+    final response = await query.order('shiftDateTime', ascending: true);
+
     return (response as List)
         .map((e) => Booking.fromJson(Map<String, dynamic>.from(e)))
         .toList();
   }
 
-  static Future<BookingResult> bookShift({
+  Future<BookingResult> bookShift({
     required int shiftId,
     required DateTime shiftDate,
     int? userId,
@@ -69,63 +69,64 @@ class BookingRepository {
     final params = {
       'pGymId': _gymId,
       'pShiftId': shiftId,
-      'pShiftDate': shiftDate.toIso8601String().split('T').first,
+      'pShiftDateTime': shiftDate.toIso8601String(),
     };
 
     if (userId != null) {
       params['pUserId'] = userId;
     }
 
-    final String result = await _supabase.rpc(
-      'bookShift',
-      params: params,
-    );
+    final String result = await _client.rpc('bookShift', params: params);
 
     return switch (result) {
       'ok' => BookingResult.ok,
       'full' => BookingResult.full,
       'alreadyBooked' => BookingResult.alreadyBooked,
       'invalidDate' => BookingResult.invalidDate,
-      'unauthorized' => BookingResult.unauthorized, // ← nuovo
+      'unauthorized' => BookingResult.unauthorized,
       _ => BookingResult.userNotFound,
     };
   }
 
-  static Future<BookingResult> cancelBooking({required int bookingId}) async {
-    final String result = await _supabase.rpc(
+  Future<BookingResult> cancelBooking({required int bookingId}) async {
+    final String result = await _client.rpc(
       'cancelBooking',
       params: {'bookingId': bookingId},
     );
+
     return switch (result) {
       'ok' => BookingResult.ok,
       _ => BookingResult.userNotFound,
     };
   }
 
-  static Future<List<Booking>> list({
+  Future<List<Booking>> list({
     required int courseId,
     int? shiftId,
   }) async {
-    final shiftIds = await _supabase
+    final shiftIds = await _client
         .from('shifts')
         .select('id')
         .eq('gymId', _gymId)
         .eq('courseId', courseId);
+
     final ids = (shiftIds as List).map((s) => s['id'] as int).toList();
     if (ids.isEmpty) return [];
-    final response = await _supabase
+
+    final response = await _client
         .from('bookings')
         .select('*, shifts(courseId), users(id, name, surname, email)')
         .eq('gymId', _gymId)
         .inFilter('shiftId', shiftId != null ? [shiftId] : ids)
-        .order('shiftDate', ascending: false);
+        .order('shiftDateTime', ascending: false);
+
     return (response as List)
         .map((e) => Booking.fromJson(Map<String, dynamic>.from(e)))
         .toList();
   }
 
-  static Future<void> markAsUsed({required int bookingId}) async {
-    await _supabase
+  Future<void> markAsUsed({required int bookingId}) async {
+    await _client
         .from('bookings')
         .update({'status': BookingStatus.used.toJson()}).eq('id', bookingId);
   }
