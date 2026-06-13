@@ -37,12 +37,13 @@ class SaleRepository {
   }
 
   static Future<List<Sale>> list(
-      {String? q,
+      {int? userId,
+      String? q,
       bool? completed,
       DateTime? startDate,
       DateTime? endDate}) async {
     final url =
-        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/sales?q=$q&completed=$completed&startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}";
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/sales?q=$q&completed=$completed&startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}&userId=$userId";
     final response = await ApiService.getInstance().dio.get(url);
     return (response.data as List).map((e) => Sale.fromJson(e)).toList();
   }
