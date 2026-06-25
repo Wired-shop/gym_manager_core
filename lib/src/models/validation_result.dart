@@ -10,6 +10,14 @@ class ValidationResult {
 
   ValidationResult(this.response, this.warnings);
 
+  String warningsPrettyString() {
+    return warnings
+        .map((e) => ValidationResponseWarnings.toPrettyString(e))
+        .toString()
+        .replaceAll("(", "")
+        .replaceAll(")", "");
+  }
+
   static List<ValidationResponseWarnings>? associatedWarningsOf(
       ValidationResponse? response) {
     if (response == ValidationResponse.notValid) {
