@@ -11,7 +11,7 @@ class BookingRepository {
 
   String get _email => _client.auth.currentUser?.email ?? '';
 
-  Future<ShiftWithAvailability> fetchShiftAvailability({
+  Future<ShiftWithAvailability> listShiftAvailability({
     required Shift shift,
   }) async {
     final response = await _client
@@ -29,7 +29,7 @@ class BookingRepository {
     );
   }
 
-  Future<List<Booking>> fetchUserBookings({bool onlyFuture = true}) async {
+  Future<List<Booking>> listUserBookings({bool onlyFuture = true}) async {
     final userResponse = await _client
         .from('users')
         .select('id')
@@ -61,7 +61,7 @@ class BookingRepository {
         .toList();
   }
 
-  Future<BookingResult> bookShift({
+  Future<BookingResult> book({
     required int shiftId,
     required DateTime shiftDate,
     int? userId,
