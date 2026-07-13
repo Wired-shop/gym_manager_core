@@ -10,6 +10,7 @@ class Sale {
   PaymentMethod paymentMethod;
   int completed;
   String? note;
+  List<SaleInstallment> installments;
 
   Sale({
     this.id,
@@ -21,6 +22,7 @@ class Sale {
     required this.products,
     required this.total,
     required this.paymentMethod,
+    required this.installments,
   });
 
   factory Sale.fromJson(Map<String, dynamic> json) {
@@ -44,6 +46,11 @@ class Sale {
             e.toString().split('.').last == (json['paymentMethod'] as String),
         orElse: () => PaymentMethod.cash,
       ),
+      installments: json['installments'] != null
+          ? (json['installments'] as List)
+              .map((e) => SaleInstallment.fromJson(e as Map<String, dynamic>))
+              .toList()
+          : [],
     );
   }
 
@@ -57,6 +64,7 @@ class Sale {
         'planId': planId,
         'total': total,
         'paymentMethod': paymentMethod.toString().split('.').last,
+        'installments': installments.map((e) => e.toJson()).toList(),
       };
 
   @override
@@ -70,7 +78,8 @@ class Sale {
           products == other.products &&
           planId == other.planId &&
           total == other.total &&
-          paymentMethod == other.paymentMethod;
+          paymentMethod == other.paymentMethod &&
+          installments == other.installments;
 
   @override
   int get hashCode =>
@@ -80,7 +89,8 @@ class Sale {
       products.hashCode ^
       planId.hashCode ^
       total.hashCode ^
-      paymentMethod.hashCode;
+      paymentMethod.hashCode ^
+      installments.hashCode;
 
   @override
   String toString() => toJson().toString();

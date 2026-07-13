@@ -15,6 +15,7 @@ export 'src/models/time_of_day.dart';
 export 'src/models/plan.dart';
 export 'src/models/product.dart';
 export 'src/models/sale.dart';
+export 'src/models/sale_installment.dart';
 export 'src/models/booking.dart';
 export 'src/models/gym.dart';
 export 'src/models/license.dart';

@@ -39,7 +39,7 @@ class SaleRepository {
   static Future<List<Sale>> list(
       {int? userId,
       String? q,
-      bool? completed,
+      int? completed,
       DateTime? startDate,
       DateTime? endDate}) async {
     final url =
