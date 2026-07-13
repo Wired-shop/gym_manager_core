@@ -36,6 +36,7 @@ const _$EntryRejectionReasonEnumMap = {
   EntryRejectionReason.accessiDisponibiliEsauriti: 'accessiDisponibiliEsauriti',
   EntryRejectionReason.fuoriFasciaOraria: 'fuoriFasciaOraria',
   EntryRejectionReason.bloccato: 'bloccato',
+  EntryRejectionReason.rateNonSaldate: 'rateNonSaldate',
   EntryRejectionReason.iscrizioneScaduta: 'iscrizioneScaduta',
   EntryRejectionReason.affiliazioneScaduta: 'affiliazioneScaduta',
   EntryRejectionReason.certificatoMedicoScaduto: 'certificatoMedicoScaduto',
