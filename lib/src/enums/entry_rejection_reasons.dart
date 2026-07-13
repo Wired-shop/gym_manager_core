@@ -6,6 +6,7 @@ enum EntryRejectionReason {
   accessiDisponibiliEsauriti,
   fuoriFasciaOraria,
   bloccato,
+  rateNonSaldate,
 
   // Validazione
   iscrizioneScaduta,
@@ -47,6 +48,8 @@ enum EntryRejectionReason {
         return "Fuori fascia oraria";
       case EntryRejectionReason.bloccato:
         return "Bloccato";
+      case EntryRejectionReason.rateNonSaldate:
+        return "Rate non saldate";
       case EntryRejectionReason.iscrizioneScaduta:
         return "Iscrizione scaduta";
       case EntryRejectionReason.affiliazioneScaduta:
