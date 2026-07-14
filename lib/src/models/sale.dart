@@ -11,6 +11,7 @@ class Sale {
   int completed;
   String? note;
   List<SaleInstallment> installments;
+  int installmentsEnabled;
 
   Sale({
     this.id,
@@ -23,6 +24,7 @@ class Sale {
     required this.total,
     required this.paymentMethod,
     required this.installments,
+    required this.installmentsEnabled,
   });
 
   factory Sale.fromJson(Map<String, dynamic> json) {
@@ -51,6 +53,9 @@ class Sale {
               .map((e) => SaleInstallment.fromJson(e as Map<String, dynamic>))
               .toList()
           : [],
+      installmentsEnabled: json['installmentsEnabled'] != null
+          ? json['installmentsEnabled'] as int
+          : 0,
     );
   }
 
@@ -65,6 +70,7 @@ class Sale {
         'total': total,
         'paymentMethod': paymentMethod.toString().split('.').last,
         'installments': installments.map((e) => e.toJson()).toList(),
+        'installmentsEnabled': installmentsEnabled,
       };
 
   @override
@@ -79,7 +85,8 @@ class Sale {
           planId == other.planId &&
           total == other.total &&
           paymentMethod == other.paymentMethod &&
-          installments == other.installments;
+          installments == other.installments &&
+          installmentsEnabled == other.installmentsEnabled;
 
   @override
   int get hashCode =>
@@ -90,7 +97,8 @@ class Sale {
       planId.hashCode ^
       total.hashCode ^
       paymentMethod.hashCode ^
-      installments.hashCode;
+      installments.hashCode ^
+      installmentsEnabled.hashCode;
 
   @override
   String toString() => toJson().toString();

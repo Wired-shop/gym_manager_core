@@ -1,1 +1,1 @@
-enum PaymentMethod { cash, card, installments }
+enum PaymentMethod { cash, card, bankTransfer }
