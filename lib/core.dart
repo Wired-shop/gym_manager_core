@@ -22,8 +22,8 @@ export 'src/models/license.dart';
 export 'src/models/license_plan.dart';
 export 'src/models/license_validation_result.dart';
 export 'src/models/shift_with_avaibility.dart';
-export 'src/models/campaign.dart';
-export 'src/models/campaign_user.dart';
+export 'src/models/comunication.dart';
+export 'src/models/comunication_user.dart';
 
 export 'src/enums/document_type.dart';
 export 'src/enums/validation_response.dart';
@@ -36,8 +36,8 @@ export 'src/enums/payment_method.dart';
 export 'src/enums/booking_result.dart';
 export 'src/enums/license_plan_validation_result_status.dart';
 export 'src/enums/license_validation_result_status.dart';
-export 'src/enums/campaign_type.dart';
-export 'src/enums/campaign_status.dart';
+export 'src/enums/comunication_channel.dart';
+export 'src/enums/comunication_status.dart';
 
 export 'src/repositories/entry_repository.dart';
 export 'src/repositories/file_repository.dart';
@@ -50,6 +50,6 @@ export 'src/repositories/plan_repository.dart';
 export 'src/repositories/sale_repository.dart';
 export 'src/repositories/sync_repository.dart';
 export 'src/repositories/booking_repository.dart';
-export 'src/repositories/campaign_repository.dart';
+export 'src/repositories/comunication_repository.dart';
 
 export 'src/helpers/validator.dart';

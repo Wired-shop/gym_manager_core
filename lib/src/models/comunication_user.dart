@@ -1,10 +1,10 @@
-class CampaignUser {
+class ComunicationUser {
   final String name;
   final String surname;
   final String? email;
   final String? phone;
 
-  CampaignUser({
+  ComunicationUser({
     required this.name,
     required this.surname,
     this.email,
@@ -18,7 +18,7 @@ class CampaignUser {
         'phone': phone,
       };
 
-  factory CampaignUser.fromJson(Map<String, dynamic> json) => CampaignUser(
+  factory ComunicationUser.fromJson(Map<String, dynamic> json) => ComunicationUser(
         name: json['name'] as String,
         surname: json['surname'] as String,
         email: json['email'] as String?,

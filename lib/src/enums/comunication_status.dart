@@ -1,10 +1,10 @@
-enum CampaignStatus {
+enum ComunicationStatus {
   completed,
   active,
   scheduled;
 
-  static CampaignStatus fromString(String value) {
-    return CampaignStatus.values.firstWhere(
+  static ComunicationStatus fromString(String value) {
+    return ComunicationStatus.values.firstWhere(
       (e) => e.name == value,
       orElse: () => throw ArgumentError('CampaignStatus sconosciuto: $value'),
     );

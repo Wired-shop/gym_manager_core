@@ -1,10 +1,10 @@
-enum CampaignType {
+enum ComunicationChannel {
   whatsapp,
   email,
   app;
 
-  static CampaignType fromString(String value) {
-    return CampaignType.values.firstWhere(
+  static ComunicationChannel fromString(String value) {
+    return ComunicationChannel.values.firstWhere(
       (e) => e.name == value,
       orElse: () => throw ArgumentError('CampaignType sconosciuto: $value'),
     );

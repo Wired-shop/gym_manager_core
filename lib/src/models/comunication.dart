@@ -1,19 +1,19 @@
-import 'package:gym_manager_core/src/enums/campaign_status.dart';
-import 'package:gym_manager_core/src/enums/campaign_type.dart';
-import 'package:gym_manager_core/src/models/campaign_user.dart';
+import 'package:gym_manager_core/src/enums/comunication_status.dart';
+import 'package:gym_manager_core/src/enums/comunication_channel.dart';
+import 'package:gym_manager_core/src/models/comunication_user.dart';
 
-class Campaign {
+class Comunication {
   int? id;
   String name;
   String? description;
   String? attachmentUrl;
-  List<CampaignUser> users;
+  List<ComunicationUser> users;
   DateTime? scheduledAt;
-  CampaignStatus status;
-  CampaignType type;
+  ComunicationStatus status;
+  ComunicationChannel channel;
   int? success;
 
-  Campaign({
+  Comunication({
     this.id,
     required this.name,
     this.description,
@@ -21,7 +21,7 @@ class Campaign {
     required this.users,
     this.scheduledAt,
     required this.status,
-    required this.type,
+    required this.channel,
     this.success,
   });
 
@@ -33,23 +33,23 @@ class Campaign {
         'users': users.map((e) => e.toJson()).toList(),
         'scheduledAt': scheduledAt?.toIso8601String(),
         'status': status.name,
-        'type': type.name,
+        'channel': channel.name,
         'success': success,
       };
 
-  factory Campaign.fromJson(Map<String, dynamic> json) => Campaign(
+  factory Comunication.fromJson(Map<String, dynamic> json) => Comunication(
         id: json['id'] as int?,
         name: json['name'] as String,
         description: json['description'] as String?,
         attachmentUrl: json['attachmentUrl'] as String?,
         users: (json['users'] as List<dynamic>? ?? [])
-            .map((e) => CampaignUser.fromJson(e as Map<String, dynamic>))
+            .map((e) => ComunicationUser.fromJson(e as Map<String, dynamic>))
             .toList(),
         scheduledAt: json['scheduledAt'] != null
             ? DateTime.parse(json['scheduledAt'] as String)
             : null,
-        status: CampaignStatus.fromString(json['status'] as String),
-        type: CampaignType.fromString(json['type'] as String),
+        status: ComunicationStatus.fromString(json['status'] as String),
+        channel: ComunicationChannel.fromString(json['type'] as String),
         success: json['success'] as int?,
       );
 
