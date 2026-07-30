@@ -18,7 +18,7 @@ class ComunicationRepository {
 
     if (comunication.users.isNotEmpty) {
       final usersData = comunication.users
-          .map((u) => {...u.toJson(), 'comunicaionId': insertedId})
+          .map((u) => {...u.toJson(), 'comunicationId': insertedId})
           .toList();
       await _client.from('comunicationUsers').insert(usersData);
     }
@@ -53,7 +53,7 @@ class ComunicationRepository {
         await _client.from('comunications').select().eq('id', id).single();
 
     final usersResult = await _client
-        .from('comunicationsUsers')
+        .from('comunicationUsers')
         .select()
         .eq('comunicationId', id);
 
