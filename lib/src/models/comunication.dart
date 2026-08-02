@@ -33,7 +33,7 @@ class Comunication {
         'users': users.map((e) => e.toJson()).toList(),
         'scheduledAt': scheduledAt?.toIso8601String(),
         'status': status.name,
-        'channel': channel.name,
+        'type': channel.name,
         'success': success,
       };
 
