@@ -6,10 +6,14 @@ class ComunicationRepository {
 
   ComunicationRepository({required SupabaseClient client}) : _client = client;
 
+  String get _gymId =>
+      _client.auth.currentUser?.appMetadata['gymId'] as String? ?? '';
+
   Future<Comunication> insert(Comunication comunication) async {
     final data = comunication.toJson()
       ..remove('id')
       ..remove('users');
+    data['gymId'] = _gymId;
 
     final result =
         await _client.from('comunications').insert(data).select().single();
@@ -18,7 +22,7 @@ class ComunicationRepository {
 
     if (comunication.users.isNotEmpty) {
       final usersData = comunication.users
-          .map((u) => {...u.toJson(), 'comunicaionId': insertedId})
+          .map((u) => {...u.toJson(), 'comunicationId': insertedId})
           .toList();
       await _client.from('comunicationUsers').insert(usersData);
     }
@@ -30,8 +34,13 @@ class ComunicationRepository {
     final data = comunication.toJson()
       ..remove('id')
       ..remove('users');
+    data['gymId'] = _gymId;
 
-    await _client.from('comunications').update(data).eq('id', comunication.id!);
+    await _client
+        .from('comunications')
+        .update(data)
+        .eq('id', comunication.id!)
+        .eq('gymId', _gymId);
 
     await _client
         .from('comunicationUsers')
@@ -49,11 +58,15 @@ class ComunicationRepository {
   }
 
   Future<Comunication> get(int id) async {
-    final result =
-        await _client.from('comunications').select().eq('id', id).single();
+    final result = await _client
+        .from('comunications')
+        .select()
+        .eq('id', id)
+        .eq('gymId', _gymId)
+        .single();
 
     final usersResult = await _client
-        .from('comunicationsUsers')
+        .from('comunicationUsers')
         .select()
         .eq('comunicationId', id);
 
@@ -71,7 +84,7 @@ class ComunicationRepository {
     DateTime? startDate,
     DateTime? endDate,
   }) async {
-    var query = _client.from('comunications').select();
+    var query = _client.from('comunications').select().eq('gymId', _gymId);
 
     if (q != null && q.trim().isNotEmpty) {
       query = query.ilike('name', '%$q%');
@@ -102,6 +115,10 @@ class ComunicationRepository {
   }
 
   Future<void> delete(int id) async {
-    await _client.from('comunications').delete().eq('id', id);
+    await _client
+        .from('comunications')
+        .delete()
+        .eq('id', id)
+        .eq('gymId', _gymId);
   }
 }

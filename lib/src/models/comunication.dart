@@ -4,6 +4,7 @@ import 'package:gym_manager_core/src/models/comunication_user.dart';
 
 class Comunication {
   int? id;
+  String gymId;
   String name;
   String? description;
   String? attachmentUrl;
@@ -15,6 +16,7 @@ class Comunication {
 
   Comunication({
     this.id,
+    this.gymId = '',
     required this.name,
     this.description,
     this.attachmentUrl,
@@ -27,18 +29,20 @@ class Comunication {
 
   Map<String, dynamic> toJson() => {
         'id': id,
+        'gymId': gymId,
         'name': name,
         'description': description,
         'attachmentUrl': attachmentUrl,
         'users': users.map((e) => e.toJson()).toList(),
         'scheduledAt': scheduledAt?.toIso8601String(),
         'status': status.name,
-        'channel': channel.name,
+        'type': channel.name,
         'success': success,
       };
 
   factory Comunication.fromJson(Map<String, dynamic> json) => Comunication(
         id: json['id'] as int?,
+        gymId: json['gymId'] as String? ?? '',
         name: json['name'] as String,
         description: json['description'] as String?,
         attachmentUrl: json['attachmentUrl'] as String?,

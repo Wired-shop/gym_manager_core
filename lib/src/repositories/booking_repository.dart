@@ -7,7 +7,7 @@ class BookingRepository {
   BookingRepository({required SupabaseClient client}) : _client = client;
 
   String get _gymId =>
-      _client.auth.currentUser?.userMetadata?['gymId'] as String? ?? '';
+      _client.auth.currentUser?.appMetadata['gymId'] as String? ?? '';
 
   String get _email => _client.auth.currentUser?.email ?? '';
 
