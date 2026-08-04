@@ -6,10 +6,14 @@ class ComunicationRepository {
 
   ComunicationRepository({required SupabaseClient client}) : _client = client;
 
+  String get _gymId =>
+      _client.auth.currentUser?.userMetadata?['gymId'] as String? ?? '';
+
   Future<Comunication> insert(Comunication comunication) async {
     final data = comunication.toJson()
       ..remove('id')
-      ..remove('users');
+      ..remove('users')
+      ..['gymId'] = _gymId;
 
     final result =
         await _client.from('comunications').insert(data).select().single();
