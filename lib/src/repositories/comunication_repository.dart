@@ -61,11 +61,7 @@ class ComunicationRepository {
         .select()
         .eq('comunicationId', id);
 
-    final users = (usersResult as List)
-        .map((e) => ComunicationUser.fromJson(e as Map<String, dynamic>))
-        .toList();
-
-    return Comunication.fromJson({...result, 'users': users});
+    return Comunication.fromJson({...result, 'users': usersResult});
   }
 
   Future<List<Comunication>> list({
