@@ -31,8 +31,5 @@ enum PreferencesKeys {
   mailServerUsername,
   mailServerPassword,
   mailServerFromAddress,
-  mailServerUseSsl,
-  firebaseProjectId,
-  firebaseClientEmail,
-  firebasePrivateKey;
+  mailServerUseSsl;
 }
