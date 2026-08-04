@@ -66,8 +66,8 @@ class ComunicationRepository {
 
   Future<List<Comunication>> list({
     String? q,
-    String? status,
-    String? type,
+    ComunicationStatus? status,
+    ComunicationChannel? type,
     DateTime? startDate,
     DateTime? endDate,
   }) async {
@@ -77,10 +77,10 @@ class ComunicationRepository {
       query = query.ilike('name', '%$q%');
     }
     if (status != null) {
-      query = query.eq('status', status);
+      query = query.eq('status', status.name);
     }
     if (type != null) {
-      query = query.eq('type', type);
+      query = query.eq('type', type.name);
     }
     if (startDate != null) {
       query = query.gte('scheduledAt', startDate.toIso8601String());
