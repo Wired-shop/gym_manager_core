@@ -25,5 +25,14 @@ enum PreferencesKeys {
   skipSecondAccess,
   jwtToken,
   machineId,
-  timeWatermark;
+  timeWatermark,
+  mailServerHost,
+  mailServerPort,
+  mailServerUsername,
+  mailServerPassword,
+  mailServerFromAddress,
+  mailServerUseSsl,
+  firebaseProjectId,
+  firebaseClientEmail,
+  firebasePrivateKey;
 }
