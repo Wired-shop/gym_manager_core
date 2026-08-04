@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+
 import '../models/subscription.dart';
 import '../services/api_service.dart';
 
@@ -12,8 +14,15 @@ class SubscriptionRepository {
       {int? id, String? badgeCode, int? userId}) async {
     final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/subscriptions?badgeCode=$badgeCode&id=$id&userId=$userId";
-    final response = await ApiService.getInstance().dio.get(url);
-    return response.data != null ? Subscription.fromJson(response.data) : null;
+    try {
+      final response = await ApiService.getInstance().dio.get(url);
+      return response.data != null
+          ? Subscription.fromJson(response.data)
+          : null;
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 404) return null;
+      rethrow;
+    }
   }
 
   static Future<List<Subscription>> list() async {
