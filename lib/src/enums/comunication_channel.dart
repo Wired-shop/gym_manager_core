@@ -9,4 +9,16 @@ enum ComunicationChannel {
       orElse: () => throw ArgumentError('CampaignType sconosciuto: $value'),
     );
   }
+
+  @override
+  String toString() {
+    switch (this) {
+      case ComunicationChannel.whatsapp:
+        return "WhatsApp";
+      case ComunicationChannel.email:
+        return "Email";
+      case ComunicationChannel.app:
+        return "Notifica app";
+    }
+  }
 }

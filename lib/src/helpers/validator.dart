@@ -8,9 +8,6 @@ class Validator {
   }) {
     List<ValidationResponseWarnings> warnings = [];
 
-    if (subscription == null) {
-      warnings.add(ValidationResponseWarnings.abbonamentoAssente);
-    }
     if (subscription != null) {
       // Scadenza abbonamento
       if (subscription.expiration.isBefore(DateTime.now())) {
