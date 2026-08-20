@@ -70,17 +70,13 @@ class ComunicationRepository {
         .select()
         .eq('comunicationId', id);
 
-    final users = (usersResult as List)
-        .map((e) => ComunicationUser.fromJson(e as Map<String, dynamic>))
-        .toList();
-
-    return Comunication.fromJson({...result, 'users': users});
+    return Comunication.fromJson({...result, 'users': usersResult});
   }
 
   Future<List<Comunication>> list({
     String? q,
-    String? status,
-    String? type,
+    ComunicationStatus? status,
+    ComunicationChannel? type,
     DateTime? startDate,
     DateTime? endDate,
   }) async {
@@ -90,10 +86,10 @@ class ComunicationRepository {
       query = query.ilike('name', '%$q%');
     }
     if (status != null) {
-      query = query.eq('status', status);
+      query = query.eq('status', status.name);
     }
     if (type != null) {
-      query = query.eq('type', type);
+      query = query.eq('type', type.name);
     }
     if (startDate != null) {
       query = query.gte('scheduledAt', startDate.toIso8601String());
@@ -104,7 +100,7 @@ class ComunicationRepository {
       query = query.lte('scheduledAt', end.toIso8601String());
     }
 
-    final results = await query.order('scheduledAt', ascending: false);
+    final results = await query.order('createdAt', ascending: false);
 
     final List<Comunication> comunications = [];
     for (final row in results as List) {
@@ -120,5 +116,22 @@ class ComunicationRepository {
         .delete()
         .eq('id', id)
         .eq('gymId', _gymId);
+  }
+
+  RealtimeChannel watchChanges(void Function() onChange) {
+    return _client
+        .channel('comunications-changes-$_gymId')
+        .onPostgresChanges(
+          event: PostgresChangeEvent.all,
+          schema: 'public',
+          table: 'comunications',
+          filter: PostgresChangeFilter(
+            type: PostgresChangeFilterType.eq,
+            column: 'gymId',
+            value: _gymId,
+          ),
+          callback: (_) => onChange(),
+        )
+        .subscribe();
   }
 }

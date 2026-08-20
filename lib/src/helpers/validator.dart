@@ -8,9 +8,6 @@ class Validator {
   }) {
     List<ValidationResponseWarnings> warnings = [];
 
-    if (subscription == null) {
-      warnings.add(ValidationResponseWarnings.abbonamentoAssente);
-    }
     if (subscription != null) {
       // Scadenza abbonamento
       if (subscription.expiration.isBefore(DateTime.now())) {
@@ -26,6 +23,8 @@ class Validator {
           subscription.accessesAvaiable == 0) {
         warnings.add(ValidationResponseWarnings.accessiDisponibiliEsauriti);
       }
+    } else {
+      warnings.add(ValidationResponseWarnings.abbonamentoAssente);
     }
 
     // Certificato medico
