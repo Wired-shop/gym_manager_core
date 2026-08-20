@@ -35,6 +35,7 @@ class ApiService {
             "Errore sconosciuto";
         handler.reject(DioException(
           requestOptions: error.requestOptions,
+          response: error.response,
           message: message,
         ));
       },

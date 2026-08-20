@@ -13,6 +13,7 @@ class ComunicationRepository {
     final data = comunication.toJson()
       ..remove('id')
       ..remove('users')
+      ..remove('createdAt')
       ..['gymId'] = _gymId;
 
     final result =
@@ -33,7 +34,8 @@ class ComunicationRepository {
   Future<Comunication> update(Comunication comunication) async {
     final data = comunication.toJson()
       ..remove('id')
-      ..remove('users');
+      ..remove('users')
+      ..remove('createdAt');
 
     await _client.from('comunications').update(data).eq('id', comunication.id!);
 
@@ -91,7 +93,7 @@ class ComunicationRepository {
       query = query.lte('scheduledAt', end.toIso8601String());
     }
 
-    final results = await query.order('scheduledAt', ascending: false);
+    final results = await query.order('createdAt', ascending: false);
 
     final List<Comunication> comunications = [];
     for (final row in results as List) {
@@ -103,5 +105,22 @@ class ComunicationRepository {
 
   Future<void> delete(int id) async {
     await _client.from('comunications').delete().eq('id', id);
+  }
+
+  RealtimeChannel watchChanges(void Function() onChange) {
+    return _client
+        .channel('comunications-changes-$_gymId')
+        .onPostgresChanges(
+          event: PostgresChangeEvent.all,
+          schema: 'public',
+          table: 'comunications',
+          filter: PostgresChangeFilter(
+            type: PostgresChangeFilterType.eq,
+            column: 'gymId',
+            value: _gymId,
+          ),
+          callback: (_) => onChange(),
+        )
+        .subscribe();
   }
 }

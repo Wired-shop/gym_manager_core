@@ -9,6 +9,7 @@ class Comunication {
   String? attachmentUrl;
   List<ComunicationUser> users;
   DateTime? scheduledAt;
+  DateTime? createdAt;
   ComunicationStatus status;
   ComunicationChannel channel;
   int? success;
@@ -20,6 +21,7 @@ class Comunication {
     this.attachmentUrl,
     required this.users,
     this.scheduledAt,
+    this.createdAt,
     required this.status,
     required this.channel,
     this.success,
@@ -32,6 +34,7 @@ class Comunication {
         'attachmentUrl': attachmentUrl,
         'users': users.map((e) => e.toJson()).toList(),
         'scheduledAt': scheduledAt?.toIso8601String(),
+        'createdAt': createdAt?.toIso8601String(),
         'status': status.name,
         'type': channel.name,
         'success': success,
@@ -47,6 +50,9 @@ class Comunication {
             .toList(),
         scheduledAt: json['scheduledAt'] != null
             ? DateTime.parse(json['scheduledAt'] as String)
+            : null,
+        createdAt: json['createdAt'] != null
+            ? DateTime.parse(json['createdAt'] as String)
             : null,
         status: ComunicationStatus.fromString(json['status'] as String),
         channel: ComunicationChannel.fromString(json['type'] as String),

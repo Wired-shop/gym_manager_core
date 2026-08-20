@@ -23,6 +23,8 @@ class Validator {
           subscription.accessesAvaiable == 0) {
         warnings.add(ValidationResponseWarnings.accessiDisponibiliEsauriti);
       }
+    } else {
+      warnings.add(ValidationResponseWarnings.abbonamentoAssente);
     }
 
     // Certificato medico

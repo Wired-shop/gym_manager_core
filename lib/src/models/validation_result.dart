@@ -50,6 +50,7 @@ class ValidationResult {
     if (warnings
             .contains(ValidationResponseWarnings.accessiDisponibiliEsauriti) ||
         (warnings.contains(ValidationResponseWarnings.abbonamentoScaduto)) ||
+        (warnings.contains(ValidationResponseWarnings.abbonamentoAssente)) ||
         (warnings.contains(ValidationResponseWarnings.affiliazioneScaduta)) ||
         (warnings
             .contains(ValidationResponseWarnings.certificatoMedicoScaduto)) ||
