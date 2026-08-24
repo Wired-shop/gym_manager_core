@@ -24,6 +24,7 @@ export 'src/models/license_validation_result.dart';
 export 'src/models/shift_with_avaibility.dart';
 export 'src/models/comunication.dart';
 export 'src/models/comunication_user.dart';
+export 'src/models/notification.dart';
 
 export 'src/enums/document_type.dart';
 export 'src/enums/validation_response.dart';
@@ -52,5 +53,6 @@ export 'src/repositories/sync_repository.dart';
 export 'src/repositories/booking_repository.dart';
 export 'src/repositories/comunication_repository.dart';
 export 'src/repositories/notification_token_repository.dart';
+export 'src/repositories/notification_repository.dart';
 
 export 'src/helpers/validator.dart';

@@ -19,4 +19,16 @@ class NotificationTokenRepository {
 
     return result?['token'] as String?;
   }
+
+  Future<void> setToken(
+      {required String email,
+      required String gymId,
+      required String token}) async {
+    await _client.from('notificationTokens').upsert({
+      'email': email,
+      'gymId': gymId,
+      'token': token,
+      'updatedAt': DateTime.now().toIso8601String(),
+    }, onConflict: 'email,gymId');
+  }
 }
