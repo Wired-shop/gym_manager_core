@@ -6,24 +6,23 @@ class NotificationTokenRepository {
   NotificationTokenRepository({required SupabaseClient client})
       : _client = client;
 
-  String get _gymId =>
-      _client.auth.currentUser?.userMetadata?['gymId'] as String? ?? '';
-
-  Future<String?> getToken({required String email}) async {
+  Future<String?> getToken(
+      {required String email, required String gymId}) async {
     final result = await _client
         .from('notificationTokens')
         .select('token')
         .eq('email', email)
-        .eq('gymId', _gymId)
+        .eq('gymId', gymId)
         .maybeSingle();
 
     return result?['token'] as String?;
   }
 
-  Future<void> setToken(
-      {required String email,
-      required String gymId,
-      required String token}) async {
+  Future<void> setToken({
+    required String email,
+    required String token,
+    required String gymId,
+  }) async {
     await _client.from('notificationTokens').upsert({
       'email': email,
       'gymId': gymId,

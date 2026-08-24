@@ -6,18 +6,16 @@ class BookingRepository {
 
   BookingRepository({required SupabaseClient client}) : _client = client;
 
-  String get _gymId =>
-      _client.auth.currentUser?.appMetadata['gymId'] as String? ?? '';
-
   String get _email => _client.auth.currentUser?.email ?? '';
 
   Future<ShiftWithAvailability> listShiftAvailability({
     required Shift shift,
+    required String gymId,
   }) async {
     final response = await _client
         .from('bookings')
         .select('id')
-        .eq('gymId', _gymId)
+        .eq('gymId', gymId)
         .eq('shiftId', shift.id!)
         .eq('shiftDateTime', shift.nextBookableOccurrence.toIso8601String())
         .eq('status', BookingStatus.confirmed.toJson())
@@ -29,12 +27,13 @@ class BookingRepository {
     );
   }
 
-  Future<List<Booking>> listUserBookings({bool onlyFuture = true}) async {
+  Future<List<Booking>> listUserBookings(
+      {required String gymId, bool onlyFuture = true}) async {
     final userResponse = await _client
         .from('users')
         .select('id')
         .eq('email', _email)
-        .eq('gymId', _gymId)
+        .eq('gymId', gymId)
         .maybeSingle();
 
     if (userResponse == null) {
@@ -47,7 +46,7 @@ class BookingRepository {
         .from('bookings')
         .select('*, shifts(courseId)')
         .eq('userId', userId)
-        .eq('gymId', _gymId)
+        .eq('gymId', gymId)
         .eq('status', BookingStatus.confirmed.toJson());
 
     if (onlyFuture) {
@@ -64,10 +63,11 @@ class BookingRepository {
   Future<BookingResult> book({
     required int shiftId,
     required DateTime shiftDate,
+    required String gymId,
     int? userId,
   }) async {
     final params = {
-      'pGymId': _gymId,
+      'pGymId': gymId,
       'pShiftId': shiftId,
       'pShiftDateTime': shiftDate.toIso8601String(),
     };
@@ -102,12 +102,13 @@ class BookingRepository {
 
   Future<List<Booking>> list({
     required int courseId,
+    required String gymId,
     int? shiftId,
   }) async {
     final shiftIds = await _client
         .from('shifts')
         .select('id')
-        .eq('gymId', _gymId)
+        .eq('gymId', gymId)
         .eq('courseId', courseId);
 
     final ids = (shiftIds as List).map((s) => s['id'] as int).toList();
@@ -116,7 +117,7 @@ class BookingRepository {
     final response = await _client
         .from('bookings')
         .select('*, shifts(courseId), users(id, name, surname, email)')
-        .eq('gymId', _gymId)
+        .eq('gymId', gymId)
         .inFilter('shiftId', shiftId != null ? [shiftId] : ids)
         .order('shiftDateTime', ascending: false);
 
