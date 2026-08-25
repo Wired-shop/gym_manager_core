@@ -4,6 +4,7 @@ class Notification {
   final String message;
   final String email;
   final String gymId;
+  final bool visualizzato;
 
   Notification({
     required this.id,
@@ -11,7 +12,19 @@ class Notification {
     required this.message,
     required this.email,
     required this.gymId,
+    this.visualizzato = false,
   });
+
+  Notification copyWith({bool? visualizzato}) {
+    return Notification(
+      id: id,
+      title: title,
+      message: message,
+      email: email,
+      gymId: gymId,
+      visualizzato: visualizzato ?? this.visualizzato,
+    );
+  }
 
   Map<String, dynamic> toJson() {
     return {
@@ -20,6 +33,7 @@ class Notification {
       'message': message,
       'email': email,
       'gymId': gymId,
+      'visualizzato': visualizzato,
     };
   }
 
@@ -30,11 +44,12 @@ class Notification {
       message: json['message'],
       email: json['email'],
       gymId: json['gymId'],
+      visualizzato: json['visualizzato'] ?? false,
     );
   }
 
   @override
   toString() {
-    return 'Notification{id: $id, title: $title, message: $message, email: $email, gymId: $gymId}';
+    return 'Notification{id: $id, title: $title, message: $message, email: $email, gymId: $gymId, visualizzato: $visualizzato}';
   }
 }

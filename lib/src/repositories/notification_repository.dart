@@ -24,11 +24,20 @@ class NotificationRepository {
     }
   }
 
-  Future<void> deleteNotification({required String id}) async {
+  Future<void> markAllAsViewed({
+    required String email,
+    required String gymId,
+  }) async {
     try {
-      await _client.from('notifications').delete().eq('id', id);
+      await _client
+          .from('notifications')
+          .update({'visualizzato': true})
+          .eq('gymId', gymId)
+          .eq('email', email)
+          .eq('visualizzato', false);
     } on PostgrestException catch (e) {
-      throw Exception('Errore nell\'eliminazione della notifica: ${e.message}');
+      throw Exception(
+          'Errore nell\'aggiornamento delle notifiche: ${e.message}');
     }
   }
 }
