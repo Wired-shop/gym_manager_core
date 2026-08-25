@@ -5,6 +5,7 @@ class Notification {
   final String email;
   final String gymId;
   final bool viewed;
+  final DateTime createdAt;
 
   Notification({
     required this.id,
@@ -13,6 +14,7 @@ class Notification {
     required this.email,
     required this.gymId,
     this.viewed = false,
+    required this.createdAt,
   });
 
   Notification copyWith({bool? viewed}) {
@@ -23,6 +25,7 @@ class Notification {
       email: email,
       gymId: gymId,
       viewed: viewed ?? this.viewed,
+      createdAt: createdAt,
     );
   }
 
@@ -34,6 +37,7 @@ class Notification {
       'email': email,
       'gymId': gymId,
       'viewed': viewed,
+      'createdAt': createdAt.toIso8601String(),
     };
   }
 
@@ -45,11 +49,12 @@ class Notification {
       email: json['email'],
       gymId: json['gymId'],
       viewed: json['viewed'] ?? false,
+      createdAt: DateTime.parse(json['createdAt']),
     );
   }
 
   @override
   toString() {
-    return 'Notification{id: $id, title: $title, message: $message, email: $email, gymId: $gymId, viewed: $viewed}';
+    return 'Notification{id: $id, title: $title, message: $message, email: $email, gymId: $gymId, viewed: $viewed, createdAt: $createdAt}';
   }
 }
