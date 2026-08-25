@@ -31,10 +31,10 @@ class NotificationRepository {
     try {
       await _client
           .from('notifications')
-          .update({'visualizzato': true})
+          .update({'viewed': true})
           .eq('gymId', gymId)
           .eq('email', email)
-          .eq('visualizzato', false);
+          .eq('viewed', false);
     } on PostgrestException catch (e) {
       throw Exception(
           'Errore nell\'aggiornamento delle notifiche: ${e.message}');

@@ -4,7 +4,7 @@ class Notification {
   final String message;
   final String email;
   final String gymId;
-  final bool visualizzato;
+  final bool viewed;
 
   Notification({
     required this.id,
@@ -12,17 +12,17 @@ class Notification {
     required this.message,
     required this.email,
     required this.gymId,
-    this.visualizzato = false,
+    this.viewed = false,
   });
 
-  Notification copyWith({bool? visualizzato}) {
+  Notification copyWith({bool? viewed}) {
     return Notification(
       id: id,
       title: title,
       message: message,
       email: email,
       gymId: gymId,
-      visualizzato: visualizzato ?? this.visualizzato,
+      viewed: viewed ?? this.viewed,
     );
   }
 
@@ -33,7 +33,7 @@ class Notification {
       'message': message,
       'email': email,
       'gymId': gymId,
-      'visualizzato': visualizzato,
+      'viewed': viewed,
     };
   }
 
@@ -44,12 +44,12 @@ class Notification {
       message: json['message'],
       email: json['email'],
       gymId: json['gymId'],
-      visualizzato: json['visualizzato'] ?? false,
+      viewed: json['viewed'] ?? false,
     );
   }
 
   @override
   toString() {
-    return 'Notification{id: $id, title: $title, message: $message, email: $email, gymId: $gymId, visualizzato: $visualizzato}';
+    return 'Notification{id: $id, title: $title, message: $message, email: $email, gymId: $gymId, viewed: $viewed}';
   }
 }
