@@ -23,4 +23,12 @@ class NotificationRepository {
       throw Exception('Errore nel recupero delle notifiche: ${e.message}');
     }
   }
+
+  Future<void> deleteNotification({required String id}) async {
+    try {
+      await _client.from('notifications').delete().eq('id', id);
+    } on PostgrestException catch (e) {
+      throw Exception('Errore nell\'eliminazione della notifica: ${e.message}');
+    }
+  }
 }

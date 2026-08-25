@@ -1,10 +1,12 @@
 class Notification {
+  final String id;
   final String title;
   final String message;
   final String email;
   final String gymId;
 
   Notification({
+    required this.id,
     required this.title,
     required this.message,
     required this.email,
@@ -13,6 +15,7 @@ class Notification {
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'title': title,
       'message': message,
       'email': email,
@@ -22,6 +25,7 @@ class Notification {
 
   static Notification fromJson(Map<String, dynamic> json) {
     return Notification(
+      id: json['id'],
       title: json['title'],
       message: json['message'],
       email: json['email'],
@@ -31,6 +35,6 @@ class Notification {
 
   @override
   toString() {
-    return 'Notification{title: $title, message: $message, email: $email, gymId: $gymId}';
+    return 'Notification{id: $id, title: $title, message: $message, email: $email, gymId: $gymId}';
   }
 }
