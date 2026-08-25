@@ -1,7 +1,7 @@
 class Notification {
   final String id;
   final String title;
-  final String message;
+  final String? message;
   final String email;
   final String gymId;
   final bool viewed;
@@ -9,7 +9,7 @@ class Notification {
   Notification({
     required this.id,
     required this.title,
-    required this.message,
+    this.message,
     required this.email,
     required this.gymId,
     this.viewed = false,
