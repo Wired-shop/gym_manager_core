@@ -2,6 +2,7 @@ class Notification {
   final String id;
   final String title;
   final String? message;
+  final String? attachmentUrl;
   final String email;
   final String gymId;
   final bool viewed;
@@ -11,6 +12,7 @@ class Notification {
     required this.id,
     required this.title,
     this.message,
+    this.attachmentUrl,
     required this.email,
     required this.gymId,
     this.viewed = false,
@@ -22,6 +24,7 @@ class Notification {
       id: id,
       title: title,
       message: message,
+      attachmentUrl: attachmentUrl,
       email: email,
       gymId: gymId,
       viewed: viewed ?? this.viewed,
@@ -34,6 +37,7 @@ class Notification {
       'id': id,
       'title': title,
       'message': message,
+      'attachmentUrl': attachmentUrl,
       'email': email,
       'gymId': gymId,
       'viewed': viewed,
@@ -46,6 +50,7 @@ class Notification {
       id: json['id'],
       title: json['title'],
       message: json['message'],
+      attachmentUrl: json['attachmentUrl'],
       email: json['email'],
       gymId: json['gymId'],
       viewed: json['viewed'] ?? false,
@@ -55,6 +60,6 @@ class Notification {
 
   @override
   toString() {
-    return 'Notification{id: $id, title: $title, message: $message, email: $email, gymId: $gymId, viewed: $viewed, createdAt: $createdAt}';
+    return 'Notification{id: $id, title: $title, message: $message, attachmentUrl: $attachmentUrl, email: $email, gymId: $gymId, viewed: $viewed, createdAt: $createdAt}';
   }
 }
