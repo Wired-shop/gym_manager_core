@@ -1,19 +1,61 @@
+import 'dart:typed_data';
+
 import 'package:gym_manager_core/core.dart';
 import 'package:supabase/supabase.dart';
 
 class ComunicationRepository {
   final SupabaseClient _client;
+  static const _attachmentsBucket = 'attachments';
 
   ComunicationRepository({required SupabaseClient client}) : _client = client;
 
   String get _gymId =>
       _client.auth.currentUser?.appMetadata['gymId'] as String? ?? '';
 
-  Future<Comunication> insert(Comunication comunication) async {
+  Future<String> _uploadAttachment({
+    required Uint8List bytes,
+    required String fileName,
+    String? contentType,
+  }) async {
+    final path = '${DateTime.now().millisecondsSinceEpoch}_$fileName';
+
+    await _client.storage.from(_attachmentsBucket).uploadBinary(
+          path,
+          bytes,
+          fileOptions: FileOptions(contentType: contentType, upsert: false),
+        );
+
+    return _client.storage.from(_attachmentsBucket).getPublicUrl(path);
+  }
+
+  Future<void> _deleteAttachment(String attachmentUrl) async {
+    final marker = '/object/public/$_attachmentsBucket/';
+    final idx = attachmentUrl.indexOf(marker);
+    if (idx == -1) return;
+    final path = attachmentUrl.substring(idx + marker.length);
+    await _client.storage.from(_attachmentsBucket).remove([path]);
+  }
+
+  Future<Comunication> insert(
+    Comunication comunication, {
+    Uint8List? attachmentBytes,
+    String? attachmentFileName,
+    String? attachmentContentType,
+  }) async {
+    var attachmentUrl = comunication.attachmentUrl;
+    if (attachmentBytes != null && attachmentFileName != null) {
+      attachmentUrl = await _uploadAttachment(
+        bytes: attachmentBytes,
+        fileName: attachmentFileName,
+        contentType: attachmentContentType,
+      );
+    }
+
     final data = comunication.toJson()
       ..remove('id')
       ..remove('users');
     data['gymId'] = _gymId;
+    data['attachmentUrl'] = attachmentUrl;
 
     final result =
         await _client.from('comunications').insert(data).select().single();
@@ -30,11 +72,34 @@ class ComunicationRepository {
     return await get(insertedId);
   }
 
-  Future<Comunication> update(Comunication comunication) async {
+  Future<Comunication> update(
+    Comunication comunication, {
+    Uint8List? attachmentBytes,
+    String? attachmentFileName,
+    String? attachmentContentType,
+    bool removeAttachment = false,
+  }) async {
+    var attachmentUrl = comunication.attachmentUrl;
+
+    if (attachmentBytes != null && attachmentFileName != null) {
+      if (attachmentUrl != null) {
+        await _deleteAttachment(attachmentUrl);
+      }
+      attachmentUrl = await _uploadAttachment(
+        bytes: attachmentBytes,
+        fileName: attachmentFileName,
+        contentType: attachmentContentType,
+      );
+    } else if (removeAttachment && attachmentUrl != null) {
+      await _deleteAttachment(attachmentUrl);
+      attachmentUrl = null;
+    }
+
     final data = comunication.toJson()
       ..remove('id')
       ..remove('users');
     data['gymId'] = _gymId;
+    data['attachmentUrl'] = attachmentUrl;
 
     await _client
         .from('comunications')
@@ -111,6 +176,11 @@ class ComunicationRepository {
   }
 
   Future<void> delete(int id) async {
+    final comunication = await get(id);
+    if (comunication.attachmentUrl != null) {
+      await _deleteAttachment(comunication.attachmentUrl!);
+    }
+
     await _client
         .from('comunications')
         .delete()
@@ -118,7 +188,7 @@ class ComunicationRepository {
         .eq('gymId', _gymId);
   }
 
-  RealtimeChannel watchChanges(void Function() onChange) {
+  RealtimeChannel stream(void Function() onChange) {
     return _client
         .channel('comunications-changes-$_gymId')
         .onPostgresChanges(
