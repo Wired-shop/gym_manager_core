@@ -14,6 +14,8 @@ class Comunication {
   ComunicationStatus status;
   ComunicationChannel channel;
   int? success;
+  int? whatsappTemplateId;
+  Map<String, String>? whatsappTemplateFields;
 
   Comunication({
     this.id,
@@ -27,6 +29,8 @@ class Comunication {
     required this.status,
     required this.channel,
     this.success,
+    this.whatsappTemplateId,
+    this.whatsappTemplateFields,
   });
 
   Map<String, dynamic> toJson() => {
@@ -41,6 +45,8 @@ class Comunication {
         'status': status.name,
         'type': channel.name,
         'success': success,
+        'whatsappTemplateId': whatsappTemplateId,
+        'whatsappTemplateFields': whatsappTemplateFields,
       };
 
   factory Comunication.fromJson(Map<String, dynamic> json) => Comunication(
@@ -61,6 +67,10 @@ class Comunication {
         status: ComunicationStatus.fromString(json['status'] as String),
         channel: ComunicationChannel.fromString(json['type'] as String),
         success: json['success'] as int?,
+        whatsappTemplateId: json['whatsappTemplateId'] as int?,
+        whatsappTemplateFields:
+            (json['whatsappTemplateFields'] as Map<String, dynamic>?)
+                ?.map((key, value) => MapEntry(key, value.toString())),
       );
 
   @override
