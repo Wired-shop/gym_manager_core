@@ -4,6 +4,10 @@ class UsersFilter implements Filter {
   String? name;
   bool? hasEmail;
   bool? hasPhone;
+
+  /// Ha l'app degli iscritti (token push per la palestra su Supabase).
+  /// Non lo applica il backend: lo applica il gestionale sulla lista ricevuta.
+  bool? hasApp;
   bool? hasTpPro;
   bool? hasPublicNote;
   bool? hasPrivateNote;
@@ -22,6 +26,7 @@ class UsersFilter implements Filter {
     bool? hasEmail,
     bool? hasTpPro,
     bool? hasPhone,
+    bool? hasApp,
     bool? hasPrivateNote,
     bool? hasPublicNote,
     bool? isArchived,
@@ -37,6 +42,7 @@ class UsersFilter implements Filter {
         hasEmail = hasEmail ?? false,
         hasTpPro = hasTpPro ?? false,
         hasPhone = hasPhone ?? false,
+        hasApp = hasApp ?? false,
         hasPublicNote = hasPublicNote ?? false,
         hasPrivateNote = hasPrivateNote ?? false,
         isArchived = isArchived ?? false,
@@ -49,6 +55,7 @@ class UsersFilter implements Filter {
     hasEmail = false;
     hasTpPro = false;
     hasPhone = false;
+    hasApp = false;
     hasPublicNote = false;
     hasPrivateNote = false;
     isArchived = false;
@@ -67,6 +74,7 @@ class UsersFilter implements Filter {
     return hasEmail == false &&
         hasTpPro == false &&
         hasPhone == false &&
+        hasApp == false &&
         hasPublicNote == false &&
         hasPrivateNote == false &&
         isArchived == false &&
@@ -84,7 +92,7 @@ class UsersFilter implements Filter {
   String toQueryParameters() {
     String encodedValidationResponseWarnings =
         validationResponseWarnings?.map((e) => e.name).join(",") ?? "null";
-    return 'courseId=$courseId&hasEmail=$hasEmail&hasTpPro=$hasTpPro&hasPhone=$hasPhone&hasPublicNote=$hasPublicNote&hasPrivateNote=$hasPrivateNote&isArchived=$isArchived&isFlagged=$isFlagged&isForceBlocked=$isForceBlocked&idleDays=$idleDays&yearsRange=${yearsRange?.toQueryParameters()}&gender=$gender&creation=$creation&validationResponseWarnings=$encodedValidationResponseWarnings';
+    return 'courseId=$courseId&hasEmail=$hasEmail&hasTpPro=$hasTpPro&hasPhone=$hasPhone&hasApp=$hasApp&hasPublicNote=$hasPublicNote&hasPrivateNote=$hasPrivateNote&isArchived=$isArchived&isFlagged=$isFlagged&isForceBlocked=$isForceBlocked&idleDays=$idleDays&yearsRange=${yearsRange?.toQueryParameters()}&gender=$gender&creation=$creation&validationResponseWarnings=$encodedValidationResponseWarnings';
   }
 
   @override
@@ -92,6 +100,7 @@ class UsersFilter implements Filter {
     hasEmail = map['hasEmail'] == 'true';
     hasTpPro = map['hasTpPro'] == 'true';
     hasPhone = map['hasPhone'] == 'true';
+    hasApp = map['hasApp'] == 'true';
     hasPublicNote = map['hasPublicNote'] == 'true';
     hasPrivateNote = map['hasPrivateNote'] == 'true';
     isArchived = map['isArchived'] == 'true';
@@ -128,8 +137,9 @@ class UsersFilter implements Filter {
     return {
       'name': name,
       'hasEmail': hasEmail,
-      'hasTpPro': hasEmail,
+      'hasTpPro': hasTpPro,
       'hasPhone': hasPhone,
+      'hasApp': hasApp,
       'hasPrivateNote': hasPrivateNote,
       'hasPublicNote': hasPublicNote,
       'isFlagged': isFlagged,
@@ -152,6 +162,7 @@ class UsersFilter implements Filter {
       hasEmail: json['hasEmail'] as bool? ?? false,
       hasTpPro: json['hasTpPro'] as bool? ?? false,
       hasPhone: json['hasPhone'] as bool? ?? false,
+      hasApp: json['hasApp'] as bool? ?? false,
       hasPrivateNote: json['hasPrivateNote'] as bool? ?? false,
       hasPublicNote: json['hasPublicNote'] as bool? ?? false,
       isArchived: json['isArchived'] as bool? ?? false,
