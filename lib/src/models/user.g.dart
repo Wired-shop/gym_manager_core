@@ -49,6 +49,10 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       creation: json['creation'] == null
           ? null
           : DateTime.parse(json['creation'] as String),
+      role: $enumDecodeNullable(_$UserRoleEnumMap, json['role'],
+              unknownValue: UserRole.unassigned) ??
+          UserRole.unassigned,
+      passwordHash: json['passwordHash'] as String?,
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
@@ -86,5 +90,14 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'archived': instance.archived,
       'tpPro': instance.tpPro,
       'forceBlock': instance.forceBlock,
+      'role': _$UserRoleEnumMap[instance.role]!,
+      'passwordHash': instance.passwordHash,
       'creation': instance.creation?.toIso8601String(),
     };
+
+const _$UserRoleEnumMap = {
+  UserRole.unassigned: 'unassigned',
+  UserRole.member: 'member',
+  UserRole.staff: 'staff',
+  UserRole.admin: 'admin',
+};

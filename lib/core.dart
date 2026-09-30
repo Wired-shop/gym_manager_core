@@ -39,6 +39,7 @@ export 'src/enums/license_plan_validation_result_status.dart';
 export 'src/enums/license_validation_result_status.dart';
 export 'src/enums/comunication_channel.dart';
 export 'src/enums/comunication_status.dart';
+export 'src/enums/user_role.dart';
 
 export 'src/repositories/entry_repository.dart';
 export 'src/repositories/file_repository.dart';

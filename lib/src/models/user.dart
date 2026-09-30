@@ -1,4 +1,6 @@
+import 'package:gym_manager_core/src/enums/user_role.dart';
 import 'package:json_annotation/json_annotation.dart';
+
 part 'user.g.dart';
 
 @JsonSerializable()
@@ -50,6 +52,11 @@ class User {
   int? tpPro;
   int? forceBlock;
 
+  //Access
+  @JsonKey(unknownEnumValue: UserRole.unassigned)
+  UserRole role;
+
+  String? passwordHash;
   DateTime? creation;
 
   User({
@@ -85,6 +92,8 @@ class User {
     this.gender,
     this.job,
     this.creation,
+    this.role = UserRole.unassigned,
+    this.passwordHash,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
