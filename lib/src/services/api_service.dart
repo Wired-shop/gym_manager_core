@@ -1,11 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
+import 'package:gym_manager_core/src/models/user.dart';
 
 class ApiService {
   String _IP = "127.0.0.1";
   int _PORT = 3000;
 
-  String? _email;
+  User? _user;
 
   Dio dio = Dio(BaseOptions())
     ..httpClientAdapter = IOHttpClientAdapter(onHttpClientCreate: (client) {
@@ -15,6 +16,10 @@ class ApiService {
 
   ApiService._privateConstructor() {
     dio.interceptors.add(InterceptorsWrapper(
+      onRequest: (options, handler) {
+        options.headers.addAll(authHeaders);
+        handler.next(options);
+      },
       onResponse: (response, handler) {
         final data = response.data;
         if (data is! Map || data["responseType"] != "ok") {
@@ -48,9 +53,12 @@ class ApiService {
 
   void setIP(String IP) => _IP = IP;
   void setPORT(int PORT) => _PORT = PORT;
-  void setEmail(String? email) => _email = email;
+  void setUser(User? user) => _user = user;
 
-  String? getEmail() => _email;
   String getIP() => _IP;
   int getPORT() => _PORT;
+  User? getUser() => _user;
+
+  Map<String, String> get authHeaders =>
+      _user?.id != null ? {'X-User-Id': '${_user!.id}'} : {};
 }

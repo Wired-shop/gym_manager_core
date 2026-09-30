@@ -33,6 +33,7 @@ class EntryRepository {
         "wss://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/stream/entries?startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}";
     final channel = IOWebSocketChannel.connect(
       Uri.parse(wsUrl),
+      headers: ApiService.getInstance().authHeaders,
       customClient: HttpClient()
         ..badCertificateCallback =
             (X509Certificate cert, String host, int port) => true,

@@ -4,6 +4,25 @@ import 'package:gym_manager_core/core.dart';
 import 'package:web_socket_channel/io.dart';
 
 class UserRepository {
+  static Future<User> login(String email, String password) async {
+    final url =
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/users/login";
+    final response = await ApiService.getInstance()
+        .dio
+        .post(url, data: {'email': email, 'password': password});
+    final user = User.fromJson(response.data);
+    ApiService.getInstance().setUser(user);
+    return user;
+  }
+
+  static void logout() => ApiService.getInstance().setUser(null);
+
+  static Future<void> setPassword(int id, String password) async {
+    final url =
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/users/$id/password";
+    await ApiService.getInstance().dio.put(url, data: {'password': password});
+  }
+
   static Future<void> truncate() async {
     final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/users/truncate";
@@ -15,6 +34,7 @@ class UserRepository {
         'wss://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/stream/users?q=$q&${filter?.toQueryParameters()}';
     final channel = IOWebSocketChannel.connect(
       Uri.parse(wsUrl),
+      headers: ApiService.getInstance().authHeaders,
       customClient: HttpClient()
         ..badCertificateCallback =
             (X509Certificate cert, String host, int port) => true,

@@ -9,6 +9,7 @@ class CourseRepository {
         "wss://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/stream/courses";
     final channel = IOWebSocketChannel.connect(
       Uri.parse(wsUrl),
+      headers: ApiService.getInstance().authHeaders,
       customClient: HttpClient()
         ..badCertificateCallback =
             (X509Certificate cert, String host, int port) => true,
