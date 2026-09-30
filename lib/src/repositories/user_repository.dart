@@ -17,6 +17,20 @@ class UserRepository {
 
   static void logout() => ApiService.getInstance().setUser(null);
 
+  static Future<List<User>> accounts() async {
+    final url =
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/users/accounts";
+    final response = await ApiService.getInstance().dio.get(url);
+    return (response.data as List).map((e) => User.fromJson(e)).toList();
+  }
+
+  static Future<List<int>> accountImage(int id) async {
+    final url =
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/users/accounts/$id/image";
+    final response = await ApiService.getInstance().dio.get(url);
+    return (response.data as List).map<int>((e) => e).toList();
+  }
+
   static Future<void> setPassword(int id, String password) async {
     final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/users/$id/password";

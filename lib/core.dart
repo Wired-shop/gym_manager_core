@@ -41,6 +41,8 @@ export 'src/enums/comunication_channel.dart';
 export 'src/enums/comunication_status.dart';
 export 'src/enums/user_role.dart';
 
+export 'src/extensions/user_role_extension.dart';
+
 export 'src/repositories/entry_repository.dart';
 export 'src/repositories/file_repository.dart';
 export 'src/repositories/subscription_repository.dart';
