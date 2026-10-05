@@ -32,5 +32,7 @@ enum PreferencesKeys {
   mailServerPassword,
   mailServerFromAddress,
   mailServerUseSsl,
-  whatsappApiKey;
+  whatsappApiKey,
+  enablePrivacyMode,
+  privacyModeTimeout;
 }
