@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:gym_manager_core/src/models/user.dart';
@@ -7,6 +8,8 @@ class ApiService {
   int _PORT = 3000;
 
   User? _user;
+  final StreamController<User?> _userChanges =
+      StreamController<User?>.broadcast();
 
   Dio dio = Dio(BaseOptions())
     ..httpClientAdapter = IOHttpClientAdapter(onHttpClientCreate: (client) {
@@ -53,11 +56,15 @@ class ApiService {
 
   void setIP(String IP) => _IP = IP;
   void setPORT(int PORT) => _PORT = PORT;
-  void setUser(User? user) => _user = user;
+  void setUser(User? user) {
+    _user = user;
+    _userChanges.add(user);
+  }
 
   String getIP() => _IP;
   int getPORT() => _PORT;
   User? getUser() => _user;
+  Stream<User?> get userChanges => _userChanges.stream;
 
   Map<String, String> get authHeaders =>
       _user?.id != null ? {'X-User-Id': '${_user!.id}'} : {};
