@@ -31,6 +31,13 @@ class UserRepository {
     return (response.data as List).map<int>((e) => e).toList();
   }
 
+  static Future<bool> hasPassword(int id) async {
+    final url =
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/users/$id/has-password";
+    final response = await ApiService.getInstance().dio.get(url);
+    return response.data == true;
+  }
+
   static Future<void> setPassword(int id, String password) async {
     final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/users/$id/password";
