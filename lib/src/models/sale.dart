@@ -12,8 +12,12 @@ class Sale {
   String? note;
   List<SaleInstallment> installments;
   int installmentsEnabled;
+  int? sellerId;
+  String? sellerName;
 
   Sale({
+    this.sellerId,
+    this.sellerName,
     this.id,
     this.planId,
     this.note,
@@ -56,6 +60,8 @@ class Sale {
       installmentsEnabled: json['installmentsEnabled'] != null
           ? json['installmentsEnabled'] as int
           : 0,
+      sellerId: json['sellerId'] as int?,
+      sellerName: json['sellerName'] as String?,
     );
   }
 
@@ -71,6 +77,8 @@ class Sale {
         'paymentMethod': paymentMethod.toString().split('.').last,
         'installments': installments.map((e) => e.toJson()).toList(),
         'installmentsEnabled': installmentsEnabled,
+        'sellerId': sellerId,
+        'sellerName': sellerName,
       };
 
   @override

@@ -42,9 +42,10 @@ class SaleRepository {
       String? q,
       int? completed,
       DateTime? startDate,
-      DateTime? endDate}) async {
+      DateTime? endDate,
+      int? sellerId}) async {
     final url =
-        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/sales?q=$q&completed=$completed&startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}&userId=$userId";
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/sales?q=$q&completed=$completed&startDate=${startDate?.toIso8601String()}&endDate=${endDate?.toIso8601String()}&userId=$userId&sellerId=$sellerId";
     final response = await ApiService.getInstance().dio.get(url);
     return (response.data as List).map((e) => Sale.fromJson(e)).toList();
   }
