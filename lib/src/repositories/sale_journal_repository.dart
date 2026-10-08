@@ -14,7 +14,7 @@ class SaleJournalRepository {
     }
   }
 
-  static Future<SaleJournal> create(SaleJournal journal) async {
+  static Future<SaleJournal> insert(SaleJournal journal) async {
     final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/saleJournal";
     final response =
