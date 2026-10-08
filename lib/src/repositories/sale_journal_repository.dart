@@ -8,7 +8,6 @@ class SaleJournalRepository {
     return SaleJournal.fromJson(response.data);
   }
 
-  /// Aggiunge un'azione al journal della vendita: il journal nasce con la prima
   static Future<SaleJournal> insert(SaleAction action) async {
     final url =
         "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/saleJournal";
