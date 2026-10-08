@@ -2,11 +2,11 @@ import 'package:gym_manager_core/src/models/sale_action.dart';
 
 class SaleJournal {
   final int saleId;
-  final List<SaleAction> actions;
+  final List<SaleAction>? actions;
 
   SaleJournal({
     required this.saleId,
-    required this.actions,
+    this.actions,
   });
 
   factory SaleJournal.fromJson(Map<String, dynamic> json) {
@@ -21,7 +21,7 @@ class SaleJournal {
   Map<String, dynamic> toJson() {
     return {
       'saleId': saleId,
-      'actions': actions.map((e) => e.toJson()).toList(),
+      'actions': actions?.map((e) => e.toJson()).toList(),
     };
   }
 }

@@ -1,21 +1,19 @@
 import 'package:gym_manager_core/core.dart';
 
 class SaleJournalRepository {
+  static String _url(int saleId) =>
+      "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/sales/$saleId/journal";
+
   static Future<SaleJournal> get(int saleId) async {
-    final url =
-        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/saleJournal";
-    final response = await ApiService.getInstance().dio.get(url);
+    final response = await ApiService.getInstance().dio.get(_url(saleId));
     return SaleJournal.fromJson(response.data);
   }
 
-  static Future<SaleJournal> insert(
-      {required SaleJournal journal, required SaleAction action}) async {
-    final url =
-        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/saleJournal";
-    final response = await ApiService.getInstance().dio.post(url, data: {
-      'journal': journal.toJson(),
-      'action': action.toJson(),
-    });
+  /// Aggiunge un'azione: il journal nasce con la prima
+  static Future<SaleJournal> addAction(SaleAction action) async {
+    final response = await ApiService.getInstance()
+        .dio
+        .post(_url(action.saleId), data: action.toJson());
     return SaleJournal.fromJson(response.data);
   }
 }
