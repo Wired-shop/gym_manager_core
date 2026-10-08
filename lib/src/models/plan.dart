@@ -3,7 +3,8 @@ class Plan {
   String? name;
   String? description;
   double price;
-  int validityDays;
+  int? validityDays;
+  int? accesses;
   int courseId;
 
   Plan({
@@ -12,7 +13,8 @@ class Plan {
     this.name,
     this.description,
     required this.price,
-    required this.validityDays,
+    this.validityDays,
+    this.accesses,
   });
   factory Plan.fromJson(Map<String, dynamic> json) {
     return Plan(
@@ -23,7 +25,8 @@ class Plan {
       price: json['price'] is String
           ? double.parse(json['price'])
           : (json['price'] as num).toDouble(),
-      validityDays: json['validityDays'] as int,
+      validityDays: json['validityDays'] as int?,
+      accesses: json['accesses'] as int?,
     );
   }
 
@@ -35,8 +38,14 @@ class Plan {
       'description': description,
       'price': price,
       'validityDays': validityDays,
+      'accesses': accesses,
     };
   }
+
+  String get durationLabel => [
+        if (accesses != null) "$accesses ingressi",
+        if (validityDays != null) "$validityDays giorni",
+      ].join(" · ");
 
   @override
   bool operator ==(Object other) =>
@@ -48,7 +57,8 @@ class Plan {
           name == other.name &&
           description == other.description &&
           price == other.price &&
-          validityDays == other.validityDays;
+          validityDays == other.validityDays &&
+          accesses == other.accesses;
 
   @override
   int get hashCode =>
@@ -57,7 +67,8 @@ class Plan {
       name.hashCode ^
       description.hashCode ^
       price.hashCode ^
-      validityDays.hashCode;
+      validityDays.hashCode ^
+      accesses.hashCode;
 
   @override
   String toString() {
