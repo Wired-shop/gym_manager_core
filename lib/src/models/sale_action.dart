@@ -4,20 +4,18 @@ class SaleAction {
   final int? id;
   final int saleId;
   final SaleActionType type;
-
-  /// Numero della rata (da 1), solo per le azioni sulle rate
-  final int? installmentNumber;
-  final int? userId;
-  final String? userName;
+  final int? installmentId;
+  final int? sellerId;
+  final String? sellerName;
   final DateTime date;
 
   SaleAction({
     this.id,
     required this.saleId,
     required this.type,
-    this.installmentNumber,
-    this.userId,
-    this.userName,
+    this.installmentId,
+    this.sellerId,
+    this.sellerName,
     required this.date,
   });
 
@@ -26,9 +24,9 @@ class SaleAction {
       id: json['id'] as int?,
       saleId: json['saleId'] as int,
       type: SaleActionType.fromString(json['type'] as String),
-      installmentNumber: json['installmentNumber'] as int?,
-      userId: json['userId'] as int?,
-      userName: json['userName'] as String?,
+      installmentId: json['installmentId'] as int?,
+      sellerId: json['sellerId'] as int?,
+      sellerName: json['sellerName'] as String?,
       date: DateTime.parse(json['date'] as String),
     );
   }
@@ -38,9 +36,9 @@ class SaleAction {
       if (id != null) 'id': id,
       'saleId': saleId,
       'type': type.name,
-      'installmentNumber': installmentNumber,
-      'userId': userId,
-      'userName': userName,
+      'installmentId': installmentId,
+      'sellerId': sellerId,
+      'sellerName': sellerName,
       'date': date.toUtc().toIso8601String(),
     };
   }

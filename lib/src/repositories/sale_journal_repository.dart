@@ -3,23 +3,18 @@ import 'package:gym_manager_core/core.dart';
 class SaleJournalRepository {
   static Future<SaleJournal> get(int saleId) async {
     final url =
-        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/sales/$saleId/journal";
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/saleJournal";
     final response = await ApiService.getInstance().dio.get(url);
     return SaleJournal.fromJson(response.data);
   }
 
-  /// Utente e data li assegna il server: si inviano solo tipo e rata
   static Future<SaleJournal> insert(
-      int saleId, List<SaleAction> actions) async {
+      {required SaleJournal journal, required SaleAction action}) async {
     final url =
-        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/sales/$saleId/journal";
+        "https://${ApiService.getInstance().getIP()}:${ApiService.getInstance().getPORT()}/saleJournal";
     final response = await ApiService.getInstance().dio.post(url, data: {
-      'actions': actions
-          .map((a) => {
-                'type': a.type.name,
-                'installmentNumber': a.installmentNumber,
-              })
-          .toList(),
+      'journal': journal.toJson(),
+      'action': action.toJson(),
     });
     return SaleJournal.fromJson(response.data);
   }
