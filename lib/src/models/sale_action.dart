@@ -4,7 +4,7 @@ class SaleAction {
   final int? id;
   final int saleId;
   final SaleActionType type;
-  final int? installmentId;
+  final int? installmentNumber;
   final int? sellerId;
   final String? sellerName;
   final DateTime date;
@@ -13,7 +13,7 @@ class SaleAction {
     this.id,
     required this.saleId,
     required this.type,
-    this.installmentId,
+    this.installmentNumber,
     this.sellerId,
     this.sellerName,
     required this.date,
@@ -24,7 +24,7 @@ class SaleAction {
       id: json['id'] as int?,
       saleId: json['saleId'] as int,
       type: SaleActionType.fromString(json['type'] as String),
-      installmentId: json['installmentId'] as int?,
+      installmentNumber: json['installmentNumber'] as int?,
       sellerId: json['sellerId'] as int?,
       sellerName: json['sellerName'] as String?,
       date: DateTime.parse(json['date'] as String),
@@ -36,7 +36,7 @@ class SaleAction {
       if (id != null) 'id': id,
       'saleId': saleId,
       'type': type.name,
-      'installmentId': installmentId,
+      'installmentNumber': installmentNumber,
       'sellerId': sellerId,
       'sellerName': sellerName,
       'date': date.toUtc().toIso8601String(),
