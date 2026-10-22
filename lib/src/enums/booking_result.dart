@@ -4,5 +4,6 @@ enum BookingResult {
   alreadyBooked,
   invalidDate,
   userNotFound,
+  notFound,
   unauthorized;
 }

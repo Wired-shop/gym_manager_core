@@ -64,8 +64,10 @@ class Shift {
     final today = DateTime(now.year, now.month, now.day);
     final dartDow = dayOfWeek == 0 ? 7 : dayOfWeek;
     final daysUntil = (dartDow - today.weekday + 7) % 7;
-    final date = daysUntil == 0 ? today : today.add(Duration(days: daysUntil));
-    return DateTime(date.year, date.month, date.day, start.hour, start.minute);
+    // Calendar-day arithmetic: Duration(days: n) is n*24h and shifts the date
+    // across a DST change.
+    return DateTime(today.year, today.month, today.day + daysUntil, start.hour,
+        start.minute);
   }
 
   bool get isBookable {

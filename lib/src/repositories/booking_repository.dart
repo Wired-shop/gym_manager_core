@@ -96,6 +96,7 @@ class BookingRepository {
 
     return switch (result) {
       'ok' => BookingResult.ok,
+      'notFound' => BookingResult.notFound,
       _ => BookingResult.userNotFound,
     };
   }
