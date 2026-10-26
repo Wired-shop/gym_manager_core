@@ -48,6 +48,15 @@ class License {
         'gym': gym?.toJson(),
       };
 
+  License copyWith({Gym? gym}) => License(
+        machineId: machineId,
+        gymId: gymId,
+        expiration: expiration,
+        plans: plans,
+        gym: gym ?? this.gym,
+        fromCache: fromCache,
+      );
+
   bool isExpired() => expiration != null && DateTime.now().isAfter(expiration!);
   bool hasPlan(String name) => plans.any((p) => p.name == name);
   bool isSectionUnlocked(String sectionId) {
