@@ -37,7 +37,8 @@ class Gym {
         website: json['website'] as String?,
         instagram: json['instagram'] as String?,
         description: json['description'] as String?,
-        openingHours: _parseOpeningHours(json['openingHours']),
+        openingHours: json['openingHoursText'] as String? ??
+            _parseOpeningHours(json['openingHours']),
       );
 
   Map<String, dynamic> toJson() => {
@@ -51,11 +52,13 @@ class Gym {
         'website': website,
         'instagram': instagram,
         'description': description,
-        'openingHours': openingHours,
+        'openingHoursText': openingHours,
       };
 
-  // Licenses cached before the switch to free text still carry the old
-  // { monday: { open, close } | null, ... } map: render it as text.
+  // The free text lives in "openingHoursText"; "openingHours" keeps the old
+  // { monday: { open, close, open_afternoon?, close_afternoon? } | null, ... }
+  // map for the installed versions, which cast it to a Map. Gyms without the
+  // text yet get the map rendered as text.
   static String? _parseOpeningHours(dynamic value) {
     if (value == null || value is String) return value as String?;
     if (value is! Map) return null;
@@ -70,9 +73,11 @@ class Gym {
     };
     return days.entries.where((d) => value.containsKey(d.key)).map((d) {
       final hours = value[d.key];
-      return hours is Map
-          ? '${d.value}: ${hours['open']} - ${hours['close']}'
-          : '${d.value}: Chiuso';
+      if (hours is! Map) return '${d.value}: Chiuso';
+      final afternoon = hours['open_afternoon'] != null
+          ? ', ${hours['open_afternoon']} - ${hours['close_afternoon']}'
+          : '';
+      return '${d.value}: ${hours['open']} - ${hours['close']}$afternoon';
     }).join('\n');
   }
 }
