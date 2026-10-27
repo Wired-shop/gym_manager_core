@@ -30,6 +30,10 @@ class UsersFilter implements Filter {
   /// backend usa la sua preferenza.
   int? inExpiringDays;
 
+  /// Solo gli utenti con uno dei motivi "scaduto" selezionati in
+  /// [validationResponseWarnings] scaduto negli ultimi N giorni.
+  int? expiredWithinDays;
+
   UsersFilter({
     this.name,
     bool? hasEmail,
@@ -49,6 +53,7 @@ class UsersFilter implements Filter {
     this.validationResponseWarnings,
     this.validationResponses,
     this.inExpiringDays,
+    this.expiredWithinDays,
   })  : yearsRange = yearsRange ?? IntFilterRange(),
         hasEmail = hasEmail ?? false,
         hasTpPro = hasTpPro ?? false,
@@ -76,6 +81,7 @@ class UsersFilter implements Filter {
     validationResponseWarnings = null;
     validationResponses = null;
     inExpiringDays = null;
+    expiredWithinDays = null;
     idleDays = null;
     yearsRange = IntFilterRange();
     gender = null;
@@ -108,7 +114,7 @@ class UsersFilter implements Filter {
         validationResponseWarnings?.map((e) => e.name).join(",") ?? "null";
     String encodedValidationResponses =
         validationResponses?.map((e) => e.name).join(",") ?? "null";
-    return 'courseId=$courseId&hasEmail=$hasEmail&hasTpPro=$hasTpPro&hasPhone=$hasPhone&hasApp=$hasApp&hasPublicNote=$hasPublicNote&hasPrivateNote=$hasPrivateNote&isArchived=$isArchived&isFlagged=$isFlagged&isForceBlocked=$isForceBlocked&idleDays=$idleDays&yearsRange=${yearsRange?.toQueryParameters()}&gender=$gender&creation=$creation&validationResponseWarnings=$encodedValidationResponseWarnings&inExpiringDays=$inExpiringDays&validationResponses=$encodedValidationResponses';
+    return 'courseId=$courseId&hasEmail=$hasEmail&hasTpPro=$hasTpPro&hasPhone=$hasPhone&hasApp=$hasApp&hasPublicNote=$hasPublicNote&hasPrivateNote=$hasPrivateNote&isArchived=$isArchived&isFlagged=$isFlagged&isForceBlocked=$isForceBlocked&idleDays=$idleDays&yearsRange=${yearsRange?.toQueryParameters()}&gender=$gender&creation=$creation&validationResponseWarnings=$encodedValidationResponseWarnings&inExpiringDays=$inExpiringDays&expiredWithinDays=$expiredWithinDays&validationResponses=$encodedValidationResponses';
   }
 
   @override
@@ -139,6 +145,9 @@ class UsersFilter implements Filter {
         _parseValidationResponses(map['validationResponses']?.toString());
     inExpiringDays = map['inExpiringDays'].toString() != 'null'
         ? int.tryParse(map['inExpiringDays'])
+        : null;
+    expiredWithinDays = map['expiredWithinDays'].toString() != 'null'
+        ? int.tryParse(map['expiredWithinDays'])
         : null;
     validationResponseWarnings = map.containsKey("validationResponseWarnings")
         ? !(map['validationResponseWarnings'].toString()).contains('null')
@@ -174,6 +183,7 @@ class UsersFilter implements Filter {
       'validationResponseWarnings':
           validationResponseWarnings?.map((e) => e.name).toList(),
       'inExpiringDays': inExpiringDays,
+      'expiredWithinDays': expiredWithinDays,
       'validationResponses': validationResponses?.map((e) => e.name).toList(),
     };
   }
@@ -202,6 +212,7 @@ class UsersFilter implements Filter {
       creation: json['creation'] as int?,
       validationResponseWarnings: warnings,
       inExpiringDays: json['inExpiringDays'] as int?,
+      expiredWithinDays: json['expiredWithinDays'] as int?,
       validationResponses: json.containsKey('validationResponses')
           ? (json['validationResponses'] as List<dynamic>?)
               ?.map((e) => ValidationResponse.values.byName(e as String))

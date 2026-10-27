@@ -34,5 +34,6 @@ enum PreferencesKeys {
   mailServerUseSsl,
   whatsappApiKey,
   enablePrivacyMode,
-  privacyModeTimeout;
+  privacyModeTimeout,
+  expiredFiltersDays;
 }

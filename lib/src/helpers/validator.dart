@@ -70,4 +70,25 @@ class Validator {
       warnings,
     );
   }
+
+  /// Data di scadenza a cui si riferisce un motivo "scaduto", null per gli
+  /// altri motivi.
+  static DateTime? expirationOf({
+    required ValidationResponseWarnings warning,
+    required User user,
+    required Subscription? subscription,
+  }) {
+    switch (warning) {
+      case ValidationResponseWarnings.abbonamentoScaduto:
+        return subscription?.expiration;
+      case ValidationResponseWarnings.iscrizioneScaduta:
+        return user.subscriptionExpiration;
+      case ValidationResponseWarnings.affiliazioneScaduta:
+        return user.affiliationExpiration;
+      case ValidationResponseWarnings.certificatoMedicoScaduto:
+        return user.medicalCertificateExpiration;
+      default:
+        return null;
+    }
+  }
 }
