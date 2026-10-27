@@ -21,6 +21,11 @@ class UsersFilter implements Filter {
   int? creation;
   List<ValidationResponseWarnings>? validationResponseWarnings;
 
+  /// Stati dell'abbonamento da includere (in OR). Per Problemi e Non valido
+  /// l'utente deve avere anche almeno uno dei [validationResponseWarnings].
+  /// Se null vale il vecchio comportamento basato solo sui motivi.
+  List<ValidationResponse>? validationResponses;
+
   /// Giorni entro cui una scadenza conta come "in scadenza". Se null il
   /// backend usa la sua preferenza.
   int? inExpiringDays;
@@ -42,6 +47,7 @@ class UsersFilter implements Filter {
     this.courseId,
     this.creation,
     this.validationResponseWarnings,
+    this.validationResponses,
     this.inExpiringDays,
   })  : yearsRange = yearsRange ?? IntFilterRange(),
         hasEmail = hasEmail ?? false,
@@ -68,6 +74,7 @@ class UsersFilter implements Filter {
     isForceBlocked = false;
     courseId = null;
     validationResponseWarnings = null;
+    validationResponses = null;
     inExpiringDays = null;
     idleDays = null;
     yearsRange = IntFilterRange();
@@ -88,6 +95,7 @@ class UsersFilter implements Filter {
         isFlagged == false &&
         courseId == null &&
         validationResponseWarnings == null &&
+        validationResponses == null &&
         (yearsRange?.start == null && yearsRange?.end == null) &&
         gender == null &&
         idleDays == null &&
@@ -98,7 +106,9 @@ class UsersFilter implements Filter {
   String toQueryParameters() {
     String encodedValidationResponseWarnings =
         validationResponseWarnings?.map((e) => e.name).join(",") ?? "null";
-    return 'courseId=$courseId&hasEmail=$hasEmail&hasTpPro=$hasTpPro&hasPhone=$hasPhone&hasApp=$hasApp&hasPublicNote=$hasPublicNote&hasPrivateNote=$hasPrivateNote&isArchived=$isArchived&isFlagged=$isFlagged&isForceBlocked=$isForceBlocked&idleDays=$idleDays&yearsRange=${yearsRange?.toQueryParameters()}&gender=$gender&creation=$creation&validationResponseWarnings=$encodedValidationResponseWarnings&inExpiringDays=$inExpiringDays';
+    String encodedValidationResponses =
+        validationResponses?.map((e) => e.name).join(",") ?? "null";
+    return 'courseId=$courseId&hasEmail=$hasEmail&hasTpPro=$hasTpPro&hasPhone=$hasPhone&hasApp=$hasApp&hasPublicNote=$hasPublicNote&hasPrivateNote=$hasPrivateNote&isArchived=$isArchived&isFlagged=$isFlagged&isForceBlocked=$isForceBlocked&idleDays=$idleDays&yearsRange=${yearsRange?.toQueryParameters()}&gender=$gender&creation=$creation&validationResponseWarnings=$encodedValidationResponseWarnings&inExpiringDays=$inExpiringDays&validationResponses=$encodedValidationResponses';
   }
 
   @override
@@ -125,6 +135,8 @@ class UsersFilter implements Filter {
     creation = map['creation'].toString() != 'null'
         ? int.tryParse(map['creation'])
         : null;
+    validationResponses =
+        _parseValidationResponses(map['validationResponses']?.toString());
     inExpiringDays = map['inExpiringDays'].toString() != 'null'
         ? int.tryParse(map['inExpiringDays'])
         : null;
@@ -162,11 +174,15 @@ class UsersFilter implements Filter {
       'validationResponseWarnings':
           validationResponseWarnings?.map((e) => e.name).toList(),
       'inExpiringDays': inExpiringDays,
+      'validationResponses': validationResponses?.map((e) => e.name).toList(),
     };
   }
 
   @override
   UsersFilter fromJson(Map<String, dynamic> json) {
+    final warnings = (json['validationResponseWarnings'] as List<dynamic>?)
+        ?.map((e) => ValidationResponseWarnings.fromString(e as String))
+        .toList();
     return UsersFilter(
       name: json['name'] as String?,
       hasEmail: json['hasEmail'] as bool? ?? false,
@@ -184,13 +200,35 @@ class UsersFilter implements Filter {
       yearsRange: IntFilterRange.fromQueryParameters(
           map: json, intFilterRangeName: "yearsRange"),
       creation: json['creation'] as int?,
-      validationResponseWarnings: (json['validationResponseWarnings']
-                  as List<dynamic>?)
-              ?.map((e) => ValidationResponseWarnings.fromString(e as String))
-              .toList() ??
-          [],
+      validationResponseWarnings: warnings,
       inExpiringDays: json['inExpiringDays'] as int?,
+      validationResponses: json.containsKey('validationResponses')
+          ? (json['validationResponses'] as List<dynamic>?)
+              ?.map((e) => ValidationResponse.values.byName(e as String))
+              .toList()
+          : _legacyValidationResponses(warnings),
     );
+  }
+
+  /// Filtri salvati prima degli stati multipli: avevano solo i motivi, con la
+  /// lista vuota per "Valido".
+  static List<ValidationResponse>? _legacyValidationResponses(
+      List<ValidationResponseWarnings>? warnings) {
+    if (warnings == null) return null;
+    if (warnings.isEmpty) return [ValidationResponse.valid];
+    return ValidationResponse.values
+        .where((r) => (ValidationResult.associatedWarningsOf(r) ?? [])
+            .any(warnings.contains))
+        .toList();
+  }
+
+  static List<ValidationResponse>? _parseValidationResponses(String? value) {
+    if (value == null || value == 'null') return null;
+    return value
+        .split(',')
+        .map((e) => ValidationResponse.values.asNameMap()[e.trim()])
+        .whereType<ValidationResponse>()
+        .toList();
   }
 
   @override
