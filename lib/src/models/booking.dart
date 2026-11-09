@@ -6,6 +6,7 @@ class Booking {
   final int shiftId;
   final int userId;
   final int courseId;
+  final bool fromAdmin;
   final DateTime shiftDateTime;
   final DateTime bookedAt;
   final BookingStatus status;
@@ -19,6 +20,7 @@ class Booking {
     required this.shiftDateTime,
     required this.bookedAt,
     required this.status,
+    required this.fromAdmin,
   });
 
   factory Booking.fromJson(Map<String, dynamic> json) => Booking(
@@ -33,6 +35,7 @@ class Booking {
         shiftDateTime: DateTime.parse(json['shiftDateTime'] as String),
         bookedAt: DateTime.parse(json['bookedAt'] as String),
         status: BookingStatus.fromString(json['status'] as String),
+        fromAdmin: json['fromAdmin'] as bool,
       );
 
   Map<String, dynamic> toJson() => {
@@ -44,5 +47,6 @@ class Booking {
         'shiftDate': shiftDateTime.toIso8601String(),
         'bookedAt': bookedAt.toIso8601String(),
         'status': status.toJson(),
+        'fromAdmin': fromAdmin,
       };
 }
