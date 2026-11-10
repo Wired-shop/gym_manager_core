@@ -27,6 +27,7 @@ export 'src/models/shift_with_avaibility.dart';
 export 'src/models/comunication.dart';
 export 'src/models/comunication_user.dart';
 export 'src/models/notification.dart';
+export 'src/models/automation.dart';
 
 export 'src/enums/document_type.dart';
 export 'src/enums/sale_action_type.dart';
@@ -43,6 +44,7 @@ export 'src/enums/license_validation_result_status.dart';
 export 'src/enums/comunication_channel.dart';
 export 'src/enums/comunication_status.dart';
 export 'src/enums/user_role.dart';
+export 'src/enums/automation_trigger.dart';
 
 export 'src/extensions/user_role_extension.dart';
 
@@ -61,5 +63,6 @@ export 'src/repositories/booking_repository.dart';
 export 'src/repositories/comunication_repository.dart';
 export 'src/repositories/notification_token_repository.dart';
 export 'src/repositories/notification_repository.dart';
+export 'src/repositories/automation_repository.dart';
 
 export 'src/helpers/validator.dart';

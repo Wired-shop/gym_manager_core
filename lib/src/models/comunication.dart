@@ -16,6 +16,7 @@ class Comunication {
   int? success;
   int? whatsappTemplateId;
   Map<String, String>? whatsappTemplateFields;
+  int? automationId;
 
   Comunication({
     this.id,
@@ -31,6 +32,7 @@ class Comunication {
     this.success,
     this.whatsappTemplateId,
     this.whatsappTemplateFields,
+    this.automationId,
   });
 
   Map<String, dynamic> toJson() => {
@@ -47,6 +49,7 @@ class Comunication {
         'success': success,
         'whatsappTemplateId': whatsappTemplateId,
         'whatsappTemplateFields': whatsappTemplateFields,
+        'automationId': automationId,
       };
 
   factory Comunication.fromJson(Map<String, dynamic> json) => Comunication(
@@ -71,6 +74,7 @@ class Comunication {
         whatsappTemplateFields:
             (json['whatsappTemplateFields'] as Map<String, dynamic>?)
                 ?.map((key, value) => MapEntry(key, value.toString())),
+        automationId: json['automationId'] as int?,
       );
 
   @override
