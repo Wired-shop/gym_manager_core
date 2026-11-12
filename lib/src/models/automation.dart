@@ -6,7 +6,6 @@ class Automation {
   int? id;
   String gymId;
   String name;
-  String? description;
   bool enabled;
 
   AutomationTrigger trigger;
@@ -27,7 +26,6 @@ class Automation {
     this.id,
     this.gymId = '',
     required this.name,
-    this.description,
     this.enabled = true,
     required this.trigger,
     this.timing = AutomationTiming.sameDay,
@@ -46,7 +44,6 @@ class Automation {
         'id': id,
         'gymId': gymId,
         'name': name,
-        'description': description,
         'enabled': enabled,
         'trigger': trigger.name,
         'timing': timing.name,
@@ -65,7 +62,6 @@ class Automation {
         id: json['id'] as int?,
         gymId: json['gymId'] as String? ?? '',
         name: json['name'] as String,
-        description: json['description'] as String?,
         enabled: json['enabled'] as bool? ?? true,
         trigger: AutomationTrigger.fromString(json['trigger'] as String),
         timing: AutomationTiming.fromString(
