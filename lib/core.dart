@@ -44,6 +44,7 @@ export 'src/enums/license_validation_result_status.dart';
 export 'src/enums/comunication_channel.dart';
 export 'src/enums/comunication_status.dart';
 export 'src/enums/user_role.dart';
+export 'src/enums/automation_timing.dart';
 export 'src/enums/automation_trigger.dart';
 
 export 'src/extensions/user_role_extension.dart';

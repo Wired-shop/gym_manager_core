@@ -1,3 +1,4 @@
+import 'package:gym_manager_core/src/enums/automation_timing.dart';
 import 'package:gym_manager_core/src/enums/automation_trigger.dart';
 import 'package:gym_manager_core/src/enums/comunication_channel.dart';
 
@@ -5,57 +6,58 @@ class Automation {
   int? id;
   String gymId;
   String name;
+  String? description;
+  bool enabled;
+
   AutomationTrigger trigger;
+  AutomationTiming timing;
   int offsetDays;
   int sendHour;
-  bool enabled;
+
+  String comunicationTitle;
+  String? comunicationDescription;
   ComunicationChannel channel;
-  String? description;
-  String? attachmentUrl;
   int? whatsappTemplateId;
   Map<String, String>? whatsappTemplateFields;
+  String? attachmentUrl;
+
   DateTime? createdAt;
 
   Automation({
     this.id,
     this.gymId = '',
     required this.name,
-    required this.trigger,
-    required this.offsetDays,
-    required this.sendHour,
-    required this.enabled,
-    required this.channel,
     this.description,
-    this.attachmentUrl,
+    this.enabled = true,
+    required this.trigger,
+    this.timing = AutomationTiming.sameDay,
+    this.offsetDays = 0,
+    this.sendHour = 9,
+    required this.comunicationTitle,
+    this.comunicationDescription,
+    required this.channel,
     this.whatsappTemplateId,
     this.whatsappTemplateFields,
+    this.attachmentUrl,
     this.createdAt,
   });
-
-  String toRuleString() {
-    final hour = "alle ${sendHour.toString().padLeft(2, '0')}:00";
-    if (!trigger.usesOffset || offsetDays == 0) {
-      return "Il giorno ${trigger.eventLabel()} $hour";
-    }
-    final days = offsetDays.abs();
-    final when = offsetDays < 0 ? "prima" : "dopo";
-    return "${days == 1 ? '1 giorno' : '$days giorni'} $when "
-        "${trigger.eventLabel()} $hour";
-  }
 
   Map<String, dynamic> toJson() => {
         'id': id,
         'gymId': gymId,
         'name': name,
-        'trigger': trigger.name,
-        'offsetDays': offsetDays,
-        'sendHour': sendHour,
-        'enabled': enabled,
-        'type': channel.name,
         'description': description,
-        'attachmentUrl': attachmentUrl,
+        'enabled': enabled,
+        'trigger': trigger.name,
+        'timing': timing.name,
+        'offsetDays': timing == AutomationTiming.sameDay ? 0 : offsetDays,
+        'sendHour': sendHour,
+        'comunicationTitle': comunicationTitle,
+        'comunicationDescription': comunicationDescription,
+        'type': channel.name,
         'whatsappTemplateId': whatsappTemplateId,
         'whatsappTemplateFields': whatsappTemplateFields,
+        'attachmentUrl': attachmentUrl,
         'createdAt': createdAt?.toIso8601String(),
       };
 
@@ -63,17 +65,21 @@ class Automation {
         id: json['id'] as int?,
         gymId: json['gymId'] as String? ?? '',
         name: json['name'] as String,
+        description: json['description'] as String?,
+        enabled: json['enabled'] as bool? ?? true,
         trigger: AutomationTrigger.fromString(json['trigger'] as String),
+        timing: AutomationTiming.fromString(
+            json['timing'] as String? ?? AutomationTiming.sameDay.name),
         offsetDays: json['offsetDays'] as int? ?? 0,
         sendHour: json['sendHour'] as int? ?? 9,
-        enabled: json['enabled'] as bool? ?? true,
+        comunicationTitle: json['comunicationTitle'] as String,
+        comunicationDescription: json['comunicationDescription'] as String?,
         channel: ComunicationChannel.fromString(json['type'] as String),
-        description: json['description'] as String?,
-        attachmentUrl: json['attachmentUrl'] as String?,
         whatsappTemplateId: json['whatsappTemplateId'] as int?,
         whatsappTemplateFields:
             (json['whatsappTemplateFields'] as Map<String, dynamic>?)
                 ?.map((key, value) => MapEntry(key, value.toString())),
+        attachmentUrl: json['attachmentUrl'] as String?,
         createdAt: json['createdAt'] != null
             ? DateTime.parse(json['createdAt'] as String)
             : null,

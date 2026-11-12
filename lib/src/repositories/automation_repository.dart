@@ -62,13 +62,15 @@ class AutomationRepository {
 
   Future<int> countRecipients({
     required AutomationTrigger trigger,
+    required AutomationTiming timing,
     required int offsetDays,
     required ComunicationChannel channel,
     required DateTime date,
   }) async {
     final result = await _client.rpc('countAutomationRecipients', params: {
       'pTrigger': trigger.name,
-      'pOffsetDays': offsetDays,
+      'pTiming': timing.name,
+      'pOffsetDays': timing == AutomationTiming.sameDay ? 0 : offsetDays,
       'pType': channel.name,
       'pDate': DateTime(date.year, date.month, date.day)
           .toIso8601String()

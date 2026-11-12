@@ -1,8 +1,8 @@
 enum AutomationTrigger {
-  birthday,
-  subscriptionExpiring,
-  medicalCertificateExpiring,
-  affiliationExpiring;
+  subscriptionExpiration,
+  medicalCertificateExpiration,
+  newUser,
+  birthday;
 
   static AutomationTrigger fromString(String value) {
     return AutomationTrigger.values.firstWhere(
@@ -12,31 +12,19 @@ enum AutomationTrigger {
     );
   }
 
-  bool get usesOffset => this != AutomationTrigger.birthday;
+  /// newUser non ha un "prima": l'utente non esiste ancora.
+  bool get allowsBefore => this != AutomationTrigger.newUser;
 
   String toPrettyString() {
     switch (this) {
+      case AutomationTrigger.subscriptionExpiration:
+        return "Scadenza abbonamento";
+      case AutomationTrigger.medicalCertificateExpiration:
+        return "Scadenza certificato medico";
+      case AutomationTrigger.newUser:
+        return "Nuovo utente";
       case AutomationTrigger.birthday:
         return "Compleanno";
-      case AutomationTrigger.subscriptionExpiring:
-        return "Scadenza abbonamento";
-      case AutomationTrigger.medicalCertificateExpiring:
-        return "Scadenza certificato medico";
-      case AutomationTrigger.affiliationExpiring:
-        return "Scadenza tesseramento";
-    }
-  }
-
-  String eventLabel() {
-    switch (this) {
-      case AutomationTrigger.birthday:
-        return "del compleanno";
-      case AutomationTrigger.subscriptionExpiring:
-        return "della scadenza dell'abbonamento";
-      case AutomationTrigger.medicalCertificateExpiring:
-        return "della scadenza del certificato medico";
-      case AutomationTrigger.affiliationExpiring:
-        return "della scadenza del tesseramento";
     }
   }
 }
