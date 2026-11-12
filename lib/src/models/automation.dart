@@ -13,7 +13,7 @@ class Automation {
   int offsetDays;
   int sendHour;
 
-  String comunicationTitle;
+  /// Corpo del messaggio inviato con la comunicazione generata.
   String? comunicationDescription;
   ComunicationChannel channel;
   int? whatsappTemplateId;
@@ -31,7 +31,6 @@ class Automation {
     this.timing = AutomationTiming.sameDay,
     this.offsetDays = 0,
     this.sendHour = 9,
-    required this.comunicationTitle,
     this.comunicationDescription,
     required this.channel,
     this.whatsappTemplateId,
@@ -49,7 +48,6 @@ class Automation {
         'timing': timing.name,
         'offsetDays': timing == AutomationTiming.sameDay ? 0 : offsetDays,
         'sendHour': sendHour,
-        'comunicationTitle': comunicationTitle,
         'comunicationDescription': comunicationDescription,
         'type': channel.name,
         'whatsappTemplateId': whatsappTemplateId,
@@ -68,7 +66,6 @@ class Automation {
             json['timing'] as String? ?? AutomationTiming.sameDay.name),
         offsetDays: json['offsetDays'] as int? ?? 0,
         sendHour: json['sendHour'] as int? ?? 9,
-        comunicationTitle: json['comunicationTitle'] as String,
         comunicationDescription: json['comunicationDescription'] as String?,
         channel: ComunicationChannel.fromString(json['type'] as String),
         whatsappTemplateId: json['whatsappTemplateId'] as int?,
